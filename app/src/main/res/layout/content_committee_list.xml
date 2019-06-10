@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+
+        android:id="@+id/committeesTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="Committees"
+        android:textSize="36sp"
+
+        />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".CommitteeList"
+        tools:showIn="@layout/activity_committee_list">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/aero_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="AeroVJTI"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/aero2" />
+
+                <Button
+                    android:id="@+id/aero"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="AeroVJTI"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/coc_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="CoC"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/coc" />
+
+                <Button
+                    android:id="@+id/coc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Community of Coders"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/dla_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="DLA"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/dla" />
+
+                <Button
+                    android:id="@+id/dla"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Debate and Literary Activities"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/enthu_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="Enthusia"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/enthu" />
+
+                <Button
+                    android:id="@+id/enthu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Enthusia"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ieee_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="IEEE VJTI"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ieee" />
+
+                <Button
+                    android:id="@+id/ieee"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="IEEE VJTI"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/prati_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="Pratibimb"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/prati" />
+
+                <Button
+                    android:id="@+id/prati"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Pratibimb"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ranga_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="Rangavardhan"
+                    android:scaleType="centerInside" />
+
+                <Button
+                    android:id="@+id/ranga"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Ranghavardhan"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/sra_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="SRA"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/sra" />
+
+                <Button
+                    android:id="@+id/sra"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Society of Robotics and Automation"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/swachh_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="Swachh VJTI"
+                    android:scaleType="centerInside" />
+
+                <Button
+                    android:id="@+id/swachh"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Swachh VJTI"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/techno_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="Technovanza"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/techno" />
+
+                <Button
+                    android:id="@+id/techno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Technovanza"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/alumni_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="Alumni Association"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/alumni" />
+
+                <Button
+                    android:id="@+id/alumni"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="VJTI Alumni Association"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/racing_img"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:contentDescription="VJTI Racing"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/racing" />
+
+                <Button
+                    android:id="@+id/racing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="VJTI Racing"
+                    android:textAllCaps="false"
+                    android:textSize="34sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
