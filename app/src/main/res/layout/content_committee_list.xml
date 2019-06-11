@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e8eaf6"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +16,9 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="Committees"
-        android:textSize="36sp"
+        android:background="#26418f"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
 
         />
 
@@ -23,8 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".CommitteeList"
-        tools:showIn="@layout/activity_committee_list">
+        tools:context=".CommitteeList">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,24 +41,32 @@
 
                 <ImageButton
                     android:id="@+id/aero_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
                     android:baselineAligned="false"
                     android:contentDescription="AeroVJTI"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/aero2" />
+                    android:layout_weight="0"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/aerosq" />
 
                 <Button
                     android:id="@+id/aero"
                     android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:background="#5c6bc0"
                     android:layout_margin="10dp"
-                    android:layout_weight="4"
-                    android:gravity="left"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+
                     android:text="AeroVJTI"
+                    android:paddingLeft="15dp"
                     android:textAllCaps="false"
-                    android:textSize="34sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="28sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -66,24 +76,29 @@
 
                 <ImageButton
                     android:id="@+id/coc_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
                     android:baselineAligned="false"
                     android:contentDescription="CoC"
                     android:scaleType="centerInside"
+                    android:layout_weight="0"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/coc" />
 
                 <Button
                     android:id="@+id/coc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="4"
-                    android:gravity="left"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
                     android:text="Community of Coders"
                     android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
                     android:textSize="34sp" />
             </LinearLayout>
 
@@ -94,22 +109,27 @@
 
                 <ImageButton
                     android:id="@+id/dla_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+
                     android:baselineAligned="false"
                     android:contentDescription="DLA"
+                    android:layout_gravity="center_vertical"
                     android:scaleType="centerInside"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/dla" />
 
                 <Button
                     android:id="@+id/dla"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:paddingLeft="15dp"
+                    android:textColor="#FFFFFF"
                     android:text="Debate and Literary Activities"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
@@ -121,23 +141,61 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/enthu_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:id="@+id/ecell_img"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+
+                    android:layout_gravity="center_vertical"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:baselineAligned="false"
+                    android:contentDescription="DLA"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ecell" />
+
+                <Button
+                    android:id="@+id/ecell"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="4"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="Entrepreneurship Cell"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="34sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/enthu_img"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:baselineAligned="false"
+                    android:layout_gravity="center_vertical"
                     android:contentDescription="Enthusia"
                     android:scaleType="centerInside"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/enthu" />
 
                 <Button
                     android:id="@+id/enthu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="#FFFFFF"
                     android:text="Enthusia"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
@@ -150,23 +208,27 @@
 
                 <ImageButton
                     android:id="@+id/ieee_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
                     android:baselineAligned="false"
                     android:contentDescription="IEEE VJTI"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ieee" />
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/ieeesq" />
 
                 <Button
                     android:id="@+id/ieee"
+                    android:layout_margin="10dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:background="#5c6bc0"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
                     android:text="IEEE VJTI"
+                    android:textColor="#FFFFFF"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
             </LinearLayout>
@@ -178,23 +240,27 @@
 
                 <ImageButton
                     android:id="@+id/prati_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:baselineAligned="false"
+                    android:layout_gravity="center_vertical"
                     android:contentDescription="Pratibimb"
                     android:scaleType="centerInside"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/prati" />
 
                 <Button
                     android:id="@+id/prati"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
+                    android:background="#5c6bc0"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
                     android:text="Pratibimb"
+                    android:textColor="#FFFFFF"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
             </LinearLayout>
@@ -206,22 +272,26 @@
 
                 <ImageButton
                     android:id="@+id/ranga_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:baselineAligned="false"
+                    android:layout_gravity="center_vertical"
                     android:contentDescription="Rangavardhan"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:scaleType="centerInside" />
 
                 <Button
                     android:id="@+id/ranga"
+                    android:layout_margin="10dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:background="#5c6bc0"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
                     android:text="Ranghavardhan"
+                    android:textColor="#FFFFFF"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
             </LinearLayout>
@@ -233,22 +303,26 @@
 
                 <ImageButton
                     android:id="@+id/sra_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:baselineAligned="false"
                     android:contentDescription="SRA"
+                    android:layout_gravity="center_vertical"
                     android:scaleType="centerInside"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/sra" />
 
                 <Button
                     android:id="@+id/sra"
                     android:layout_width="0dp"
+                    android:layout_margin="10dp"
+                    android:background="#5c6bc0"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:fontFamily="sans-serif-light"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="#FFFFFF"
                     android:text="Society of Robotics and Automation"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
@@ -261,21 +335,25 @@
 
                 <ImageButton
                     android:id="@+id/swachh_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:baselineAligned="false"
+                    android:layout_gravity="center_vertical"
                     android:contentDescription="Swachh VJTI"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:scaleType="centerInside" />
 
                 <Button
                     android:id="@+id/swachh"
                     android:layout_width="0dp"
+                    android:layout_margin="10dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="#FFFFFF"
                     android:text="Swachh VJTI"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
@@ -288,24 +366,29 @@
 
                 <ImageButton
                     android:id="@+id/techno_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
                     android:baselineAligned="false"
+                    android:layout_weight="0"
                     android:contentDescription="Technovanza"
                     android:scaleType="centerInside"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/techno" />
 
                 <Button
                     android:id="@+id/techno"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
                     android:text="Technovanza"
                     android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
                     android:textSize="34sp" />
             </LinearLayout>
 
@@ -316,22 +399,27 @@
 
                 <ImageButton
                     android:id="@+id/alumni_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
                     android:baselineAligned="false"
-                    android:contentDescription="Alumni Association"
+                    android:layout_weight="0"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:scaleType="centerInside"
+                    android:contentDescription="VJTI Racing"
                     android:src="@drawable/alumni" />
 
                 <Button
                     android:id="@+id/alumni"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="#FFFFFF"
                     android:text="VJTI Alumni Association"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
@@ -344,22 +432,26 @@
 
                 <ImageButton
                     android:id="@+id/racing_img"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:baselineAligned="false"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+
+                    android:layout_gravity="center_vertical"
                     android:contentDescription="VJTI Racing"
                     android:scaleType="centerInside"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/racing" />
 
                 <Button
                     android:id="@+id/racing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
+                    android:background="#5c6bc0"
+                    android:fontFamily="sans-serif-light"
                     android:layout_weight="4"
-                    android:gravity="left"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="#FFFFFF"
                     android:text="VJTI Racing"
                     android:textAllCaps="false"
                     android:textSize="34sp" />
