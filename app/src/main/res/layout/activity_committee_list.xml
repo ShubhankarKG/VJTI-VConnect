@@ -22,7 +22,8 @@
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
+            android:gravity="top"
             android:text="Login" />
 
     </android.support.design.widget.AppBarLayout>
