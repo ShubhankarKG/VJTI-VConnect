@@ -8,6 +8,41 @@
     android:layout_height="match_parent"
     android:background="#e8eaf6"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#005b9f"
+            android:orientation="horizontal"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Committees"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp" />
+            <!--
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="275dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:popupTheme="@style/AppTheme.PopupOverlay" />
+            -->
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Login" />
+
+        </android.support.design.widget.AppBarLayout>
+    </RelativeLayout>
     <!--
         <TextView
 
