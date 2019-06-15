@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".loginActivity"
-    tools:showIn="@layout/activity_login">
+    tools:showIn="@layout/activity_login"
+    android:background="@drawable/wallpaper">
 
 
     <ImageView
@@ -28,7 +29,9 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="81dp"
         android:hint="Login"
-        android:textSize="35dp" />
+        android:textSize="35dp"
+        android:textColorHint="#FF0000"
+        />
 
     <TextView
         android:id="@+id/password"
@@ -40,7 +43,8 @@
         android:layout_marginTop="30dp"
         android:hint="Password"
         android:textSize="35dp"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:textColorHint="#FF0000"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -66,48 +70,41 @@
         android:layout_marginRight="0dp"
         android:layout_marginBottom="-45dp"
         android:textColorHint="#ffff29ff"
-        android:id="@+id/editText2"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/password"
-        android:textSize="25dp"
-        android:text="Attempts Left: "
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView3"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:layout_toRightOf="@id/textView3"
-        android:id="@+id/textView4"
-        android:layout_alignTop="@id/textView3"
-        android:text="New Text"
-        />
+        android:id="@+id/editText2"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_below="@id/textView3"
-        android:layout_alignEnd="@+id/textView3"
-        android:layout_marginTop="26dp"
-        android:text="login" />
+        android:layout_height="4dp"
+        android:layout_below="@+id/editText2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="92dp"
+        android:background="#D81B60"
+        android:text="login"
+        android:textSize="21.5sp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="15dp"
+        android:layout_height="47dp"
+        android:layout_below="@id/editText2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="91dp"
         android:layout_toRightOf="@id/button1"
-        android:text="cancel" />
+        android:background="#D81B60"
+        android:text="cancel"
+        android:textSize="21.5sp" />
+
+
+
+
 
 
 
