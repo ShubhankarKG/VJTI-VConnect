@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Committees"
+                android:padding="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp" />
             <!--
@@ -47,7 +48,11 @@
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:background="#005b9f"
                 android:text="Login"
+                android:padding="8dp"
+                android:textColor="#FFFFFF"
+
                 />
 
             </LinearLayout>
@@ -331,9 +336,9 @@
                     android:layout_margin="5dp"
                     android:background="?selectableItemBackgroundBorderless"
                     android:baselineAligned="false"
-                    android:contentDescription="Rangavardhan"
+                    android:contentDescription="Rangawardhan"
                     android:scaleType="centerInside"
-                    android:src="@drawable/dla" />
+                    android:src="@drawable/ranga" />
 
                 <Button
                     android:id="@+id/ranga"
@@ -345,7 +350,7 @@
                     android:fontFamily="sans-serif-light"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="15dp"
-                    android:text="Ranghavardhan"
+                    android:text="Rangawardhan"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="28sp" />
@@ -366,7 +371,7 @@
                     android:baselineAligned="false"
                     android:contentDescription="SRA"
                     android:scaleType="centerInside"
-                    android:src="@drawable/dla" />
+                    android:src="@drawable/sra" />
 
                 <Button
                     android:id="@+id/sra"

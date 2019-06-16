@@ -25,10 +25,10 @@ public class loginActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Button b1 = (Button) findViewById(R.id.button1);
-        Button b2 = (Button) findViewById(R.id.button2);
-        final EditText ed1 = (EditText) findViewById(R.id.editText1);
-        final EditText ed2 = (EditText) findViewById(R.id.editText2);
+        final Button b1 = (Button) findViewById(R.id.login_button);
+        Button b2 = (Button) findViewById(R.id.cancel_login_button);
+        final EditText ed1 = (EditText) findViewById(R.id.username_field);
+        final EditText ed2 = (EditText) findViewById(R.id.password_field);
 
         b1.setOnClickListener(new View.OnClickListener() {
 
@@ -51,6 +51,7 @@ public class loginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
+                    clear_fields();
 
 
                 }
@@ -69,6 +70,13 @@ public class loginActivity extends AppCompatActivity {
 
     }
 
-
+    private void clear_fields() {
+        EditText userField = (EditText) findViewById(R.id.username_field);
+        EditText pwdField = (EditText) findViewById(R.id.password_field);
+        userField.setText("");
+        pwdField.setText("");
+        userField.setHint("Enter username");
+        pwdField.setHint("Enter password");
+    }
 
 }
