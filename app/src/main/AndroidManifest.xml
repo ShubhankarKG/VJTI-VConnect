@@ -9,25 +9,74 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ActivityFeedRacing"
+            android:label="@string/title_activity_feed_racing"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ActivityFeedAlumni"
+            android:label="@string/title_activity_feed_alumni"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityTechnovanza"
+            android:label="@string/title_activity_feed_technovanza"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivitySwachhVjti"
+            android:label="@string/title_activity_feed_swachh_vjti"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivitySra"
+            android:label="@string/title_activity_feed_java"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityRangawardhan"
+            android:label="@string/title_activity_feed_rangawardhan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityPratibimb"
+            android:label="@string/title_activity_feed_pratibimb"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityIeee"
+            android:label="@string/title_activity_feed_ieee"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityEnthusia"
+            android:label="@string/title_activity_feed_enthusia"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityEcell"
+            android:label="@string/title_activity_feed_ecell"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityDla"
+            android:label="@string/title_activity_feed_dla"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityCoc"
+            android:label="@string/title_activity_feed_coc"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedActivityAero"
+            android:label="@string/title_activity_feed_aero"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_committee_list"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
 
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".loginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

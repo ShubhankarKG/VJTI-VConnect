@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,7 @@ public class loginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(content_login);
 
@@ -34,26 +35,100 @@ public class loginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (ed1.getText().toString().equals("admin@AeroVjti") && ed2.getText().toString().equals("AeroVjti2k19") ||
-                        ed1.getText().toString().equals("admin@COC") && ed2.getText().toString().equals("COC2k19") ||
-                        ed1.getText().toString().equals("admin@DLA") && ed2.getText().toString().equals("DLA2k19") ||
-                        ed1.getText().toString().equals("admin@ECell") && ed2.getText().toString().equals("ECell2k19") ||
-                        ed1.getText().toString().equals("admin@Enthusia") && ed2.getText().toString().equals("Enthusia2k19") ||
-                        ed1.getText().toString().equals("admin@IEEE") && ed2.getText().toString().equals("IEEE2k19") ||
-                        ed1.getText().toString().equals("admin@Pratibimb") && ed2.getText().toString().equals("Pratibimb2k19") ||
-                        ed1.getText().toString().equals("admin@Rangavardhan") && ed2.getText().toString().equals("Rangavardhan2k19") ||
-                        ed1.getText().toString().equals("admin@SRA") && ed2.getText().toString().equals("SRA2k19") ||
-                        ed1.getText().toString().equals("admin@SwachhVjti") && ed2.getText().toString().equals("SwachhVjti2k19") ||
-                        ed1.getText().toString().equals("admin@Technovanza") && ed2.getText().toString().equals("Technovanza2k19") ||
-                        ed1.getText().toString().equals("admin@VjtiAlumni") && ed2.getText().toString().equals("VjtiAlumni2k19") ||
-                        ed1.getText().toString().equals("admin@VjtiRacing") && ed2.getText().toString().equals("VjtiRacing2k19")
-                ) {
+                if (ed1.getText().toString().equals("admin@AeroVjti") && ed2.getText().toString().equals("AeroVjti2k19") ) {
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                } else {
+                    Intent intent = new Intent(loginActivity.this, FeedActivityAero.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@COC") && ed2.getText().toString().equals("COC2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivityCoc.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@DLA") && ed2.getText().toString().equals("DLA2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivityDla.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@ECell") && ed2.getText().toString().equals("ECell2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivityEcell.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@Enthusia") && ed2.getText().toString().equals("Enthusia2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivityEnthusia.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if ( ed1.getText().toString().equals("admin@IEEE") && ed2.getText().toString().equals("IEEE2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivityIeee.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@Pratibimb") && ed2.getText().toString().equals("Pratibimb2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent (loginActivity.this, FeedActivityPratibimb.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@Rangavardhan") && ed2.getText().toString().equals("Rangavardhan2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent (loginActivity.this, FeedActivityRangawardhan.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if(  ed1.getText().toString().equals("admin@SRA") && ed2.getText().toString().equals("SRA2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivitySra.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@SwachhVjti") && ed2.getText().toString().equals("SwachhVjti2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivitySwachhVjti.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if ( ed1.getText().toString().equals("admin@Technovanza") && ed2.getText().toString().equals("Technovanza2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, FeedActivityTechnovanza.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@VjtiAlumni") && ed2.getText().toString().equals("VjtiAlumni2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, ActivityFeedAlumni.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else if (ed1.getText().toString().equals("admin@VjtiRacing") && ed2.getText().toString().equals("VjtiRacing2k19")) {
+                    Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, ActivityFeedRacing.class);
+                    startActivity(intent);
+                    clear_fields();
+                }
+
+                else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
                     clear_fields();
-
-
                 }
 
 
@@ -78,5 +153,6 @@ public class loginActivity extends AppCompatActivity {
         userField.setHint("Enter username");
         pwdField.setHint("Enter password");
     }
+
 
 }

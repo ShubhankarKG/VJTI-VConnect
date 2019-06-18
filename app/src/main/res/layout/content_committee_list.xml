@@ -106,7 +106,7 @@
                     android:src="@drawable/aerosq" />
 
                 <Button
-                    android:id="@+id/aero"
+                    android:id="@+id/bAeroVjti"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -142,7 +142,7 @@
                     android:src="@drawable/coc" />
 
                 <Button
-                    android:id="@+id/coc"
+                    android:id="@+id/bCoc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -175,7 +175,7 @@
                     android:src="@drawable/dla" />
 
                 <Button
-                    android:id="@+id/dla"
+                    android:id="@+id/bDla"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -208,7 +208,7 @@
                     android:src="@drawable/ecell" />
 
                 <Button
-                    android:id="@+id/ecell"
+                    android:id="@+id/bEcell"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -242,7 +242,7 @@
                     android:src="@drawable/enthu" />
 
                 <Button
-                    android:id="@+id/enthu"
+                    android:id="@+id/bEnthu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -275,7 +275,7 @@
                     android:src="@drawable/ieeesq" />
 
                 <Button
-                    android:id="@+id/ieee"
+                    android:id="@+id/bIeee"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -308,7 +308,7 @@
                     android:src="@drawable/prati" />
 
                 <Button
-                    android:id="@+id/prati"
+                    android:id="@+id/bPrati"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -341,7 +341,7 @@
                     android:src="@drawable/ranga" />
 
                 <Button
-                    android:id="@+id/ranga"
+                    android:id="@+id/bRanga"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -374,7 +374,7 @@
                     android:src="@drawable/sra" />
 
                 <Button
-                    android:id="@+id/sra"
+                    android:id="@+id/bSra"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -403,10 +403,11 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:baselineAligned="false"
                     android:contentDescription="Swachh VJTI"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/swachh"/>
 
                 <Button
-                    android:id="@+id/swachh"
+                    android:id="@+id/bSwachh"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -440,7 +441,7 @@
                     android:src="@drawable/techno" />
 
                 <Button
-                    android:id="@+id/techno"
+                    android:id="@+id/bTechno"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -474,7 +475,7 @@
                     android:src="@drawable/alumni" />
 
                 <Button
-                    android:id="@+id/alumni"
+                    android:id="@+id/bAlumni"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -506,7 +507,7 @@
                     android:src="@drawable/racing" />
 
                 <Button
-                    android:id="@+id/racing"
+                    android:id="@+id/bRacing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

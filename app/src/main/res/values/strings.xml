@@ -2,5 +2,18 @@
     <string name="app_name">Inheritance</string>
     <string name="title_activity_login">loginActivity</string>
     <string name="title_activity_committee_list">Committees</string>
+    <string name="title_activity_feed_aero">FeedActivityAero</string>
+    <string name="title_activity_feed_coc">FeedActivityCoc</string>
+    <string name="title_activity_feed_dla">FeedActivityDla</string>
+    <string name="title_activity_feed_ecell">FeedActivityEcell</string>
+    <string name="title_activity_feed_enthusia">FeedActivityEnthusia</string>
+    <string name="title_activity_feed_ieee">FeedActivityIeee</string>
+    <string name="title_activity_feed_pratibimb">FeedActivityPratibimb</string>
+    <string name="title_activity_feed_rangawardhan">FeedActivityRangawardhan</string>
+    <string name="title_activity_feed_java">FeedActivityJava</string>
+    <string name="title_activity_feed_swachh_vjti">FeedActivitySwachhVjti</string>
+    <string name="title_activity_feed_technovanza">FeedActivityTechnovanza</string>
+    <string name="title_activity_feed_alumni">ActivityFeedAlumni</string>
+    <string name="title_activity_feed_racing">ActivityFeedRacing</string>
 
 </resources>
