@@ -16,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:contentScrim="?attr/colorPrimary">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -54,7 +53,7 @@
                     android:layout_toRightOf="@+id/aero_feed_logo"
                     android:text="AeroVJTI"
                     android:textColor="#FFFFFF"
-                    android:textSize="44sp" />
+                    android:textSize="40sp" />
 
                 <TextView
                     android:id="@+id/aero_tagline"
@@ -62,10 +61,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/aero_heading"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="16dp"
+                    android:layout_margin="8dp"
                     android:text="Born to fly"
                     android:textColor="#FFFFFF"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
 
                     />
 
