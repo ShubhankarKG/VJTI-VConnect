@@ -51,7 +51,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="54dp"
                     android:layout_marginRight="54dp"
-                    android:layout_toRightOf="@+id/prati_feed_logo"
+                    android:layout_toRightOf="@id/prati_feed_logo"
                     android:text="Pratibimb"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"

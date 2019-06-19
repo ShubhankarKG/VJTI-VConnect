@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FeedActivityAero">
+    tools:context=".ActivityFeedAlumni">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="54dp"
-                    android:layout_toRightOf="@+id/alumni_feed_logo"
+                    android:layout_toRightOf="@id/alumni_feed_logo"
                     android:text="VJTI Alumni Associtaion"
                     android:textColor="#FFFFFF"
                     android:textSize="40sp" />

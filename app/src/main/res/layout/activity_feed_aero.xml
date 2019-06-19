@@ -50,7 +50,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="54dp"
-                    android:layout_toRightOf="@+id/aero_feed_logo"
+                    android:layout_toRightOf="@id/aero_feed_logo"
                     android:text="AeroVJTI"
                     android:textColor="#FFFFFF"
                     android:textSize="40sp" />

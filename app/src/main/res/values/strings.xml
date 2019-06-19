@@ -15,5 +15,18 @@
     <string name="title_activity_feed_technovanza">FeedActivityTechnovanza</string>
     <string name="title_activity_feed_alumni">ActivityFeedAlumni</string>
     <string name="title_activity_feed_racing">ActivityFeedRacing</string>
+    <string name="title_activity_main_aero">MainAero</string>
+    <string name="title_activity_main_coc">MainCoc</string>
+    <string name="title_activity_main_dla">MainDla</string>
+    <string name="title_activity_main_ecell">MainEcell</string>
+    <string name="title_activity_main_enthu">MainEnthu</string>
+    <string name="title_activity_main_ieee">MainIeee</string>
+    <string name="title_activity_main_prati">MainPrati</string>
+    <string name="title_activity_main_ranga">MainRanga</string>
+    <string name="title_activity_main_sra">MainSra</string>
+    <string name="title_activity_main_swachh">MainSwachh</string>
+    <string name="title_activity_main_techno">MainTechno</string>
+    <string name="title_activity_main_alumni">MainAlumni</string>
+    <string name="title_activity_main_racing">MainRacing</string>
 
 </resources>
