@@ -87,9 +87,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent (loginActivity.this, FeedActivityPratibimb.class);
                     startActivity(intent);
                     clear_fields();
-                }
-
-                else if (ed1.getText().toString().equals("admin@Rangavardhan") && ed2.getText().toString().equals("Rangavardhan2k19")) {
+                } else if (ed1.getText().toString().equals("admin@Rangawardhan") && ed2.getText().toString().equals("Rangawardhan2k19")) {
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent (loginActivity.this, FeedActivityRangawardhan.class);
                     startActivity(intent);

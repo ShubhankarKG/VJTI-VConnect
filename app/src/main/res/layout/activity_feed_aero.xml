@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#005b9f"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -25,9 +26,11 @@
 
                 <ImageView
                     android:id="@+id/aero_feed_logo"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/aerosq"
                     app:layout_collapseMode="parallax"
@@ -50,11 +53,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="54dp"
-                    android:layout_toRightOf="@id/aero_feed_logo"
+                    android:fontFamily="sans-serif-light"
                     android:text="AeroVJTI"
                     android:textColor="#FFFFFF"
-                    android:textSize="40sp" />
+                    android:textSize="36sp" />
 
                 <TextView
                     android:id="@+id/aero_tagline"
@@ -62,10 +64,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/aero_heading"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="8dp"
                     android:text="Born to fly"
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
 
                     />
 

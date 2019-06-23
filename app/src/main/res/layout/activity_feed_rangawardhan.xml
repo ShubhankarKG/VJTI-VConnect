@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#005b9f"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <!--<android.support.v7.widget.Toolbar-->
@@ -31,9 +32,11 @@
 
                 <ImageView
                     android:id="@+id/rangawardhan_feed_logo"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ranga"
                     app:layout_collapseMode="parallax"
@@ -60,6 +63,7 @@
                     android:layout_toRightOf="@id/rangawardhan_feed_logo"
                     android:text="Rangawardhan"
                     android:textAlignment="center"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
 
@@ -72,7 +76,7 @@
                     android:layout_margin="8dp"
                     android:text=""
                     android:textColor="#FFFFFF"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
 
                     />
 
