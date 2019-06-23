@@ -28,5 +28,6 @@
     <string name="title_activity_main_techno">MainTechno</string>
     <string name="title_activity_main_alumni">MainAlumni</string>
     <string name="title_activity_main_racing">MainRacing</string>
+    <string name="title_activity_add_post">AddPost</string>
 
 </resources>

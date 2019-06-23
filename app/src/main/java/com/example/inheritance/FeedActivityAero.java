@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -48,7 +49,8 @@ public class FeedActivityAero extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(FeedActivityAero.this,AddPost.class);
+                startActivity(intent);
             }
         });
     }
