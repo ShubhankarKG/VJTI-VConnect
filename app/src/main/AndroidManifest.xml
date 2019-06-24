@@ -12,10 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AddPost"
-            android:label="@string/title_activity_add_post"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".MainRacing"
             android:label="@string/title_activity_main_racing"
             android:theme="@style/AppTheme.NoActionBar" />

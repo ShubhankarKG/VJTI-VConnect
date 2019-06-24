@@ -70,6 +70,10 @@
 
                     />
 
+                <android.support.v7.widget.ActionMenuView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -77,12 +81,14 @@
     <include layout="@layout/content_feed_activity_aero" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email"
+        android:layout_margin="16dp"
+        app:srcCompat="@android:drawable/ic_input_add"
+
         />
+
 
 </android.support.design.widget.CoordinatorLayout>

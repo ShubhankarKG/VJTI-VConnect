@@ -44,13 +44,7 @@ public class MainAero extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
     }
 
 }

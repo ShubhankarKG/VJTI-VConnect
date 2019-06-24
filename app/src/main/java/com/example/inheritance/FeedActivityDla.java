@@ -8,9 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.inheritance.loginActivity.userCredential;
 
 public class FeedActivityDla extends AppCompatActivity {
 
@@ -43,12 +46,19 @@ public class FeedActivityDla extends AppCompatActivity {
         adapter = new Adapter(postList, this);
         recyclerView.setAdapter(adapter);
 
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        if (userCredential.getUser().equals("admin@dla")) {
+            fabAdd.show();
+        } else {
+            fabAdd.hide();
+        }
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Intent intent = new Intent(FeedActivityAero.this, AddPost.class);
+                Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
             }
         });
     }

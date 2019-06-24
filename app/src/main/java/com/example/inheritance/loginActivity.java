@@ -18,7 +18,7 @@ import static com.example.inheritance.R.layout.content_login;
 
 public class loginActivity extends AppCompatActivity {
 
-
+    public static UserCredential userCredential = new UserCredential();
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +41,7 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ed1.getText().toString().equals("admin@AeroVjti") && ed2.getText().toString().equals("AeroVjti2k19") ) {
+                    userCredential.setUser("admin@aero");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityAero.class);
                     startActivity(intent);
@@ -48,6 +49,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@COC") && ed2.getText().toString().equals("COC2k19")) {
+                    userCredential.setUser("admin@coc");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityCoc.class);
                     startActivity(intent);
@@ -55,6 +57,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@DLA") && ed2.getText().toString().equals("DLA2k19")) {
+                    userCredential.setUser("admin@dla");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityDla.class);
                     startActivity(intent);
@@ -62,6 +65,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@ECell") && ed2.getText().toString().equals("ECell2k19")) {
+                    userCredential.setUser("admin@ecell");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityEcell.class);
                     startActivity(intent);
@@ -69,6 +73,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@Enthusia") && ed2.getText().toString().equals("Enthusia2k19")) {
+                    userCredential.setUser("admin@enthu");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityEnthusia.class);
                     startActivity(intent);
@@ -76,6 +81,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if ( ed1.getText().toString().equals("admin@IEEE") && ed2.getText().toString().equals("IEEE2k19")) {
+                    userCredential.setUser("admin@ieee");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityIeee.class);
                     startActivity(intent);
@@ -83,11 +89,13 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@Pratibimb") && ed2.getText().toString().equals("Pratibimb2k19")) {
+                    userCredential.setUser("admin@prati");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent (loginActivity.this, FeedActivityPratibimb.class);
                     startActivity(intent);
                     clear_fields();
                 } else if (ed1.getText().toString().equals("admin@Rangawardhan") && ed2.getText().toString().equals("Rangawardhan2k19")) {
+                    userCredential.setUser("admin@ranga");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent (loginActivity.this, FeedActivityRangawardhan.class);
                     startActivity(intent);
@@ -95,6 +103,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if(  ed1.getText().toString().equals("admin@SRA") && ed2.getText().toString().equals("SRA2k19")) {
+                    userCredential.setUser("admin@sra");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivitySra.class);
                     startActivity(intent);
@@ -102,6 +111,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@SwachhVjti") && ed2.getText().toString().equals("SwachhVjti2k19")) {
+                    userCredential.setUser("admin@swachh");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivitySwachhVjti.class);
                     startActivity(intent);
@@ -109,6 +119,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if ( ed1.getText().toString().equals("admin@Technovanza") && ed2.getText().toString().equals("Technovanza2k19")) {
+                    userCredential.setUser("admin@techno");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityTechnovanza.class);
                     startActivity(intent);
@@ -116,6 +127,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@VjtiAlumni") && ed2.getText().toString().equals("VjtiAlumni2k19")) {
+                    userCredential.setUser("admin@alumni");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, ActivityFeedAlumni.class);
                     startActivity(intent);
@@ -123,6 +135,7 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@VjtiRacing") && ed2.getText().toString().equals("VjtiRacing2k19")) {
+                    userCredential.setUser("admin@racing");
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, ActivityFeedRacing.class);
                     startActivity(intent);
