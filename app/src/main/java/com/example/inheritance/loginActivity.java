@@ -16,13 +16,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.inheritance.MainActivity.sharedPreferences;
 import static com.example.inheritance.R.layout.content_login;
 
 public class loginActivity extends AppCompatActivity {
-
-
-
-    public static SharedPreferences sharedPreferences;
 
 
     @Override
@@ -30,7 +27,6 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(content_login);
 
-        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

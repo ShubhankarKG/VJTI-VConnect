@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.inheritance.loginActivity.sharedPreferences;
+import static com.example.inheritance.MainActivity.sharedPreferences;
 
 public class FeedActivityAero extends AppCompatActivity {
 
@@ -56,7 +56,7 @@ public class FeedActivityAero extends AppCompatActivity {
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
 
-        if (sharedPreferences.getString("login_id", null).equals("admin@aero")) {
+        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@aero")) {
             fabAdd.show();
         } else {
             fabAdd.hide();

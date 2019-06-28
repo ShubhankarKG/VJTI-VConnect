@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.inheritance.loginActivity.sharedPreferences;
+import static com.example.inheritance.MainActivity.sharedPreferences;
 
 public class FeedActivityPratibimb extends AppCompatActivity {
 
@@ -49,7 +49,7 @@ public class FeedActivityPratibimb extends AppCompatActivity {
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        if (sharedPreferences.getString("login_id", null).equals("admin@prati")) {
+        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@prati")) {
             fabAdd.show();
         } else {
             fabAdd.hide();
