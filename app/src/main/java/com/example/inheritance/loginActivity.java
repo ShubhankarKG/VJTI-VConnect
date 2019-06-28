@@ -1,6 +1,8 @@
 package com.example.inheritance;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,10 +21,18 @@ import static com.example.inheritance.R.layout.content_login;
 public class loginActivity extends AppCompatActivity {
 
     public static UserCredential userCredential = new UserCredential();
+
+    public static SharedPreferences sharedPreferences;
+//    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(content_login);
+
+        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,8 +50,12 @@ public class loginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 if (ed1.getText().toString().equals("admin@AeroVjti") && ed2.getText().toString().equals("AeroVjti2k19") ) {
                     userCredential.setUser("admin@aero");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@aero");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityAero.class);
                     startActivity(intent);

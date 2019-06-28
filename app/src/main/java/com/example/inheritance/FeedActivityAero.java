@@ -1,6 +1,8 @@
 package com.example.inheritance;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.inheritance.loginActivity.sharedPreferences;
 import static com.example.inheritance.loginActivity.userCredential;
 
 public class FeedActivityAero extends AppCompatActivity {
@@ -22,12 +25,17 @@ public class FeedActivityAero extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private List<Post> postList;
 
+//    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_aero);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.aero_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -48,7 +56,13 @@ public class FeedActivityAero extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        if (userCredential.getUser().equals("admin@aero")) {
+//        if (userCredential.getUser().equals("admin@aero")) {
+//            fabAdd.show();
+//        } else {
+//            fabAdd.hide();
+//        }
+
+        if (sharedPreferences.getString("login_id", null).equals("admin@aero")) {
             fabAdd.show();
         } else {
             fabAdd.hide();
