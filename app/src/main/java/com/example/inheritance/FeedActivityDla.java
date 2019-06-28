@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.inheritance.loginActivity.userCredential;
+import static com.example.inheritance.loginActivity.sharedPreferences;
 
 public class FeedActivityDla extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class FeedActivityDla extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
+
         postList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
@@ -48,7 +51,8 @@ public class FeedActivityDla extends AppCompatActivity {
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        if (userCredential.getUser().equals("admin@dla")) {
+
+        if (sharedPreferences.getString("login_id", null).equals("admin@dla")) {
             fabAdd.show();
         } else {
             fabAdd.hide();

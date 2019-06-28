@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.inheritance.loginActivity.userCredential;
+import static com.example.inheritance.loginActivity.sharedPreferences;
 
 public class FeedActivityTechnovanza extends AppCompatActivity {
 
@@ -49,12 +49,12 @@ public class FeedActivityTechnovanza extends AppCompatActivity {
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        if (userCredential.getUser().equals("admin@techno")) {
+
+        if (sharedPreferences.getString("login_id", null).equals("admin@techno")) {
             fabAdd.show();
         } else {
             fabAdd.hide();
         }
-
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

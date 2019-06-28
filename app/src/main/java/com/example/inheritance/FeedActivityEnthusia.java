@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.inheritance.loginActivity.userCredential;
+import static com.example.inheritance.loginActivity.sharedPreferences;
 
 public class FeedActivityEnthusia extends AppCompatActivity {
 
@@ -49,7 +49,8 @@ public class FeedActivityEnthusia extends AppCompatActivity {
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        if (userCredential.getUser().equals("admin@enthu")) {
+
+        if (sharedPreferences.getString("login_id", null).equals("admin@enthu")) {
             fabAdd.show();
         } else {
             fabAdd.hide();

@@ -20,10 +20,9 @@ import static com.example.inheritance.R.layout.content_login;
 
 public class loginActivity extends AppCompatActivity {
 
-    public static UserCredential userCredential = new UserCredential();
+
 
     public static SharedPreferences sharedPreferences;
-//    SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
     @Override
@@ -52,7 +51,6 @@ public class loginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 if (ed1.getText().toString().equals("admin@AeroVjti") && ed2.getText().toString().equals("AeroVjti2k19") ) {
-                    userCredential.setUser("admin@aero");
                     editor.putBoolean("logged", true);
                     editor.putString("login_id", "admin@aero");
                     editor.commit();
@@ -63,7 +61,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@COC") && ed2.getText().toString().equals("COC2k19")) {
-                    userCredential.setUser("admin@coc");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@coc");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityCoc.class);
                     startActivity(intent);
@@ -71,7 +71,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@DLA") && ed2.getText().toString().equals("DLA2k19")) {
-                    userCredential.setUser("admin@dla");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@dla");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityDla.class);
                     startActivity(intent);
@@ -79,7 +81,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@ECell") && ed2.getText().toString().equals("ECell2k19")) {
-                    userCredential.setUser("admin@ecell");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@ecell");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityEcell.class);
                     startActivity(intent);
@@ -87,7 +91,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@Enthusia") && ed2.getText().toString().equals("Enthusia2k19")) {
-                    userCredential.setUser("admin@enthu");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@enthu");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityEnthusia.class);
                     startActivity(intent);
@@ -95,7 +101,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if ( ed1.getText().toString().equals("admin@IEEE") && ed2.getText().toString().equals("IEEE2k19")) {
-                    userCredential.setUser("admin@ieee");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@ieee");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityIeee.class);
                     startActivity(intent);
@@ -103,13 +111,17 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@Pratibimb") && ed2.getText().toString().equals("Pratibimb2k19")) {
-                    userCredential.setUser("admin@prati");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@prati");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent (loginActivity.this, FeedActivityPratibimb.class);
                     startActivity(intent);
                     clear_fields();
                 } else if (ed1.getText().toString().equals("admin@Rangawardhan") && ed2.getText().toString().equals("Rangawardhan2k19")) {
-                    userCredential.setUser("admin@ranga");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@ranga");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent (loginActivity.this, FeedActivityRangawardhan.class);
                     startActivity(intent);
@@ -117,7 +129,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if(  ed1.getText().toString().equals("admin@SRA") && ed2.getText().toString().equals("SRA2k19")) {
-                    userCredential.setUser("admin@sra");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@sra");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivitySra.class);
                     startActivity(intent);
@@ -125,7 +139,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@SwachhVjti") && ed2.getText().toString().equals("SwachhVjti2k19")) {
-                    userCredential.setUser("admin@swachh");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@swachh");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivitySwachhVjti.class);
                     startActivity(intent);
@@ -133,7 +149,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if ( ed1.getText().toString().equals("admin@Technovanza") && ed2.getText().toString().equals("Technovanza2k19")) {
-                    userCredential.setUser("admin@techno");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@techno");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, FeedActivityTechnovanza.class);
                     startActivity(intent);
@@ -141,7 +159,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@VjtiAlumni") && ed2.getText().toString().equals("VjtiAlumni2k19")) {
-                    userCredential.setUser("admin@alumni");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@alumni");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, ActivityFeedAlumni.class);
                     startActivity(intent);
@@ -149,7 +169,9 @@ public class loginActivity extends AppCompatActivity {
                 }
 
                 else if (ed1.getText().toString().equals("admin@VjtiRacing") && ed2.getText().toString().equals("VjtiRacing2k19")) {
-                    userCredential.setUser("admin@racing");
+                    editor.putBoolean("logged", true);
+                    editor.putString("login_id", "admin@racing");
+                    editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, ActivityFeedRacing.class);
                     startActivity(intent);

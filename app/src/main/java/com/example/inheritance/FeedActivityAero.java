@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.inheritance.loginActivity.sharedPreferences;
-import static com.example.inheritance.loginActivity.userCredential;
 
 public class FeedActivityAero extends AppCompatActivity {
 
@@ -56,11 +55,6 @@ public class FeedActivityAero extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-//        if (userCredential.getUser().equals("admin@aero")) {
-//            fabAdd.show();
-//        } else {
-//            fabAdd.hide();
-//        }
 
         if (sharedPreferences.getString("login_id", null).equals("admin@aero")) {
             fabAdd.show();
@@ -76,14 +70,7 @@ public class FeedActivityAero extends AppCompatActivity {
             }
         });
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(FeedActivityAero.this,AddPost.class);
-//                startActivity(intent);
-//            }
-//        });
+
     }
 
 }

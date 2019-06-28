@@ -12,58 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainRacing"
-            android:label="@string/title_activity_main_racing"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainAlumni"
-            android:label="@string/title_activity_main_alumni"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainTechno"
-            android:label="@string/title_activity_main_techno"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainSwachh"
-            android:label="@string/title_activity_main_swachh"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainSra"
-            android:label="@string/title_activity_main_sra"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainRanga"
-            android:label="@string/title_activity_main_ranga"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainPrati"
-            android:label="@string/title_activity_main_prati"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainIeee"
-            android:label="@string/title_activity_main_ieee"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainEnthu"
-            android:label="@string/title_activity_main_enthu"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainEcell"
-            android:label="@string/title_activity_main_ecell"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainDla"
-            android:label="@string/title_activity_main_dla"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainCoc"
-            android:label="@string/title_activity_main_coc"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainAero"
-            android:label="@string/title_activity_main_aero"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ActivityFeedRacing"
             android:label="@string/title_activity_feed_racing"
             android:theme="@style/AppTheme.NoActionBar" />
