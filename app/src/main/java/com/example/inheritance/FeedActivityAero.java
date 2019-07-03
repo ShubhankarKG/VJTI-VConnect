@@ -19,6 +19,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import static com.example.inheritance.MainActivity.sharedPreferences;
 
 public class FeedActivityAero extends AppCompatActivity {
@@ -29,7 +35,8 @@ public class FeedActivityAero extends AppCompatActivity {
     ProgressBar progressBar;
     String url_get_all_posts = "https://skgrocks.000webhostapp.com/connect/get_all_posts.php";
 
-//    SharedPreferences sharedPreferences;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,10 @@ public class FeedActivityAero extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         postList = new ArrayList<>();
+
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        // get reference to 'users' node
+        mFirebaseDatabase = mFirebaseInstance.getReference("committees");
 
         for (int i = 0; i < 10; i++) {
             Post post = new Post(
@@ -76,7 +87,10 @@ public class FeedActivityAero extends AppCompatActivity {
             public void onClick(View view) {
 
                 Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(FeedActivityAero.this, AddNewPost.class));
+//                startActivity(new Intent(FeedActivityAero.this, AddNewPost.class));
+                Intent addPost = new Intent(FeedActivityAero.this, AddPost.class);
+                addPost.putExtra("adminOf", "AeroVJTI");
+                startActivity(addPost);
             }
         });
 

@@ -1,12 +1,15 @@
 package com.example.inheritance;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 public class Post {
 
-    private String postDate, postTitle, postDescription;
+    private String postDate, postTitle, postDescription, postContent;
 
     public Post(String postTitle, String postDescription) {
         this.postTitle = postTitle;
-        this.postDescription = postDescription;
+        this.postDescription = postDescription; // postDescription, if given then okay, otherwise excerpt processed here?
+        this.postContent = postContent;
     }
 
     public String getPostTitle() {
@@ -19,5 +22,9 @@ public class Post {
 
     public String getPostDate() {
         return postDate;
+    }
+
+    public String getPostContent() {
+        return postContent;
     }
 }

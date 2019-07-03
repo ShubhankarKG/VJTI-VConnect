@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -60,6 +61,9 @@ public class FeedActivityTechnovanza extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent intent = new Intent(FeedActivityAero.this, AddPost.class);
                 Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
+                Intent addPost = new Intent(FeedActivityTechnovanza.this, AddPost.class);
+                addPost.putExtra("adminOf", "Technovanza");
+                startActivity(addPost);
             }
         });
     }
