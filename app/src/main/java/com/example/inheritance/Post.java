@@ -2,7 +2,7 @@ package com.example.inheritance;
 
 public class Post {
 
-    private String postTitle, postDescription;
+    private String postDate, postTitle, postDescription;
 
     public Post(String postTitle, String postDescription) {
         this.postTitle = postTitle;
@@ -15,5 +15,9 @@ public class Post {
 
     public String getPostDescription() {
         return postDescription;
+    }
+
+    public String getPostDate() {
+        return postDate;
     }
 }

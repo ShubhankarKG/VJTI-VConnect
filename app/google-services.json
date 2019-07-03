@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "369545653170",
+    "firebase_url": "https://inheritance-e0452.firebaseio.com",
+    "project_id": "inheritance-e0452",
+    "storage_bucket": "inheritance-e0452.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369545653170:android:f79bc82e042156e7",
+        "android_client_info": {
+          "package_name": "com.example.inheritance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369545653170-1bk8jmfod2g1vfakr1qfo9t8hns9dgt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc6Khuix6xNKAqGOvn5ol4Qw5PIe4FINg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369545653170-1bk8jmfod2g1vfakr1qfo9t8hns9dgt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

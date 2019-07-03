@@ -2,15 +2,18 @@ package com.example.inheritance;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,7 +25,9 @@ public class FeedActivityAero extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<Post> postList;
+    private List<Post> postList = new ArrayList<>();
+    ProgressBar progressBar;
+    String url_get_all_posts = "https://skgrocks.000webhostapp.com/connect/get_all_posts.php";
 
 //    SharedPreferences sharedPreferences;
 
@@ -32,6 +37,7 @@ public class FeedActivityAero extends AppCompatActivity {
         setContentView(R.layout.activity_feed_aero);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
@@ -57,7 +63,10 @@ public class FeedActivityAero extends AppCompatActivity {
 
 
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@aero")) {
+
             fabAdd.show();
+
+
         } else {
             fabAdd.hide();
         }
@@ -65,12 +74,33 @@ public class FeedActivityAero extends AppCompatActivity {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(FeedActivityAero.this, AddPost.class);
+
                 Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(FeedActivityAero.this, AddNewPost.class));
             }
         });
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_activity1, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        switch(id){
+            case R.id.Item1 :
+                Toast.makeText(getApplicationContext(), "Item 1 selected", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.Item2 :
+                Toast.makeText(getApplicationContext(), "Item 2 selected", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
