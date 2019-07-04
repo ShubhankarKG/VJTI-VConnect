@@ -41,7 +41,7 @@ public class FeedActivityDla extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             Post post = new Post(
                     "Post Title " + (i + 1),
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",""
             );
 
             postList.add(post);

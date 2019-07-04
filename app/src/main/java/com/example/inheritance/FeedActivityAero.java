@@ -9,11 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.squareup.picasso.Picasso;
 
 import static com.example.inheritance.MainActivity.sharedPreferences;
 
@@ -33,8 +39,6 @@ public class FeedActivityAero extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private List<Post> postList = new ArrayList<>();
     ProgressBar progressBar;
-    String url_get_all_posts = "https://skgrocks.000webhostapp.com/connect/get_all_posts.php";
-
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
 
@@ -44,7 +48,8 @@ public class FeedActivityAero extends AppCompatActivity {
         setContentView(R.layout.activity_feed_aero);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference().child("inheritance-e0452").child("AeroVjti");
+        mFirebaseDatabase.keepSynced(true);
 
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
@@ -53,23 +58,7 @@ public class FeedActivityAero extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        postList = new ArrayList<>();
 
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        // get reference to 'users' node
-        mFirebaseDatabase = mFirebaseInstance.getReference("committees");
-
-        for (int i = 0; i < 10; i++) {
-            Post post = new Post(
-                    "Post Title " + (i + 1),
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            );
-
-            postList.add(post);
-        }
-
-        adapter = new Adapter(postList, this);
-        recyclerView.setAdapter(adapter);
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
 
@@ -115,6 +104,44 @@ public class FeedActivityAero extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>
+                (Post.class, R.layout.feed_posts, PostViewHolder.class, mFirebaseDatabase) {
+            @Override
+            protected void populateViewHolder(PostViewHolder postViewHolder, Post post, int i) {
+                postViewHolder.setTitle(post.getTitle());
+                postViewHolder.setDescription(post.getDescription());
+                postViewHolder.setImage(getApplicationContext(), post.getImage());
+            }
+        };
+    }
+
+    public static class PostViewHolder extends RecyclerView.ViewHolder{
+        View mView;
+        public PostViewHolder(View itemView){
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setTitle(String title){
+            TextView textView = (TextView)mView.findViewById(R.id.post_title);
+            textView.setText(title);
+        }
+
+        public void setDescription(String description){
+            TextView textView = (TextView)mView.findViewById(R.id.post_description);
+            textView.setText(description);
+        }
+
+        public void setImage(Context ctx, String image){
+            ImageView imageView = (ImageView)mView.findViewById(R.id.ivPost);
+            Picasso.with(ctx).load(image).into(imageView);
+        }
+
     }
 
 }

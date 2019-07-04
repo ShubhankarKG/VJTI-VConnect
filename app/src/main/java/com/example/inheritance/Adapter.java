@@ -33,8 +33,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Post post = postList.get(i);
-        viewHolder.postTitle.setText(post.getPostTitle());
-        viewHolder.postDescription.setText((post.getPostDescription()));
+        viewHolder.postTitle.setText(post.getTitle());
+        viewHolder.postDescription.setText((post.getDescription()));
     }
 
     @Override

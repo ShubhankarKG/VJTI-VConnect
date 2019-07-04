@@ -45,8 +45,6 @@ public class AddNewPost extends AppCompatActivity {
     EditText inputDate;
     EditText inputTitle;
     EditText inputDescription;
-    private static String url_create_product = "https://skgrocks.000webhostapp.com/connect/create_product.php";
-    private static final String TAG_SUCCESS = "success";
     String Date;
     String Title;
     String Description;
@@ -73,37 +71,6 @@ public class AddNewPost extends AppCompatActivity {
                 Date = inputDate.getText().toString();
                 Title = inputTitle.getText().toString();
                 Description = inputDescription.getText().toString();
-//                RequestQueue requestQueue = Volley.newRequestQueue(AddNewPost.this);
-//
-//                StringRequest stringRequest = new StringRequest(Request.Method.POST, url_create_product,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//
-//                                Toast.makeText(AddNewPost.this, response, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(AddNewPost.this, error.toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }){
-//                    @Override
-//                    protected Map<String,String> getParams(){
-//                        Map<String,String> map = new HashMap<>();
-//                        map.put("Date", Date);
-//                        map.put("Title", Title);
-//                        map.put("Description", Description);
-//
-//                        return map;
-//                    }
-//                };
-//
-//                requestQueue.add(stringRequest);
-//
-//            }
-//        });
-
 
                 Button bPicture = (Button) findViewById(R.id.bPicture);
                 bPicture.setOnClickListener(new View.OnClickListener() {
