@@ -47,7 +47,7 @@ public class FeedActivityDla extends AppCompatActivity {
             postList.add(post);
         }
 
-        adapter = new Adapter(postList, this);
+        adapter = new Adapter(postList);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);

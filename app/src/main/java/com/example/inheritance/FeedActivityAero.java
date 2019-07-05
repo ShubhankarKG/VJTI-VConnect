@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,12 +37,11 @@ import static com.example.inheritance.MainActivity.sharedPreferences;
 
 public class FeedActivityAero extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private List<Post> postList = new ArrayList<>();
-    ProgressBar progressBar;
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
+    private List<Post> postData;
+    private RecyclerView mPostList;
+    private DatabaseReference mDatabase;
+    private Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +49,38 @@ public class FeedActivityAero extends AppCompatActivity {
         setContentView(R.layout.activity_feed_aero);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference().child("inheritance-e0452").child("AeroVjti");
-        mFirebaseDatabase.keepSynced(true);
-
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
+        mPostList = (RecyclerView) findViewById(R.id.aero_recyclerview);
+        mPostList.setHasFixedSize(true);
+        mPostList.setLayoutManager(new LinearLayoutManager(this));
+        postData = new ArrayList<>();
 
-        recyclerView = (RecyclerView) findViewById(R.id.aero_recyclerview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Intent intent = getIntent();
+        String committee = intent.getStringExtra("adminOf");
+        mDatabase = FirebaseDatabase.getInstance().getReference("AeroVJTI");
+        mDatabase.keepSynced(true);
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        postData.add(dataSnapshot1.getValue(Post.class));
+                    }
+                    adapter = new Adapter(postData);
+                    mPostList.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
-
 
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@aero")) {
 
@@ -76,7 +96,6 @@ public class FeedActivityAero extends AppCompatActivity {
             public void onClick(View view) {
 
                 Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(FeedActivityAero.this, AddNewPost.class));
                 Intent addPost = new Intent(FeedActivityAero.this, AddPost.class);
                 addPost.putExtra("adminOf", "AeroVJTI");
                 startActivity(addPost);
@@ -106,42 +125,5 @@ public class FeedActivityAero extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>
-                (Post.class, R.layout.feed_posts, PostViewHolder.class, mFirebaseDatabase) {
-            @Override
-            protected void populateViewHolder(PostViewHolder postViewHolder, Post post, int i) {
-                postViewHolder.setTitle(post.getTitle());
-                postViewHolder.setDescription(post.getDescription());
-                postViewHolder.setImage(getApplicationContext(), post.getImage());
-            }
-        };
-    }
-
-    public static class PostViewHolder extends RecyclerView.ViewHolder{
-        View mView;
-        public PostViewHolder(View itemView){
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setTitle(String title){
-            TextView textView = (TextView)mView.findViewById(R.id.post_title);
-            textView.setText(title);
-        }
-
-        public void setDescription(String description){
-            TextView textView = (TextView)mView.findViewById(R.id.post_description);
-            textView.setText(description);
-        }
-
-        public void setImage(Context ctx, String image){
-            ImageView imageView = (ImageView)mView.findViewById(R.id.ivPost);
-            Picasso.with(ctx).load(image).into(imageView);
-        }
-
-    }
 
 }

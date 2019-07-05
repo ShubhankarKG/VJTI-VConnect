@@ -31,11 +31,6 @@ public class loginActivity extends AppCompatActivity {
         final EditText ed1 = (EditText) findViewById(R.id.username_field);
         final EditText ed2 = (EditText) findViewById(R.id.password_field);
 
-        String username , password;
-        username = ed1.getText().toString();
-        password = ed2.getText().toString();
-
-
         b1.setOnClickListener(new View.OnClickListener() {
 
             @Override

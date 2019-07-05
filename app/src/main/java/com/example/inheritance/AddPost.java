@@ -32,22 +32,21 @@ import com.google.firebase.database.core.utilities.Utilities;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddPost extends AppCompatActivity {
 
-    EditText inputDate;
-    EditText inputTitle;
-    EditText inputDescription;
-    String Date;
-    String Title;
-    String Description;
-    Button bPicture;
-    Button bCamera;
+    EditText inputDate, inputTitle, inputDescription;
+    String date, Title, Description;
+    Button bPicture, bCamera;
     public static final int IMAGE_GALLERY_REQUEST = 20;
     public static final int IMAGE_CAMERA_REQUEST = 30;
     ImageView ivPicture;
     InputStream inputStream;
-    private DatabaseReference dbRef;
+    FirebaseDatabase database;
+    DatabaseReference dbRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,24 +54,26 @@ public class AddPost extends AppCompatActivity {
         inputDate = (EditText) findViewById(R.id.inputDate);
         inputTitle = (EditText) findViewById(R.id.inputTitle);
         inputDescription = (EditText) findViewById(R.id.inputDescription);
+        ivPicture = (ImageView) findViewById(R.id.ivPicture);
+        Button btnCreateProduct = findViewById(R.id.btnCreatePost);
+        date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
         Intent intent = getIntent();
         String committee = intent.getStringExtra("adminOf");
         dbRef = FirebaseDatabase.getInstance().getReference(committee);
-        ivPicture = (ImageView) findViewById(R.id.ivPicture);
 
-        Button btnCreateProduct = findViewById(R.id.btnCreatePost);
+
         btnCreateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Date = inputDate.getText().toString();
+
                 Title = inputTitle.getText().toString();
                 Description = inputDescription.getText().toString();
-
+                inputDate.setText(date);
 
                 if (!TextUtils.isEmpty(Title)) {
                     String id = dbRef.push().getKey();
-                    Post post = new Post(Title, Description, "");
+                    Post post = new Post(Title, Description, "", date);
                     if (id != null) {
                         dbRef.child(id).setValue(post);
                         Toast.makeText(AddPost.this, "Post added successfully", Toast.LENGTH_SHORT).show(); //Toast doesn't come!
@@ -98,7 +99,7 @@ public class AddPost extends AppCompatActivity {
             }
         });
 
-        Button bCamera = (Button) findViewById(R.id.bCamera);
+        bCamera = (Button) findViewById(R.id.bCamera);
         bCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,16 +120,6 @@ public class AddPost extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 new LoadImageDataTask(imageUri).execute();
 
-/*
-try {
-inputStream = getContentResolver().openInputStream(imageUri);
-Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-ivPicture.setImageBitmap(bitmap);
-} catch (FileNotFoundException e) {
-e.printStackTrace();
-Toast.makeText(AddPost.this, "Unable to open image", Toast.LENGTH_LONG).show();
-}
-*/
             } else if (requestCode == IMAGE_CAMERA_REQUEST) {
 
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
