@@ -37,6 +37,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         Post post = postList.get(i);
         viewHolder.postTitle.setText(post.getTitle());
         viewHolder.postDescription.setText((post.getDescription()));
+        viewHolder.postDate.setText(post.getDate());
     }
 
     @Override
@@ -46,14 +47,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView postTitle, postDescription;
+        TextView postTitle, postDescription, postDate;
         ImageView postImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             postTitle = (TextView) itemView.findViewById(R.id.post_title);
             postDescription = (TextView) itemView.findViewById(R.id.post_description);
-            postImage = (ImageView)itemView.findViewById(R.id.ivPost);
+            postDate = (TextView) itemView.findViewById(R.id.post_date);
+//            postImage = (ImageView)itemView.findViewById(R.id.ivPost);
         }
     }
 }

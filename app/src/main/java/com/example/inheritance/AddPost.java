@@ -34,6 +34,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+//import java.util.Calendar;
 import java.util.Locale;
 
 public class AddPost extends AppCompatActivity {
@@ -56,7 +57,8 @@ public class AddPost extends AppCompatActivity {
         inputDescription = (EditText) findViewById(R.id.inputDescription);
         ivPicture = (ImageView) findViewById(R.id.ivPicture);
         Button btnCreateProduct = findViewById(R.id.btnCreatePost);
-        date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
+//        Calendar currentDate = Calendar.getInstance();
         Intent intent = getIntent();
         String committee = intent.getStringExtra("adminOf");
         dbRef = FirebaseDatabase.getInstance().getReference(committee);

@@ -25,9 +25,13 @@
 
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/post_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:fontFamily="sans-serif-light"
@@ -38,12 +42,13 @@
             <TextView
                 android:id="@+id/post_date"
                 android:layout_width="wrap_content"
+                android:layout_weight="0"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="8dp"
-                android:text="June 23, 2019" />
-
+                android:text="" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/post_description"
                 android:layout_width="match_parent"
@@ -58,9 +63,11 @@
                 android:layout_below="@id/post_description"
                 android:layout_centerHorizontal="true"
                 android:backgroundTintMode="add"
-                android:fontFamily="sans-serif-condensed-light"
-                android:text="Read more"
+                android:id="@+id/view_post"
+                android:fontFamily="sans-serif-light"
+                android:text="View Post"
                 android:textAllCaps="false"
+                android:textSize="18sp"
 
                 />
 

@@ -8,6 +8,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AddNewPost"
     tools:showIn="@layout/activity_add_new_post"
+    android:layout_margin="8dp"
+    android:padding="8dp"
     >
 
     <LinearLayout
@@ -18,10 +20,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Post Date"
+        android:layout_weight="0"
+        android:text="Date"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:id="@+id/tvPostDate"
         />
 
@@ -37,16 +40,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:id="@+id/tvPostTitle"
-        android:text="Post Title"
+        android:text="Title"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:textSize="17dp"/>
+        android:textSize="17sp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputTitle"
+        android:layout_weight="0"
         android:inputType="textCapCharacters"
         android:layout_margin="5dp"
         android:layout_marginBottom="15dp"/>
@@ -54,23 +59,30 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Post Description"
+        android:layout_weight="0"
         android:id="@+id/tvPostDescription"
-        android:textSize="17dp"
+        android:text="Description"
+        android:textSize="17sp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"/>
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lines="2"
+        android:id="@+id/inputDescription"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:color="#FFFFFF"
+        android:gravity="top|left"
         android:layout_margin="5dp"
-        android:id="@+id/inputDescription"/>
+        android:inputType="textMultiLine"
+        android:minLines="10"
+        android:scrollbars="vertical" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Image"
+        android:layout_weight="0"
         android:textSize="17dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"/>
@@ -79,6 +91,7 @@
             android:id="@+id/ivPicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             />
@@ -86,6 +99,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:orientation="horizontal">
     <Button
         android:layout_width="wrap_content"
@@ -94,6 +108,8 @@
         android:id="@+id/bPicture"
         android:text="Choose from gallery"
         android:layout_weight="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="8dp"
         />
 
     <Button
@@ -102,6 +118,8 @@
         android:id="@+id/bCamera"
         android:layout_weight="1"
         android:text="Take a picture"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="8dp"
         />
 
     </LinearLayout>
@@ -112,6 +130,8 @@
         android:layout_height="wrap_content"
         android:text="Create Post"
         android:id="@+id/btnCreatePost"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         />
 
     </LinearLayout>
