@@ -14,7 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewPost"></activity>
+        <activity
+            android:name=".DeleteActivity"
+            android:label="@string/title_activity_delete"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".EditPost"
+            android:label="@string/title_activity_edit_post"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewPost"
+            android:label="ViewPost"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".AddPost"
             android:label="AddPost"

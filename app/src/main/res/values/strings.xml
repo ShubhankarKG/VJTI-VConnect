@@ -30,5 +30,7 @@
     <string name="title_activity_main_racing">MainRacing</string>
     <string name="title_activity_add_post">AddPost</string>
     <string name="title_activity_add_new_post">AddNewPost</string>
+    <string name="title_activity_edit_post">EditPost</string>
+    <string name="title_activity_delete">DeleteActivity</string>
 
 </resources>
