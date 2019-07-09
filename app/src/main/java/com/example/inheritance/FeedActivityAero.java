@@ -72,7 +72,7 @@ public class FeedActivityAero extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                         postData.add(dataSnapshot1.getValue(Post.class));
                     }
-                    adapter = new Adapter(postData);
+                    adapter = new Adapter(postData,"AeroVJTI");
                     mPostList.setAdapter(adapter);
                 }
             }
