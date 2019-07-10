@@ -76,12 +76,14 @@ public class AddPost extends AppCompatActivity {
                 if (!TextUtils.isEmpty(Title)) {
                     String id = dbRef.push().getKey();
                     Post post = new Post(Title, Description, "", date);
+                    post.setId(id);
                     if (id != null) {
                         dbRef.child(id).setValue(post);
                         Toast.makeText(AddPost.this, "Post added successfully", Toast.LENGTH_SHORT).show(); //Toast doesn't come!
-                    } else {
-                        Toast.makeText(AddPost.this, "Please add a title", Toast.LENGTH_SHORT).show(); //Toast doesn't come!
-                    }
+                    } else
+                        Toast.makeText(AddPost.this, "Sorry, error occured!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddPost.this, "Please add a title", Toast.LENGTH_SHORT).show(); //Toast doesn't come!
                 }
 
             }

@@ -9,13 +9,7 @@ public class Post {
     private String date;
     private String id;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Post(String title, String description, String image, String date) {
         this.title = title;
@@ -31,6 +25,14 @@ public class Post {
         this.title = title;
         this.description = description;
         this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
