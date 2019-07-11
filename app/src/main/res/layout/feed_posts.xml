@@ -48,6 +48,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="8dp"
                 android:text="" />
+
+                <ImageButton
+                    android:id="@+id/overflow_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/overflow" />
             </LinearLayout>
             <TextView
                 android:id="@+id/post_description"

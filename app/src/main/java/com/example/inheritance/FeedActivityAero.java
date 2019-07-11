@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
 import android.provider.ContactsContract;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.squareup.picasso.Picasso;
@@ -45,7 +47,9 @@ public class FeedActivityAero extends AppCompatActivity {
     private RecyclerView mPostList;
     private DatabaseReference mDatabase;
     private Adapter adapter;
-
+    final String COMMITTEE = "AeroVJTI";
+    final String USERCRED = "admin@aero";
+    private ProgressBar progressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,30 +59,41 @@ public class FeedActivityAero extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
+
+
         mPostList = (RecyclerView) findViewById(R.id.aero_recyclerview);
         mPostList.setHasFixedSize(true);
         mPostList.setLayoutManager(new LinearLayoutManager(this));
+
+        progressCircle = findViewById(R.id.progress_circle);
         postData = new ArrayList<>();
 
 
         Intent intent = getIntent();
         String committee = intent.getStringExtra("adminOf");
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference("AeroVJTI");
         mDatabase.keepSynced(true);
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                        postData.add(dataSnapshot1.getValue(Post.class));
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        Post post1 = dataSnapshot1.getValue(Post.class);
+                        postData.add(post1);
                     }
-                    adapter = new Adapter(postData,"AeroVJTI");
+                    adapter = new Adapter(FeedActivityAero.this, postData, COMMITTEE, USERCRED);
                     mPostList.setAdapter(adapter);
+                    progressCircle.setVisibility(View.INVISIBLE);
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(FeedActivityAero.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                progressCircle.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -86,9 +101,9 @@ public class FeedActivityAero extends AppCompatActivity {
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
-        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@aero")) {
+        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(USERCRED)) {
 
-            fabAdd.show();
+            fabAdd.show();  //show FAB for adding post to admin
 
 
         } else {
@@ -107,35 +122,34 @@ public class FeedActivityAero extends AppCompatActivity {
         });
 
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.menu_activity1, menu);
-//
-//        if(menu instanceof MenuBuilder){
-//            MenuBuilder m = (MenuBuilder) menu;
-//            m.setOptionalIconsVisible(true);
-//        }
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item){
-//        int id = item.getItemId();
-//        switch(id){
-//            case R.id.Item1 :
-//                Intent intent = new Intent(FeedActivityAero.this, EditPost.class);
-//                intent.putExtra("adminOf", "AeroVJTI");
-//                startActivity(intent);
-//                return true;
-//            case R.id.Item2 :
-//                Intent intent1 = new Intent(FeedActivityAero.this, DeleteActivity.class);
-//                intent1.putExtra("adminOf", "AeroVJTI");
-//                startActivity(intent1);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
-
+/*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_activity1, menu);
+        return true;
+    }
+    */
+/*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.Item1:
+                Intent intent = new Intent(FeedActivityAero.this, EditPost.class);
+                intent.putExtra("adminOf", "AeroVJTI");
+                startActivity(intent);
+                return true;
+            case R.id.Item2:
+                Intent intent1 = new Intent(FeedActivityAero.this, DeleteActivity.class);
+                intent1.putExtra("adminOf", "AeroVJTI");
+                startActivity(intent1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+*/
 }
+

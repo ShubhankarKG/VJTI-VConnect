@@ -46,7 +46,6 @@ public class DeleteActivity extends AppCompatActivity {
         bDelete = findViewById(R.id.bDelete);
         bCancel = findViewById(R.id.bCancel);
         bLoad = findViewById(R.id.bLoad);
-
         Intent intent = getIntent();
         committee = intent.getStringExtra("adminOf");
         postTitle = etPostTitle.getText().toString();
