@@ -4,12 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,6 +30,8 @@ public class FeedActivityCoc extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Post> postList;
+    private DatabaseReference mDatabase;
+    private ProgressBar progressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +41,14 @@ public class FeedActivityCoc extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
-
+        progressCircle = findViewById(R.id.progress_circle);
+        Button bEdit = findViewById(R.id.bEdit);
+        bEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FeedActivityCoc.this, EditPost.class));
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.coc_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -39,19 +56,30 @@ public class FeedActivityCoc extends AppCompatActivity {
 
         postList = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            Post post = new Post(
-                    "Post Title " + (i + 1),
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",""
-            );
 
-            postList.add(post);
-        }
+        mDatabase = FirebaseDatabase.getInstance().getReference("COC");
+        mDatabase.keepSynced(true);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        Post post1 = dataSnapshot1.getValue(Post.class);
+                        postList.add(post1);
+                    }
+                    adapter = new Adapter(FeedActivityCoc.this,postList);
+                    recyclerView.setAdapter(adapter);
 
-        adapter = new Adapter(postList);
-        recyclerView.setAdapter(adapter);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(FeedActivityCoc.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                progressCircle.setVisibility(View.INVISIBLE);
 
+            }
+        });
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
 
 

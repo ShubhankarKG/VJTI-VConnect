@@ -47,7 +47,9 @@ public class Post {
     }
 
     public String getImage() {
+
         return image;
+
     }
 
     public void setImage(String image) {
