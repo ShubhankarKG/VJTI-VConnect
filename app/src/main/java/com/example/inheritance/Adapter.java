@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,10 +61,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.postDescription.setText(postCurrent.getDescription());
         holder.postDate.setText(postCurrent.getDate());
         holder.postId = postCurrent.getId();
-        Picasso.get()
-                .load(postCurrent.getImage())
-                .error(R.drawable.vjti_logo)
-                .into(holder.postImage);
+        if(!TextUtils.isEmpty(postCurrent.getImage())){
+            Picasso.get()
+                    .load(postCurrent.getImage())
+                    .into(holder.postImage);
+        }
 
         sharedPreferences = context.getSharedPreferences("userCred", Context.MODE_PRIVATE);
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(userCred)) {

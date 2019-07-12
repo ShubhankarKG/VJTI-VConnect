@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     android:divider="@drawable/inset_divider"
     android:showDividers="middle">
@@ -10,7 +11,9 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="48dp">
+        android:elevation="48dp"
+        app:cardCornerRadius="3dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/post_title"
                 android:text="Some text, which is an excerpt for the post"
+                android:lines="4"
                 android:textSize="20sp" />
 
             <Button
