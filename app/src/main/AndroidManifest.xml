@@ -9,6 +9,10 @@
 
     <application>
         <activity
+            android:name=".EditThisPost"
+            android:label="EditThisPost"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".DeleteActivity"
             android:label="@string/title_activity_delete"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -44,7 +44,7 @@ import static com.example.inheritance.MainActivity.sharedPreferences;
 public class FeedActivityAero extends AppCompatActivity {
 
     private List<Post> postData;
-    private RecyclerView mPostList;
+    public RecyclerView mPostList;
     private DatabaseReference mDatabase;
     private Adapter adapter;
     final String COMMITTEE = "AeroVJTI";
@@ -78,6 +78,7 @@ public class FeedActivityAero extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postData.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         Post post1 = dataSnapshot1.getValue(Post.class);
@@ -85,9 +86,10 @@ public class FeedActivityAero extends AppCompatActivity {
                     }
                     adapter = new Adapter(FeedActivityAero.this, postData, COMMITTEE, USERCRED);
                     mPostList.setAdapter(adapter);
-                    progressCircle.setVisibility(View.INVISIBLE);
+
 
                 }
+                progressCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override

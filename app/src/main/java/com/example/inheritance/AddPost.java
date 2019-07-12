@@ -162,6 +162,7 @@ public class AddPost extends AppCompatActivity {
                                     while (TextUtils.isEmpty(Title)) {
                                         Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
                                     }
+                                    post.setId(id);
                                     dbRef.child(id).setValue(post);
                                     Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(AddPost.this, MainActivity.class));
@@ -183,6 +184,7 @@ public class AddPost extends AppCompatActivity {
             } else {
                 id = dbRef.push().getKey();
             }
+            post.setId(id);
             dbRef.child(id).setValue(post);
             Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(AddPost.this, MainActivity.class));
