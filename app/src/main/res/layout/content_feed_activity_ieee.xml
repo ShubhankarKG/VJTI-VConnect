@@ -9,11 +9,10 @@
     android:layout_height="match_parent">
 
     <ProgressBar
+        android:id="@+id/progress_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progress_circle"
-        android:layout_centerInParent="true"
-        />
+        android:layout_centerInParent="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

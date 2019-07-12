@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,8 @@ public class ViewPost extends AppCompatActivity {
         Intent intent = getIntent();
         String postID = intent.getStringExtra("postID");
         String committee = intent.getStringExtra("committee");
+        if (postID.equals(null) || committee.equals(null))
+            Toast.makeText(this, "PostID or commmittee error occured!", Toast.LENGTH_SHORT).show();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postID);
         dbRef.keepSynced(true);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -36,7 +39,7 @@ public class ViewPost extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Post post = dataSnapshot.getValue(Post.class);
-                    if(post.getTitle()!=null) vpPostTitle.setText(post.getTitle());
+                    vpPostTitle.setText(post.getTitle());
                     vpPostDate.setText(post.getDate());
                     vpPostDescription.setText(post.getDescription());
                 }

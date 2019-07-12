@@ -74,7 +74,6 @@ public class DeleteActivity extends AppCompatActivity {
 
 
     public void DeletePost() {
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(DeleteActivity.this);
         alertDialog.setTitle("Confirm delete...");
         alertDialog.setMessage("Are you sure you want to delete?");

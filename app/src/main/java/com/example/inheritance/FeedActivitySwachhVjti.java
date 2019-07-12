@@ -50,12 +50,12 @@ public class FeedActivitySwachhVjti extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         Post post1 = dataSnapshot1.getValue(Post.class);
                         postList.add(post1);
                     }
-                    adapter = new Adapter(FeedActivitySwachhVjti.this,postList);
+                    adapter = new Adapter(FeedActivitySwachhVjti.this, postList);
                     recyclerView.setAdapter(adapter);
                     progressCircle.setVisibility(View.INVISIBLE);
 

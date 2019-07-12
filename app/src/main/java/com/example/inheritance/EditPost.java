@@ -58,6 +58,7 @@ public class EditPost extends AppCompatActivity {
     String postTitle, postDescription, Image, date, id;
     StorageReference storageReference;
     Uri imageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +88,11 @@ public class EditPost extends AppCompatActivity {
 
 
         bLoad.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               loadFile();
-           }
-       });
+            @Override
+            public void onClick(View v) {
+                loadFile();
+            }
+        });
 
 
         bSave.setOnClickListener(new View.OnClickListener() {
@@ -106,14 +107,14 @@ public class EditPost extends AppCompatActivity {
 
     }
 
-    private void loadFile(){
+    private void loadFile() {
         final String Title = postTitle.toUpperCase();
         Query query = databaseReference.orderByChild("title").equalTo(Title);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if(dataSnapshot1.child("title").toString().equals(Title)){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.child("title").toString().equals(Title)) {
                         String postDescription = dataSnapshot1.child("description").getValue().toString();
                         etPostDescription.setText(postDescription);
                         String imageUrl = dataSnapshot1.child("image").getValue().toString();
@@ -129,14 +130,14 @@ public class EditPost extends AppCompatActivity {
         });
     }
 
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mp = MimeTypeMap.getSingleton();
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Select Image From");
         menu.add(0, v.getId(), 0, "GALLERY");
@@ -144,19 +145,17 @@ public class EditPost extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item){
-        if(item.getTitle() == "GALLERY"){
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getTitle() == "GALLERY") {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             String pictureDirectoryPath = pictureDirectory.getPath();
             Uri data = Uri.parse(pictureDirectoryPath);
             photoPickerIntent.setDataAndType(data, "image/*");
             startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
-        }
-
-        else if(item.getTitle() == "CAMERA"){
+        } else if (item.getTitle() == "CAMERA") {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(intent.resolveActivity(getPackageManager()) != null) {
+            if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
             }
         }
@@ -164,13 +163,12 @@ public class EditPost extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if( resultCode == RESULT_OK) {
-            if( requestCode == IMAGE_GALLERY_REQUEST && data != null && data.getData()!= null){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(ivPost);
-            }
-            else if( requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData()!= null ) {
+            } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 ivPost.setImageBitmap(bitmap);
 
@@ -179,7 +177,7 @@ public class EditPost extends AppCompatActivity {
         }
     }
 
-    private void uploadFile(){
+    private void uploadFile() {
         postTitle = etPostTitle.getText().toString();
         postDescription = etPostDescription.getText().toString();
         if (imageUri != null) {
