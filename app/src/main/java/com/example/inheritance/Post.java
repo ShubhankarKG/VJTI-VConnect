@@ -7,8 +7,11 @@ public class Post {
     private String description;
     private String image;
     private String date;
+    private String id;
 
-    public Post(String title, String description,String image,String date) {
+
+
+    public Post(String title, String description, String image, String date) {
         this.title = title;
         this.description = description;
         this.image = image;
@@ -22,6 +25,14 @@ public class Post {
         this.title = title;
         this.description = description;
         this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

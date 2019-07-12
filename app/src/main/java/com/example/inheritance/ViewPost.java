@@ -39,8 +39,6 @@ public class ViewPost extends AppCompatActivity {
                     if(post.getTitle()!=null) vpPostTitle.setText(post.getTitle());
                     vpPostDate.setText(post.getDate());
                     vpPostDescription.setText(post.getDescription());
-
-
                 }
             }
 
