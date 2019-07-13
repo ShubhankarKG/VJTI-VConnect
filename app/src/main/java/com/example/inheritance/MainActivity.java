@@ -338,7 +338,7 @@ Log.d("Name: ", log);
                     editor.putBoolean("logged", false);
                     editor.putString("login_id", null);
                     editor.commit();
-                    // Probably add a toast saying "Logging out"
+                    Toast.makeText(MainActivity.this,"You have been logged out!", Toast.LENGTH_SHORT).show();
                     Intent refresh = new Intent(MainActivity.this, MainActivity.class);
                     startActivity(refresh);
                 }

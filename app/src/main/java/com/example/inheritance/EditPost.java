@@ -103,8 +103,6 @@ public class EditPost extends AppCompatActivity {
         });
 
 
-        registerForContextMenu(ivPost);
-
     }
 
     private void loadFile() {
@@ -134,32 +132,6 @@ public class EditPost extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mp = MimeTypeMap.getSingleton();
         return mp.getExtensionFromMimeType(cr.getType(uri));
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Select Image From");
-        menu.add(0, v.getId(), 0, "GALLERY");
-        menu.add(0, v.getId(), 0, "CAMERA");
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if (item.getTitle() == "GALLERY") {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            String pictureDirectoryPath = pictureDirectory.getPath();
-            Uri data = Uri.parse(pictureDirectoryPath);
-            photoPickerIntent.setDataAndType(data, "image/*");
-            startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
-        } else if (item.getTitle() == "CAMERA") {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
-            }
-        }
-        return true;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

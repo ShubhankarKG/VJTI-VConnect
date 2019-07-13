@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class ViewPost extends AppCompatActivity {
 
@@ -25,7 +27,9 @@ public class ViewPost extends AppCompatActivity {
         final TextView vpPostTitle = (TextView) findViewById(R.id.tvviewpost_title);
         final TextView vpPostDate = (TextView) findViewById(R.id.tvviewpost_date);
         final TextView vpPostDescription = (TextView) findViewById(R.id.tvviewpost_description);
-   //     ImageView vpImage = (ImageView) findViewById(R.id.ivviewpost_image);
+        final ImageView vpImage = (ImageView) findViewById(R.id.ivviewpost_image);
+
+
   //      vpPostDate.setText(date);
         Intent intent = getIntent();
         String postID = intent.getStringExtra("postID");
@@ -42,6 +46,11 @@ public class ViewPost extends AppCompatActivity {
                     vpPostTitle.setText(post.getTitle());
                     vpPostDate.setText(post.getDate());
                     vpPostDescription.setText(post.getDescription());
+                    if(!TextUtils.isEmpty(post.getImage())){
+                        Picasso.get()
+                                .load(post.getImage())
+                                .into(vpImage);
+                    }
                 }
             }
 
