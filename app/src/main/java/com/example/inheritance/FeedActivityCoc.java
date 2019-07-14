@@ -50,7 +50,7 @@ public class FeedActivityCoc extends AppCompatActivity {
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.coc_recyclerview);
+        recyclerView = findViewById(R.id.coc_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -80,7 +80,7 @@ public class FeedActivityCoc extends AppCompatActivity {
 
             }
         });
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
 
 
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@coc")) {

@@ -65,12 +65,12 @@ public class EditPost extends AppCompatActivity {
         setContentView(R.layout.activity_edit_post);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        etPostTitle = (EditText) findViewById(R.id.etPostTitle);
-        etPostDescription = (EditText) findViewById(R.id.etPostDescription);
-        ivPost = (ImageView) findViewById(R.id.ivPost);
-        bSave = (Button) findViewById(R.id.bSave);
-        bCancel = (Button) findViewById(R.id.bCancel);
-        bLoad = (Button) findViewById(R.id.bLoad);
+        etPostTitle = findViewById(R.id.etPostTitle);
+        etPostDescription = findViewById(R.id.etPostDescription);
+        ivPost = findViewById(R.id.ivPost);
+        bSave = findViewById(R.id.bSave);
+        bCancel = findViewById(R.id.bCancel);
+        bLoad = findViewById(R.id.bLoad);
         postTitle = etPostTitle.getText().toString();
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 

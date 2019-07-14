@@ -58,11 +58,11 @@ public class AddNewPost extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_post);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        inputDate = (EditText) findViewById(R.id.inputDate);
-        inputTitle = (EditText) findViewById(R.id.inputTitle);
-        inputDescription = (EditText) findViewById(R.id.inputDescription);
+        inputDate = findViewById(R.id.inputDate);
+        inputTitle = findViewById(R.id.inputTitle);
+        inputDescription = findViewById(R.id.inputDescription);
         Button btnCreateProduct = findViewById(R.id.btnCreatePost);
-        ivPicture = (ImageView) findViewById(R.id.ivPicture) ;
+        ivPicture = findViewById(R.id.ivPicture);
 
         btnCreateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class AddNewPost extends AppCompatActivity {
                 Title = inputTitle.getText().toString();
                 Description = inputDescription.getText().toString();
 
-                Button bPicture = (Button) findViewById(R.id.bPicture);
+                Button bPicture = findViewById(R.id.bPicture);
                 bPicture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -86,7 +86,7 @@ public class AddNewPost extends AppCompatActivity {
                     }
                 });
 
-                Button bCamera = (Button) findViewById(R.id.bCamera);
+                Button bCamera = findViewById(R.id.bCamera);
                 bCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

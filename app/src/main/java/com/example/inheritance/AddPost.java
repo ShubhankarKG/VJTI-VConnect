@@ -48,7 +48,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,14 +72,12 @@ public class AddPost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-        inputDate = (EditText) findViewById(R.id.inputDate);
-        inputTitle = (EditText) findViewById(R.id.inputTitle);
-        inputDescription = (EditText) findViewById(R.id.inputDescription);
-        ivPicture = (ImageView) findViewById(R.id.ivPicture);
+        inputDate =  findViewById(R.id.inputDate);
+        inputTitle =  findViewById(R.id.inputTitle);
+        inputDescription =  findViewById(R.id.inputDescription);
+        ivPicture =  findViewById(R.id.ivPicture);
         Button btnCreateProduct = findViewById(R.id.btnCreatePost);
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
-//        Calendar currentDate = Calendar.getInstance();
-
 
         Intent intent = getIntent();
         committee = intent.getStringExtra("adminOf");
@@ -105,7 +102,7 @@ public class AddPost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                File pictureDirectory = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                 String pictureDirectoryPath = pictureDirectory.getPath();
                 Uri data = Uri.parse(pictureDirectoryPath);
                 photoPickerIntent.setDataAndType(data, "image/*");
@@ -120,7 +117,10 @@ public class AddPost extends AppCompatActivity {
         bCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchPictureTakerAction();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
+                }
             }
         });
 
@@ -128,32 +128,6 @@ public class AddPost extends AppCompatActivity {
     }
 
 
-    private void dispatchPictureTakerAction(){
-        Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePic.resolveActivity(getPackageManager())!= null){
-            File photoFile = null;
-            photoFile = createPhotoFile();
-            if(photoFile != null){
-                pathToFile = photoFile.getAbsolutePath();
-                Uri photoUri = FileProvider.getUriForFile(AddPost.this, "com.example.inheritance", photoFile);
-                takePic.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(takePic, IMAGE_CAMERA_REQUEST);
-            }
-        }
-
-    }
-
-    private File createPhotoFile(){
-        String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = null;
-        try {
-            image = File.createTempFile(name, ".jpg", storageDir);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -162,8 +136,9 @@ public class AddPost extends AppCompatActivity {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(ivPicture);
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
-                Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 ivPicture.setImageBitmap(bitmap);
+
             }
 
         }
@@ -196,6 +171,7 @@ public class AddPost extends AppCompatActivity {
                                     while (TextUtils.isEmpty(Title)) {
                                         Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
                                     }
+                                    post.setId(id);
                                     dbRef.child(id).setValue(post);
                                     Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(AddPost.this, MainActivity.class));
@@ -223,19 +199,6 @@ public class AddPost extends AppCompatActivity {
         }
 
 
-    }
-
-    private static File getOutputMediaFile(){
-        File mediaStorageDir = new File(getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "CameraDemo");
-        if(!mediaStorageDir.exists()){
-            if(!mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-
-        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
     }
 
 }

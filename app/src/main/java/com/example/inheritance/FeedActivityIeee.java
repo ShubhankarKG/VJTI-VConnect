@@ -38,7 +38,7 @@ public class FeedActivityIeee extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.ieee_recyclerview);
+        recyclerView = findViewById(R.id.ieee_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -71,7 +71,7 @@ public class FeedActivityIeee extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
 
 
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals("admin@ieee")) {

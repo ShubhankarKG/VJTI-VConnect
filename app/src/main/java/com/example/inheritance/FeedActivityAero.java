@@ -44,7 +44,7 @@ import static com.example.inheritance.MainActivity.sharedPreferences;
 public class FeedActivityAero extends AppCompatActivity {
 
     private List<Post> postData;
-    private RecyclerView mPostList;
+    public RecyclerView mPostList;
     private DatabaseReference mDatabase;
     private Adapter adapter;
     final String COMMITTEE = "AeroVJTI";
@@ -61,7 +61,7 @@ public class FeedActivityAero extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
 
-        mPostList = (RecyclerView) findViewById(R.id.aero_recyclerview);
+        mPostList = findViewById(R.id.aero_recyclerview);
         mPostList.setHasFixedSize(true);
         mPostList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,33 +73,37 @@ public class FeedActivityAero extends AppCompatActivity {
         String committee = intent.getStringExtra("adminOf");
 
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("AeroVJTI");
-        mDatabase.keepSynced(true);
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Post post1 = dataSnapshot1.getValue(Post.class);
-                        postData.add(post1);
-                    }
-                    adapter = new Adapter(FeedActivityAero.this, postData, COMMITTEE, USERCRED);
-                    mPostList.setAdapter(adapter);
-                    progressCircle.setVisibility(View.INVISIBLE);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(FeedActivityAero.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                progressCircle.setVisibility(View.INVISIBLE);
-
-            }
-        });
+/*
+mDatabase = FirebaseDatabase.getInstance().getReference("AeroVJTI");
+mDatabase.keepSynced(true);
+mDatabase.addValueEventListener(new ValueEventListener() {
+@Override
+public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+postData.clear();
+if (dataSnapshot.exists()) {
+for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+Post post1 = dataSnapshot1.getValue(Post.class);
+postData.add(post1);
+}
+adapter = new Adapter(FeedActivityAero.this, postData, COMMITTEE, USERCRED);
+mPostList.setAdapter(adapter);
 
 
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+}
+progressCircle.setVisibility(View.INVISIBLE);
+}
+
+@Override
+public void onCancelled(@NonNull DatabaseError databaseError) {
+Toast.makeText(FeedActivityAero.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+progressCircle.setVisibility(View.INVISIBLE);
+
+}
+});
+*/
+
+
+        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
 
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(USERCRED)) {
 
@@ -122,34 +126,5 @@ public class FeedActivityAero extends AppCompatActivity {
         });
 
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_activity1, menu);
-        return true;
-    }
-    */
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.Item1:
-                Intent intent = new Intent(FeedActivityAero.this, EditPost.class);
-                intent.putExtra("adminOf", "AeroVJTI");
-                startActivity(intent);
-                return true;
-            case R.id.Item2:
-                Intent intent1 = new Intent(FeedActivityAero.this, DeleteActivity.class);
-                intent1.putExtra("adminOf", "AeroVJTI");
-                startActivity(intent1);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
 }
 

@@ -1,10 +1,12 @@
 package com.example.inheritance;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
@@ -24,6 +26,10 @@ import android.widget.TextView;
 import static com.example.inheritance.MainActivity.sharedPreferences;
 
 import android.content.SharedPreferences;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,6 +75,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         sharedPreferences = context.getSharedPreferences("userCred", Context.MODE_PRIVATE);
         if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(userCred)) {
+            holder.overflow.setVisibility(View.VISIBLE);
             holder.overflow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -79,17 +86,33 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.edit_post:
-                                    Intent editIntent = new Intent(v.getContext(), EditPost.class);
+                                    Intent editIntent = new Intent(v.getContext(), EditThisPost.class);
                                     editIntent.putExtra("committee", committee);
                                     editIntent.putExtra("postID", holder.postId);
                                     v.getContext().startActivity(editIntent);
                                     break;
 
                                 case R.id.delete_post:
-                                    Intent deleteIntent = new Intent(v.getContext(), DeleteActivity.class);
-                                    deleteIntent.putExtra("committee", committee);
-                                    deleteIntent.putExtra("postID", holder.postId);
-                                    v.getContext().startActivity(deleteIntent);
+                                    //Intent deleteIntent = new Intent(v.getContext(), DeleteActivity.class);
+                                    //deleteIntent.putExtra("committee", committee);
+                                    //deleteIntent.putExtra("postID", holder.postId);
+                                    //v.getContext().startActivity(deleteIntent);
+                                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+                                    alertDialog.setTitle("Confirm delete...");
+                                    alertDialog.setMessage("Are you sure you want to delete this?");
+
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            DatabaseReference db = FirebaseDatabase.getInstance().getReference(committee).child(holder.postId);
+                                            db.removeValue();
+                                            Toast.makeText(context, "Post deleted", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("Cancel", null);
+                                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                                    alertDialog.show();
+
                                     break;
                                 default:
                                     break;
@@ -119,7 +142,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         TextView postTitle, postDescription, postDate;
         ImageView postImage;
-        ImageButton overflow = (ImageButton) itemView.findViewById(R.id.overflow_menu);
+        ImageButton overflow = itemView.findViewById(R.id.overflow_menu);
         String postId;
         Button viewPost;
 
@@ -130,7 +153,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             postDescription = itemView.findViewById(R.id.post_description);
             postDate = itemView.findViewById(R.id.post_date);
             postImage = itemView.findViewById(R.id.ivPost);
-            viewPost = (Button) itemView.findViewById(R.id.view_post);
+            viewPost = itemView.findViewById(R.id.view_post);
 
             viewPost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -141,6 +164,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     itemView.getContext().startActivity(intent);
                 }
             });
+
+            overflow.setVisibility(View.INVISIBLE);
 
 
         }

@@ -24,10 +24,10 @@ public class ViewPost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
-        final TextView vpPostTitle = (TextView) findViewById(R.id.tvviewpost_title);
-        final TextView vpPostDate = (TextView) findViewById(R.id.tvviewpost_date);
-        final TextView vpPostDescription = (TextView) findViewById(R.id.tvviewpost_description);
-        final ImageView vpImage = (ImageView) findViewById(R.id.ivviewpost_image);
+        final TextView vpPostTitle = findViewById(R.id.tvviewpost_title);
+        final TextView vpPostDate = findViewById(R.id.tvviewpost_date);
+        final TextView vpPostDescription = findViewById(R.id.tvviewpost_description);
+        final ImageView vpImage = findViewById(R.id.ivviewpost_image);
 
 
   //      vpPostDate.setText(date);

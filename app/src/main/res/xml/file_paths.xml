@@ -3,6 +3,6 @@
 
     <external-path
         name="VJTI-VConnect"
-        path="storage/emulated/0/pictures"
+        path="Android/data/com.example.inheritance/files/Pictures"
     />
 </paths>

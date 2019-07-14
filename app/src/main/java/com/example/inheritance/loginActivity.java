@@ -26,10 +26,10 @@ public class loginActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Button b1 = (Button) findViewById(R.id.login_button);
-        Button b2 = (Button) findViewById(R.id.cancel_login_button);
-        final EditText ed1 = (EditText) findViewById(R.id.username_field);
-        final EditText ed2 = (EditText) findViewById(R.id.password_field);
+        final Button b1 = findViewById(R.id.login_button);
+        Button b2 = findViewById(R.id.cancel_login_button);
+        final EditText ed1 = findViewById(R.id.username_field);
+        final EditText ed2 = findViewById(R.id.password_field);
 
         b1.setOnClickListener(new View.OnClickListener() {
 
@@ -184,8 +184,8 @@ public class loginActivity extends AppCompatActivity {
     }
 
     private void clear_fields() {
-        EditText userField = (EditText) findViewById(R.id.username_field);
-        EditText pwdField = (EditText) findViewById(R.id.password_field);
+        EditText userField = findViewById(R.id.username_field);
+        EditText pwdField = findViewById(R.id.password_field);
         userField.setText("");
         pwdField.setText("");
         userField.setHint("Enter username");
