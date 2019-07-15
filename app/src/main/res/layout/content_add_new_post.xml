@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".AddNewPost"
+    tools:context=".AddPost"
     tools:showIn="@layout/activity_add_new_post"
     android:layout_margin="8dp"
     android:padding="8dp"
@@ -16,27 +16,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <!--
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Date"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textSize="17sp"
+                android:id="@+id/tvPostDate"
+                />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Date"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="17sp"
-        android:id="@+id/tvPostDate"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputDate"
-        android:inputType="text"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="15dp"
-        />
-
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/inputDate"
+                android:inputType="text"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="15dp"
+                />
+        -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/inputTitle"
         android:layout_weight="0"
-        android:inputType="textCapCharacters"
+        android:inputType="textCapWords"
         android:layout_margin="5dp"
         android:layout_marginBottom="15dp"/>
 
@@ -74,7 +74,7 @@
         android:color="#FFFFFF"
         android:gravity="top|left"
         android:layout_margin="5dp"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:minLines="10"
         android:scrollbars="vertical" />
 

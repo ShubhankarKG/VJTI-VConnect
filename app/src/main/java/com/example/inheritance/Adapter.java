@@ -38,20 +38,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private List<Post> postList;
     private Context context;
-    private String committee, userCred;
+    private String committee, adminCred;
 
     public Adapter(Context mcontext, List<Post> list) {
         context = mcontext;
         postList = list;
     }
 
-    public Adapter(Context mContext, List<Post> postList, String committee, String userCred) {
+    public Adapter(Context mContext, List<Post> postList, String committee, String adminCred) {
         context = mContext;
         this.postList = postList;
         this.committee = committee;
-        this.userCred = userCred;
+        this.adminCred = adminCred;
     }
-
 
     @NonNull
     @Override
@@ -74,7 +73,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
 
         sharedPreferences = context.getSharedPreferences("userCred", Context.MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(userCred)) {
+        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(adminCred)) {
             holder.overflow.setVisibility(View.VISIBLE);
             holder.overflow.setOnClickListener(new View.OnClickListener() {
                 @Override

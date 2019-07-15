@@ -41,7 +41,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@aero");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityAero.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "AeroVJTI");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -51,7 +52,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@coc");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityCoc.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "COC");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -61,7 +63,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@dla");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityDla.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "DLA");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -71,7 +74,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@ecell");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityEcell.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "ECell");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -81,7 +85,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@enthu");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityEnthusia.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "Enthusia");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -91,7 +96,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@ieee");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityIeee.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "IEEE");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -101,7 +107,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@prati");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent (loginActivity.this, FeedActivityPratibimb.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "Pratibimb");
                     startActivity(intent);
                     clear_fields();
                 } else if (ed1.getText().toString().equals("admin@Rangawardhan") && ed2.getText().toString().equals("Rangawardhan2k19")) {
@@ -109,7 +116,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@ranga");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent (loginActivity.this, FeedActivityRangawardhan.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "Rangawardhan");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -119,7 +127,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@sra");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivitySra.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "SRA");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -129,7 +138,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@swachh");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivitySwachhVjti.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "Swachh VJTI");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -139,7 +149,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@techno");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, FeedActivityTechnovanza.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "Technovanza");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -149,7 +160,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@alumni");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, ActivityFeedAlumni.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "VJTI Alumni");
                     startActivity(intent);
                     clear_fields();
                 }
@@ -159,7 +171,8 @@ public class loginActivity extends AppCompatActivity {
                     editor.putString("login_id", "admin@racing");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Redirecting...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(loginActivity.this, ActivityFeedRacing.class);
+                    Intent intent = new Intent(loginActivity.this, Feed.class);
+                    intent.putExtra("committee", "VJTI Racing");
                     startActivity(intent);
                     clear_fields();
                 }

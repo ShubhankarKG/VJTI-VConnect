@@ -66,7 +66,7 @@ public class AddPost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-        inputDate = (EditText) findViewById(R.id.inputDate);
+//        inputDate = (EditText) findViewById(R.id.inputDate);
         inputTitle = (EditText) findViewById(R.id.inputTitle);
         inputDescription = (EditText) findViewById(R.id.inputDescription);
         ivPicture = (ImageView) findViewById(R.id.ivPicture);
@@ -81,7 +81,7 @@ public class AddPost extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference(committee);
 
 
-        inputDate.setText(date);
+//        inputDate.setText(date);
 
         btnCreateProduct.setOnClickListener(new View.OnClickListener() {
             @Override

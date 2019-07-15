@@ -59,7 +59,7 @@ public class EditThisPost extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        editDate = (EditText) findViewById(R.id.inputDate);
+//        editDate = (EditText) findViewById(R.id.inputDate);
         editTitle = (EditText) findViewById(R.id.inputTitle);
         editDescription = (EditText) findViewById(R.id.inputDescription);
         ivPost = (ImageView) findViewById(R.id.ivPost);
@@ -90,7 +90,7 @@ public class EditThisPost extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     Post post = dataSnapshot.getValue(Post.class);
                     editTitle.setText(post.getTitle());
-                    editDate.setText(post.getDate());
+//                    editDate.setText(post.getDate());
                     editDescription.setText(post.getDescription());
                 }
             }

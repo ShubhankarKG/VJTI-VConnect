@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         bAeroVjti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityAero.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "AeroVJTI");
                 startActivity(intent);
             }
         });
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
         ibAeroVjti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityAero.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "AeroVJTI");
                 startActivity(intent);
             }
         });
@@ -99,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
         bCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityCoc.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "COC");
                 startActivity(intent);
             }
         });
@@ -107,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
         ibCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityCoc.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "COC");
                 startActivity(intent);
             }
         });
@@ -117,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
         bDla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityDla.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "DLA");
                 startActivity(intent);
             }
         });
@@ -125,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
         ibDla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityDla.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "DLA");
                 startActivity(intent);
             }
         });
@@ -135,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
         bEcell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityEcell.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "ECell");
                 startActivity(intent);
             }
         });
@@ -143,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
         ibEcell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityEcell.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "ECell");
                 startActivity(intent);
             }
         });
@@ -153,14 +161,18 @@ public class MainActivity extends AppCompatActivity {
         bEnthu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityEnthusia.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Enthusia");
+                startActivity(intent);
             }
         });
 
         ibEnthu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityEnthusia.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Enthusia");
+                startActivity(intent);
             }
         });
 
@@ -169,14 +181,18 @@ public class MainActivity extends AppCompatActivity {
         bIeee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityIeee.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "IEEE");
+                startActivity(intent);
             }
         });
 
         ibIeee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityIeee.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "IEEE");
+                startActivity(intent);
             }
         });
 
@@ -185,14 +201,18 @@ public class MainActivity extends AppCompatActivity {
         bPrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityPratibimb.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Pratibimb");
+                startActivity(intent);
             }
         });
 
         ibPrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityPratibimb.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Pratibimb");
+                startActivity(intent);
             }
         });
 
@@ -200,14 +220,18 @@ public class MainActivity extends AppCompatActivity {
         bRanga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityRangawardhan.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Rangawardhan");
+                startActivity(intent);
             }
         });
 
         ibRanga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityRangawardhan.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Rangawardhan");
+                startActivity(intent);
             }
         });
 
@@ -216,14 +240,18 @@ public class MainActivity extends AppCompatActivity {
         bSra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySra.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "SRA");
+                startActivity(intent);
             }
         });
 
         ibSra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySra.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "SRA");
+                startActivity(intent);
             }
         });
 
@@ -232,14 +260,18 @@ public class MainActivity extends AppCompatActivity {
         bSwachh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySwachhVjti.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Swachh VJTI");
+                startActivity(intent);
             }
         });
 
         ibSwachh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySwachhVjti.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Swachh VJTI");
+                startActivity(intent);
             }
         });
 
@@ -248,14 +280,18 @@ public class MainActivity extends AppCompatActivity {
         bTechno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityTechnovanza.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Technovanza");
+                startActivity(intent);
             }
         });
 
         ibTechno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityTechnovanza.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Technovanza");
+                startActivity(intent);
             }
         });
 
@@ -265,14 +301,18 @@ public class MainActivity extends AppCompatActivity {
         bAlumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedAlumni.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Alumni");
+                startActivity(intent);
             }
         });
 
         ibAlumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedAlumni.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Alumni");
+                startActivity(intent);
             }
         });
 
@@ -281,14 +321,18 @@ public class MainActivity extends AppCompatActivity {
         bRacing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedRacing.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Racing");
+                startActivity(intent);
             }
         });
 
         ibRacing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedRacing.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Racing");
+                startActivity(intent);
             }
         });
 
@@ -385,7 +429,8 @@ Log.d("Name: ", log);
         bAeroVjti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityAero.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "AeroVJTI");
                 startActivity(intent);
             }
         });
@@ -393,16 +438,19 @@ Log.d("Name: ", log);
         ibAeroVjti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityAero.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "AeroVJTI");
                 startActivity(intent);
             }
         });
 
 
+
         bCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityCoc.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "COC");
                 startActivity(intent);
             }
         });
@@ -410,16 +458,19 @@ Log.d("Name: ", log);
         ibCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityCoc.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "COC");
                 startActivity(intent);
             }
         });
 
 
+
         bDla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityDla.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "DLA");
                 startActivity(intent);
             }
         });
@@ -427,16 +478,19 @@ Log.d("Name: ", log);
         ibDla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityDla.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "DLA");
                 startActivity(intent);
             }
         });
 
 
+
         bEcell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityEcell.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "ECell");
                 startActivity(intent);
             }
         });
@@ -444,53 +498,69 @@ Log.d("Name: ", log);
         ibEcell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FeedActivityEcell.class);
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "ECell");
                 startActivity(intent);
             }
         });
 
 
+
         bEnthu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityEnthusia.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Enthusia");
+                startActivity(intent);
             }
         });
 
         ibEnthu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityEnthusia.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Enthusia");
+                startActivity(intent);
             }
         });
+
 
 
         bIeee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityIeee.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "IEEE");
+                startActivity(intent);
             }
         });
 
         ibIeee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityIeee.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "IEEE");
+                startActivity(intent);
             }
         });
+
 
 
         bPrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityPratibimb.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Pratibimb");
+                startActivity(intent);
             }
         });
 
         ibPrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityPratibimb.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Pratibimb");
+                startActivity(intent);
             }
         });
 
@@ -498,44 +568,58 @@ Log.d("Name: ", log);
         bRanga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityRangawardhan.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Rangawardhan");
+                startActivity(intent);
             }
         });
 
         ibRanga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityRangawardhan.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Rangawardhan");
+                startActivity(intent);
             }
         });
+
 
 
         bSra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySra.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "SRA");
+                startActivity(intent);
             }
         });
 
         ibSra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySra.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "SRA");
+                startActivity(intent);
             }
         });
+
 
 
         bSwachh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySwachhVjti.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Swachh VJTI");
+                startActivity(intent);
             }
         });
 
         ibSwachh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivitySwachhVjti.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Swachh VJTI");
+                startActivity(intent);
             }
         });
 
@@ -543,14 +627,18 @@ Log.d("Name: ", log);
         bTechno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityTechnovanza.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Technovanza");
+                startActivity(intent);
             }
         });
 
         ibTechno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FeedActivityTechnovanza.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "Technovanza");
+                startActivity(intent);
             }
         });
 
@@ -558,14 +646,18 @@ Log.d("Name: ", log);
         bAlumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedAlumni.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Alumni");
+                startActivity(intent);
             }
         });
 
         ibAlumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedAlumni.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Alumni");
+                startActivity(intent);
             }
         });
 
@@ -573,14 +665,18 @@ Log.d("Name: ", log);
         bRacing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedRacing.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Racing");
+                startActivity(intent);
             }
         });
 
         ibRacing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ActivityFeedRacing.class));
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                intent.putExtra("committee", "VJTI Racing");
+                startActivity(intent);
             }
         });
 
