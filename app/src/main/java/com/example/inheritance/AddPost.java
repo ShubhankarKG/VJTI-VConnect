@@ -72,10 +72,14 @@ public class AddPost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-        inputDate =  findViewById(R.id.inputDate);
+//        inputDate =  findViewById(R.id.inputDate);
         inputTitle =  findViewById(R.id.inputTitle);
         inputDescription =  findViewById(R.id.inputDescription);
         ivPicture =  findViewById(R.id.ivPicture);
+//        inputDate = (EditText) findViewById(R.id.inputDate);
+        inputTitle = (EditText) findViewById(R.id.inputTitle);
+        inputDescription = (EditText) findViewById(R.id.inputDescription);
+        ivPicture = (ImageView) findViewById(R.id.ivPicture);
         Button btnCreateProduct = findViewById(R.id.btnCreatePost);
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
@@ -85,7 +89,7 @@ public class AddPost extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference(committee);
 
 
-        inputDate.setText(date);
+//        inputDate.setText(date);
 
         btnCreateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +101,7 @@ public class AddPost extends AppCompatActivity {
 
 
 
-        bPicture = (Button) findViewById(R.id.bPicture);
+        bPicture =  findViewById(R.id.bPicture);
         bPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +114,7 @@ public class AddPost extends AppCompatActivity {
             }
         });
 
-        bCamera = (Button) findViewById(R.id.bCamera);
+        bCamera =  findViewById(R.id.bCamera);
         if(Build.VERSION.SDK_INT>=23){
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
@@ -187,8 +191,8 @@ public class AddPost extends AppCompatActivity {
                         }
                     });
         } else {
-            Image = "";
-            Post post = new Post(Title, Description, Image, date);
+
+            Post post = new Post(Title, Description,date);
             if (!TextUtils.isEmpty(id)) {
             } else {
                 id = dbRef.push().getKey();
@@ -197,7 +201,6 @@ public class AddPost extends AppCompatActivity {
             Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(AddPost.this, MainActivity.class));
         }
-
 
     }
 

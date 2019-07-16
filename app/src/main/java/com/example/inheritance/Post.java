@@ -21,10 +21,10 @@ public class Post {
     public Post(){
 
     }
-    public Post(String title, String description,String image){
+    public Post(String title, String description,String date){
         this.title = title;
         this.description = description;
-        this.image = image;
+        this.date = date;
     }
 
     public String getId() {

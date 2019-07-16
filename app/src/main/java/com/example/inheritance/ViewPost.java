@@ -43,6 +43,7 @@ public class ViewPost extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Post post = dataSnapshot.getValue(Post.class);
+                    assert post != null;
                     vpPostTitle.setText(post.getTitle());
                     vpPostDate.setText(post.getDate());
                     vpPostDescription.setText(post.getDescription());

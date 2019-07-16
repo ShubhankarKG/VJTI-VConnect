@@ -1,5 +1,5 @@
 package com.example.inheritance;
-// test file
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,102 +26,124 @@ import java.util.List;
 
 import static com.example.inheritance.MainActivity.sharedPreferences;
 
-public class Main2Activity extends AppCompatActivity {
-    private List<Post> postData;
-    public RecyclerView mPostList;
-    private DatabaseReference mDatabase;
-    private Adapter adapter;
-    private String COMMITTEE ;
-    final String USERCRED = "admin@aero";
-    private ProgressBar progressCircle;
+public class Feed extends AppCompatActivity {
 
+    public RecyclerView mPostList;
     TextView tvHeading;
     TextView tvTagline;
-    ImageView ivFeed;
+    ImageView ivLogo;
+    private List<Post> postData;
+    private DatabaseReference dbRef;
+    private Adapter adapter;
+    private String committee;
+    private String tagline;
+    private String adminCred;
+    private ProgressBar progressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_feed);
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
-        tvHeading = findViewById(R.id.tvHeading);
-        tvTagline = findViewById(R.id.tvTagline);
-        ivFeed = findViewById(R.id.ivFeed_logo);
+        tvHeading =  findViewById(R.id.heading);
+        tvTagline =  findViewById(R.id.tagline);
+        ivLogo =  findViewById(R.id.feed_logo);
 
-        mPostList = findViewById(R.id.recyclerview);
+        mPostList =  findViewById(R.id.feed_recyclerview);
         mPostList.setHasFixedSize(true);
         mPostList.setLayoutManager(new LinearLayoutManager(this));
 
-        progressCircle = findViewById(R.id.progress_circle);
+        progressCircle =  findViewById(R.id.progress_circle);
         postData = new ArrayList<>();
 
         Intent intent = getIntent();
-        String committee = intent.getStringExtra("committee");
+        committee = intent.getStringExtra("committee");
 
         switch (committee) {
-            case "AeroVjti":
+            case "AeroVJTI":
                 tvHeading.setText("AeroVJTI");
                 tvTagline.setText("Born to fly");
-                ivFeed.setImageResource(R.drawable.aerovjti);
+                ivLogo.setImageResource(R.drawable.aerovjti);
+                adminCred = "admin@aero";
                 break;
             case "COC":
-                tvHeading.setText("COC");
-                tvTagline.setText("Imagine, Believe, Achieve");
-                ivFeed.setImageResource(R.drawable.coc);
+                tvHeading.setText("Community Of Coders");
+                tvTagline.setText("Imagine. Believe. Achieve.");
+                ivLogo.setImageResource(R.drawable.coc);
+                adminCred = "admin@coc";
                 break;
             case "DLA":
-                tvHeading.setText("DLA");
+                tvHeading.setText("Debate and Literary Activities");
                 tvTagline.setText("");
-                ivFeed.setImageResource(R.drawable.dla);
+                ivLogo.setImageResource(R.drawable.dla);
+                adminCred = "admin@dla";
                 break;
             case "ECell":
                 tvHeading.setText("Entrepreneurship Cell");
                 tvTagline.setText("");
-                ivFeed.setImageResource(R.drawable.ecell);
+                ivLogo.setImageResource(R.drawable.ecell);
+                adminCred = "admin@ecell";
                 break;
             case "Enthusia":
                 tvHeading.setText("Enthusia");
                 tvTagline.setText("");
-                ivFeed.setImageResource(R.drawable.enthu);
+                ivLogo.setImageResource(R.drawable.enthu);
+                adminCred = "admin@enthu";
                 break;
             case "IEEE":
                 tvHeading.setText("IEEE VJTI");
-                ivFeed.setImageResource(R.drawable.ieeesq);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.ieeesq);
+                adminCred = "admin@ieee";
                 break;
             case "Pratibimb":
                 tvHeading.setText("Pratibimb");
-                ivFeed.setImageResource(R.drawable.prati);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.prati);
+                adminCred = "admin@prati";
                 break;
             case "VJTI Racing":
                 tvHeading.setText("VJTI Racing");
-                ivFeed.setImageResource(R.drawable.racing);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.racing);
+                adminCred = "admin@racing";
                 break;
             case "Rangawardhan":
                 tvHeading.setText("Rangawardhan");
-                ivFeed.setImageResource(R.drawable.ranga);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.ranga);
+                adminCred = "admin@ranga";
                 break;
             case "SRA":
                 tvHeading.setText("Society of Robotics and Automation");
-                ivFeed.setImageResource(R.drawable.sra);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.sra);
+                adminCred = "admin@sra";
                 break;
             case "Swachh VJTI":
-                tvHeading.setText("Swachh Vjti");
-                ivFeed.setImageResource(R.drawable.swachh);
+                tvHeading.setText("Swachh VJTI");
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.swachh);
+                adminCred = "admin@swachh";
                 break;
             case "Technovanza":
                 tvHeading.setText("Technovanza");
-                ivFeed.setImageResource(R.drawable.techno);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.techno);
+                adminCred = "admin@techno";
                 break;
             case "VJTI Alumni":
                 tvHeading.setText("VJTI Alumni Association");
-                ivFeed.setImageResource(R.drawable.alumni);
+                tvTagline.setText("");
+                ivLogo.setImageResource(R.drawable.alumni);
+                adminCred = "admin@alumni";
                 break;
         }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference(committee);
-        mDatabase.keepSynced(true);
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        dbRef = FirebaseDatabase.getInstance().getReference(committee);
+        dbRef.keepSynced(true);
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postData.clear();
@@ -130,7 +152,7 @@ public class Main2Activity extends AppCompatActivity {
                         Post post1 = dataSnapshot1.getValue(Post.class);
                         postData.add(post1);
                     }
-                    adapter = new Adapter(Main2Activity.this, postData, COMMITTEE, USERCRED);
+                    adapter = new Adapter(Feed.this, postData, committee, adminCred);
                     mPostList.setAdapter(adapter);
 
 
@@ -140,14 +162,16 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Main2Activity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Feed.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 progressCircle.setVisibility(View.INVISIBLE);
+
             }
         });
 
-        FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
 
-        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(USERCRED)) {
+        FloatingActionButton fabAdd =  findViewById(R.id.fabAdd);
+
+        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(adminCred)) {
 
             fabAdd.show();  //show FAB for adding post to admin
 
@@ -159,12 +183,14 @@ public class Main2Activity extends AppCompatActivity {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
-                Intent addPost = new Intent(Main2Activity.this, AddPost.class);
-                addPost.putExtra("adminOf", "AeroVJTI");
+                Intent addPost = new Intent(Feed.this, AddPost.class);
+                addPost.putExtra("adminOf", committee);
                 startActivity(addPost);
             }
         });
-
     }
+
 }
+
