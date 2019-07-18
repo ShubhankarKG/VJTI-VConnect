@@ -1,13 +1,17 @@
 package com.example.inheritance;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.icu.text.CaseMap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,10 +35,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,12 +54,14 @@ public class EditThisPost extends AppCompatActivity {
     public String committee, Image, postId;
     EditText editDate, editTitle, editDescription;
     StorageReference storageReference;
-    Button bCancel, bSave;
+    Button bCancel, bSave, bRemove;
     String date, Title, Description;
     ImageView ivPost;
-    Uri imageUri;
+    Uri imageUri, newImageUri;
     DatabaseReference dbRef;
     Button bCamera, bPicture;
+    FirebaseStorage firebaseStorage;
+    String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +78,7 @@ public class EditThisPost extends AppCompatActivity {
         bCancel =  findViewById(R.id.bCancel);
         bCamera = findViewById(R.id.bCamera);
         bPicture = findViewById(R.id.bPicture);
+        bRemove = findViewById(R.id.bRemove);
 
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
@@ -100,12 +109,37 @@ public class EditThisPost extends AppCompatActivity {
                     if(!TextUtils.isEmpty(post.getImage())) {
                         Picasso.get().load(post.getImage()).into(ivPost);
                     }
+                    imageUrl = post.getImage();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("error", databaseError.toException().toString());
+            }
+        });
+
+        bRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(imageUrl == null){
+                    Toast.makeText(EditThisPost.this, "imageurl is null", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    StorageReference deletePicture = firebaseStorage.getReferenceFromUrl(imageUrl);
+                    deletePicture.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(EditThisPost.this, "Image removed", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("error", Objects.requireNonNull(e.getMessage()));
+                        }
+                    });
+                }
             }
         });
 
@@ -158,21 +192,30 @@ public class EditThisPost extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
-                imageUri = data.getData();
-                Picasso.get().load(imageUri).into(ivPost);
+                newImageUri = data.getData();
+                Picasso.get().load(newImageUri).into(ivPost);
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
                 Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ivPost.setImageBitmap(bitmap);
+                assert bitmap != null;
+                imageUri = getImageUri(getApplicationContext(), bitmap);
             }
         }
+    }
+
+    private Uri getImageUri(Context context, Bitmap inImage){
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100 , bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, Title, null );
+        return Uri.parse(path);
     }
 
     private void uploadFile() {
         Title = editTitle.getText().toString();
         Description = editDescription.getText().toString();
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-            fileReference.putFile(imageUri)
+        if (newImageUri != null) {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(newImageUri));
+            fileReference.putFile(newImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -189,9 +232,19 @@ public class EditThisPost extends AppCompatActivity {
                                         Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
                                     }
                                     post.setId(postId);
-                                    dbRef.child(postId).setValue(post);
-                                    Toast.makeText(EditThisPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                                    dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                                 }
                             });
 
@@ -213,9 +266,18 @@ public class EditThisPost extends AppCompatActivity {
             postId = dbRef.push().getKey();
         }
         post.setId(postId);
-        dbRef.setValue(post);
-        Toast.makeText(EditThisPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(EditThisPost.this, MainActivity.class));
+        dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(EditThisPost.this, MainActivity.class));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
         }
     }
 }

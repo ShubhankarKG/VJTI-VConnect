@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -143,6 +145,8 @@ public class AddPost extends AppCompatActivity {
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
                 Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ivPicture.setImageBitmap(bitmap);
+                assert bitmap != null;
+                imageUri = getImageUri(getApplicationContext(), bitmap);
             }
         }
     }
@@ -203,6 +207,15 @@ public class AddPost extends AppCompatActivity {
         }
 
     }
+
+
+    private Uri getImageUri(Context context, Bitmap inImage){
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100 , bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, Title, null );
+        return Uri.parse(path);
+    }
+
 
 }
 

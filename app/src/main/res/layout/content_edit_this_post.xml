@@ -120,6 +120,13 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove Picture"
+            android:id="@+id/bRemove"
+            />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,7 +138,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginRight="32dp"
-                android:text="Save" />
+                android:text="Save"
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/bCancel"
@@ -139,7 +147,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="Cancel" />
+                android:text="Cancel"
+                android:layout_weight="1"/>
+
         </LinearLayout>
 
     </LinearLayout>
