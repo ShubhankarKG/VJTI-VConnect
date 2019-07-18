@@ -40,7 +40,6 @@
             android:name=".loginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>

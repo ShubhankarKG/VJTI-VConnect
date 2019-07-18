@@ -34,32 +34,47 @@ public class ViewPost extends AppCompatActivity {
         Intent intent = getIntent();
         String postID = intent.getStringExtra("postID");
         String committee = intent.getStringExtra("committee");
-        if (postID.equals(null) || committee.equals(null))
-            Toast.makeText(this, "PostID or commmittee error occured!", Toast.LENGTH_SHORT).show();
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postID);
-        dbRef.keepSynced(true);
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    Post post = dataSnapshot.getValue(Post.class);
-                    assert post != null;
-                    vpPostTitle.setText(post.getTitle());
-                    vpPostDate.setText(post.getDate());
-                    vpPostDescription.setText(post.getDescription());
-                    if(!TextUtils.isEmpty(post.getImage())){
-                        Picasso.get()
-                                .load(post.getImage())
-                                .into(vpImage);
+//        if (postID.equals(null) || committee.equals(null))
+//            Toast.makeText(this, "PostID or committee error occurred!", Toast.LENGTH_SHORT).show();
+        if(committee!=null) {
+            if (postID != null) {
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postID);
+                dbRef.keepSynced(true);
+                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Post post = dataSnapshot.getValue(Post.class);
+                            assert post != null;
+                            vpPostTitle.setText(post.getTitle());
+                            vpPostDate.setText(post.getDate());
+                            vpPostDescription.setText(post.getDescription());
+                            if (!TextUtils.isEmpty(post.getImage())) {
+                                Picasso.get()
+                                        .load(post.getImage())
+                                        .into(vpImage);
+                            }
+                            else {
+                                vpPostTitle.setText(post.getTitle());
+                                vpPostDate.setText(post.getDate());
+                                vpPostDescription.setText(post.getDescription());
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("error", databaseError.toException().toString());
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("error", databaseError.toException().toString());
+                    }
+                });
+
             }
-        });
+            else {
+                Toast.makeText(this, "PostID is null!", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(this, "Committee error occurred!", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

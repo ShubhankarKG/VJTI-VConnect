@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,17 +29,23 @@ import static com.example.inheritance.MainActivity.sharedPreferences;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private List<Post> postList;
     private Context context;
     private String committee, adminCred;
+    private StorageReference sr;
 
     public Adapter(Context mcontext, List<Post> list) {
         context = mcontext;
@@ -61,7 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        Post postCurrent = postList.get(getItemCount() - position - 1);
+        final Post postCurrent = postList.get(getItemCount() - position - 1);
         holder.postTitle.setText(postCurrent.getTitle());
         holder.postDescription.setText(postCurrent.getDescription());
         holder.postDate.setText(postCurrent.getDate());
@@ -73,7 +80,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
 
         sharedPreferences = context.getSharedPreferences("userCred", Context.MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(adminCred)) {
+        if (sharedPreferences.getBoolean("logged", false) && Objects.equals(sharedPreferences.getString("login_id", null), adminCred)) {
             holder.overflow.setVisibility(View.VISIBLE);
             holder.overflow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,9 +110,37 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            DatabaseReference db = FirebaseDatabase.getInstance().getReference(committee).child(holder.postId);
-                                            db.removeValue();
-                                            Toast.makeText(context, "Post deleted", Toast.LENGTH_SHORT).show();
+                                            if (postCurrent.getImage()!=null){
+                                                FirebaseStorage storage = FirebaseStorage.getInstance();
+                                                sr = storage.getReferenceFromUrl(postCurrent.getImage());
+                                                sr.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        DatabaseReference db = FirebaseDatabase.getInstance().getReference(committee).child(holder.postId);
+                                                        db.removeValue();
+                                                        Toast.makeText(context, "Post deleted", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(context, "Oops! An error occurred", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }else {
+                                                DatabaseReference db = FirebaseDatabase.getInstance().getReference(committee).child(holder.postId);
+                                                db.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(context, "Post deleted ", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("error", Objects.requireNonNull(e.getMessage()));
+                                                }
+                                            });;
+
+                                            }
                                         }
                                     });
                                     alertDialog.setNegativeButton("Cancel", null);

@@ -81,7 +81,6 @@ public class EditThisPost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(EditThisPost.this, MainActivity.class));
-                finish();
             }
         });
 
@@ -162,7 +161,7 @@ public class EditThisPost extends AppCompatActivity {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(ivPost);
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ivPost.setImageBitmap(bitmap);
             }
         }

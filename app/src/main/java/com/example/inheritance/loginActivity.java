@@ -184,10 +184,6 @@ public class loginActivity extends AppCompatActivity {
             }
         });
 
-        if(sharedPreferences.getBoolean("logged", true)){
-            onBackPressed();
-        }
-
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,10 +203,4 @@ public class loginActivity extends AppCompatActivity {
         pwdField.setHint("Enter password");
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(loginActivity.this,MainActivity.class);
-        startActivity(i);
-    }
 }

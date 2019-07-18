@@ -32,5 +32,9 @@
     <string name="title_activity_add_new_post">AddNewPost</string>
     <string name="title_activity_edit_post">EditPost</string>
     <string name="title_activity_delete">DeleteActivity</string>
+    <string name="title_activity_test_bottom_navigation">TestBottomNavigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

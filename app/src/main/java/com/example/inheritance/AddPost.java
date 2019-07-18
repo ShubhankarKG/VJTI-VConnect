@@ -53,6 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 //import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
@@ -140,11 +141,9 @@ public class AddPost extends AppCompatActivity {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(ivPicture);
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ivPicture.setImageBitmap(bitmap);
-
             }
-
         }
     }
 
@@ -197,7 +196,8 @@ public class AddPost extends AppCompatActivity {
             } else {
                 id = dbRef.push().getKey();
             }
-            if(id != null) dbRef.child(id).setValue(post);
+            post.setId(id);
+            dbRef.child(id).setValue(post);
             Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(AddPost.this, MainActivity.class));
         }
