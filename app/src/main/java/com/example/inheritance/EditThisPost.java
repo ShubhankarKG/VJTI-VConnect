@@ -53,7 +53,6 @@ public class EditThisPost extends AppCompatActivity {
     public static final int IMAGE_CAMERA_REQUEST = 20;
     public String committee, Image, postId;
     EditText editDate, editTitle, editDescription;
-    StorageReference storageReference;
     Button bCancel, bSave, bRemove;
     String date, Title, Description;
     ImageView ivPost;
@@ -62,6 +61,8 @@ public class EditThisPost extends AppCompatActivity {
     Button bCamera, bPicture;
     FirebaseStorage firebaseStorage;
     String imageUrl;
+    StorageReference storageReference;
+    public Boolean isEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class EditThisPost extends AppCompatActivity {
         bCamera = findViewById(R.id.bCamera);
         bPicture = findViewById(R.id.bPicture);
         bRemove = findViewById(R.id.bRemove);
+
 
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
@@ -119,29 +121,15 @@ public class EditThisPost extends AppCompatActivity {
             }
         });
 
+        firebaseStorage = FirebaseStorage.getInstance();
+
         bRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imageUrl == null){
-                    Toast.makeText(EditThisPost.this, "imageurl is null", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    StorageReference deletePicture = firebaseStorage.getReferenceFromUrl(imageUrl);
-                    deletePicture.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(EditThisPost.this, "Image removed", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.e("error", Objects.requireNonNull(e.getMessage()));
-                        }
-                    });
-                }
+                ivPost.setImageResource(0);
+                isEmpty = true;
             }
-        });
+         });
 
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,13 +150,14 @@ public class EditThisPost extends AppCompatActivity {
             }
         });
 
-        if(Build.VERSION.SDK_INT>=23){
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-        }
+
 
         bCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Build.VERSION.SDK_INT>=23){
+                    requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                }
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(intent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
@@ -176,9 +165,6 @@ public class EditThisPost extends AppCompatActivity {
             }
         });
 
-        if(Build.VERSION.SDK_INT>=23){
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-        }
     }
 
     private String getFileExtension(Uri uri) {
@@ -194,12 +180,15 @@ public class EditThisPost extends AppCompatActivity {
             if (requestCode == IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
                 newImageUri = data.getData();
                 Picasso.get().load(newImageUri).into(ivPost);
+                isEmpty=false;
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
                 Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ivPost.setImageBitmap(bitmap);
                 assert bitmap != null;
-                imageUri = getImageUri(getApplicationContext(), bitmap);
+                newImageUri = getImageUri(getApplicationContext(), bitmap);
+                isEmpty=false;
             }
+
         }
     }
 
@@ -211,74 +200,303 @@ public class EditThisPost extends AppCompatActivity {
     }
 
     private void uploadFile() {
+
         Title = editTitle.getText().toString();
         Description = editDescription.getText().toString();
-        if (newImageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(newImageUri));
-            fileReference.putFile(newImageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Image = uri.toString();
-                                    Post post = new Post(Title, Description, Image, date);
-                                    if (!TextUtils.isEmpty(postId)) {
-                                    } else {
-                                        postId = dbRef.push().getKey();
-                                    }
-                                    while (TextUtils.isEmpty(Title)) {
-                                        Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
-                                    }
-                                    post.setId(postId);
-                                    dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(EditThisPost.this, MainActivity.class));
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
 
+        if(isEmpty){
+            storageReference = firebaseStorage.getReferenceFromUrl(imageUrl);
+            storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    while (TextUtils.isEmpty(Title)) {
+                        Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+                    }
+                    final Post post = new Post(Title, Description, date);
+                    if (!TextUtils.isEmpty(postId)) {
+                    }
+                    else {
+                        postId = dbRef.push().getKey();
+                    }
+                    post.setId(postId);
+                    dbRef.child("image").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        } else {
-        while (TextUtils.isEmpty(Title)) {
-            Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(EditThisPost.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        Post post = new Post(Title, Description, date);
-        if (!TextUtils.isEmpty(postId)) {
-        } else {
-            postId = dbRef.push().getKey();
-        }
-        post.setId(postId);
-        dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditThisPost.this, MainActivity.class));
+
+        else {
+            if(newImageUri == null){
+                Post post = new Post(Title, Description, imageUrl, date);
+                if (!TextUtils.isEmpty(postId)) {
+                } else {
+                    postId = dbRef.push().getKey();
+                }
+                while (TextUtils.isEmpty(Title)) {
+                    Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+                }
+                post.setId(postId);
+                dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            else {
+                final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(newImageUri));
+                fileReference.putFile(newImageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Image = uri.toString();
+                                        Post post = new Post(Title, Description, Image, date);
+                                        if (!TextUtils.isEmpty(postId)) {
+                                        } else {
+                                            postId = dbRef.push().getKey();
+                                        }
+                                        while (TextUtils.isEmpty(Title)) {
+                                            Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        post.setId(postId);
+                                        dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
-        });
         }
+
+
+
+//        if(imageUrl == null && newImageUri.toString().isEmpty()){
+//            Post post = new Post(Title, Description,date);
+//            if (!TextUtils.isEmpty(postId)) {
+//            } else {
+//                postId = dbRef.push().getKey();
+//            }
+//            post.setId(postId);
+//            dbRef.child(postId).setValue(post);
+//            Toast.makeText(EditThisPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(EditThisPost.this, MainActivity.class));
+//        }
+//
+//        else if (imageUri==null &&  !newImageUri.toString().isEmpty()) {
+//            storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Toast.makeText(EditThisPost.this, "Image removed from storage!", Toast.LENGTH_SHORT).show();
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(EditThisPost.this, "Couldn't remove Image from Storage!", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//
+//            if (newImageUri != null) {
+//                final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(newImageUri));
+//                fileReference.putFile(newImageUri)
+//                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                    @Override
+//                                    public void onSuccess(Uri uri) {
+//                                        Image = uri.toString();
+//                                        Post post = new Post(Title, Description, Image, date);
+//                                        if (!TextUtils.isEmpty(postId)) {
+//                                        } else {
+//                                            postId = dbRef.push().getKey();
+//                                        }
+//                                        while (TextUtils.isEmpty(Title)) {
+//                                            Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                        post.setId(postId);
+//                                        dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+//                                                startActivity(new Intent(EditThisPost.this, MainActivity.class));
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
+//
+//                                    }
+//                                });
+//
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//            }
+//            else {
+//                while (TextUtils.isEmpty(Title)) {
+//                    Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+//                }
+//                Post post = new Post(Title, Description, date);
+//                if (!TextUtils.isEmpty(postId)) {
+//                }
+//                else {
+//                    postId = dbRef.push().getKey();
+//                }
+//                post.setId(postId);
+//                dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        dbRef.child("image").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                                Toast.makeText(EditThisPost.this, "Image removed from database", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Toast.makeText(EditThisPost.this, "Couldn't remove image!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                        Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(EditThisPost.this, MainActivity.class));
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        }
+//
+//        else if(newImageUri.toString().isEmpty() && imageUrl != null){
+//            Post post = new Post(Title, Description,imageUrl, date);
+//            if (!TextUtils.isEmpty(postId)) {
+//            } else {
+//                postId = dbRef.push().getKey();
+//            }
+//            post.setId(postId);
+//            dbRef.child(postId).setValue(post);
+//            Toast.makeText(EditThisPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(EditThisPost.this, MainActivity.class));
+//        }
+
+//        else if(imageUri == null){
+//            storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Toast.makeText(EditThisPost.this, "Image removed", Toast.LENGTH_SHORT).show();
+//                    Post post = new Post(Title, Description, date);
+//                    if (!TextUtils.isEmpty(postId)) {
+//                    } else {
+//                        postId = dbRef.push().getKey();
+//                    }
+//                    while (TextUtils.isEmpty(Title)) {
+//                        Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+//                    }
+//                    post.setId(postId);
+//                    dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(EditThisPost.this, MainActivity.class));
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//
+//        else {
+//            Post post = new Post(Title, Description, imageUrl, date);
+//            if (!TextUtils.isEmpty(postId)) {
+//            } else {
+//                postId = dbRef.push().getKey();
+//            }
+//            while (TextUtils.isEmpty(Title)) {
+//                Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+//            }
+//            post.setId(postId);
+//            dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Toast.makeText(EditThisPost.this, "Post updated successfully!", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(EditThisPost.this, MainActivity.class));
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(EditThisPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
     }
 }
 
