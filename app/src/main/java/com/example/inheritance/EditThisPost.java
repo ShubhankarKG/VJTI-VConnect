@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -63,14 +64,14 @@ public class EditThisPost extends AppCompatActivity {
     public String committee, Image, postId;
     EditText editDate, editTitle, editDescription;
     Button bCancel, bSave, bRemove;
-    String date, Title, Description;
+    String date, Title, Description, newTitle, newDescription;
     ImageView ivPost;
     Uri oldImageUri, newImageUri;
     DatabaseReference dbRef;
     Button bCamera, bPicture;
     FirebaseStorage firebaseStorage;
     String imageUrl;
-    StorageReference storageReference;
+    StorageReference storageReference, oldStorageReference;
     public Boolean isEmpty, oldImage;
 
     @Override
@@ -120,9 +121,12 @@ public class EditThisPost extends AppCompatActivity {
                     if(!TextUtils.isEmpty(post.getImage())) {
                         Picasso.get().load(post.getImage()).into(ivPost);
                         isEmpty = false;
+                        oldImage = true;
+                        imageUrl = post.getImage();
+                    }else {
+                        isEmpty = true;
                     }
-                    imageUrl = post.getImage();
-                    oldImage = true;
+
                 }
             }
 
@@ -134,6 +138,7 @@ public class EditThisPost extends AppCompatActivity {
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference(committee);
+
 
         bRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,40 +196,48 @@ public class EditThisPost extends AppCompatActivity {
 
 
     private void uploadFile(){
-        Title = editTitle.getText().toString();
-        Description = editDescription.getText().toString();
 
         if(isEmpty){
-            Post post = new Post(Title, Description,date);
-            if (!TextUtils.isEmpty(postId)) {
-            } else {
-                postId = dbRef.push().getKey();
-            }
-            post.setId(postId);
-            dbRef.child(postId).setValue(post);
-            Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
+//            Post post = new Post(Title, Description,date);
+//            if (!TextUtils.isEmpty(postId)) {
+//            } else {
+//                postId = dbRef.push().getKey();
+//            }
+//            post.setId(postId);
+//            dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+            Title = editTitle.getText().toString();
+            Description = editDescription.getText().toString();
+            HashMap<String, String> post = new HashMap<>();
+            post.put("title", Title);
+            post.put("description", Description);
+            post.put("date", date);
+            post.put("id", postId);
+            dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(EditThisPost.this, "Done!", Toast.LENGTH_SHORT).show();
+                }
+            });
             startActivity(new Intent(EditThisPost.this, MainActivity.class));
         }
         else{
             if(oldImage){
-                Post post = new Post(Title, Description, imageUrl,date);
-                if (!TextUtils.isEmpty(postId)) {
-                } else {
-                    postId = dbRef.push().getKey();
-                }
-                post.setId(postId);
-                dbRef.child(postId).setValue(post);
-                Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
+                Title = editTitle.getText().toString();
+                Description = editDescription.getText().toString();
+                dbRef.child("title").setValue(Title);
+                dbRef.child("description").setValue(Description);
+                dbRef.child("date").setValue(date);
+                dbRef.child("id").setValue(postId);
+                Toast.makeText(EditThisPost.this, "Update successful!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(EditThisPost.this, MainActivity.class));
             }
             else{
-                dbRef.child("image").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        StorageReference oldStorageReference = firebaseStorage.getReferenceFromUrl(dbRef.child("image").toString());
-                        oldStorageReference.delete();
-                    }
-                });
+                dbRef.child("image").removeValue();
                 if(newImageUri!= null){
                     final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(newImageUri));
                     fileReference.putFile(newImageUri)
@@ -234,19 +247,27 @@ public class EditThisPost extends AppCompatActivity {
                                     fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
+                                            Title = editTitle.getText().toString();
+                                            Description = editDescription.getText().toString();
                                             Image = uri.toString();
-                                            Post post = new Post(Title, Description, Image, date);
-                                            if (!TextUtils.isEmpty(postId)) {
-                                            } else {
-                                                postId = dbRef.push().getKey();
-                                            }
-                                            while (TextUtils.isEmpty(Title)) {
-                                                Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
-                                            }
-                                            post.setId(postId);
-                                            dbRef.child(postId).setValue(post);
+//                                            Post post = new Post(Title, Description, Image, date);
+//                                            if (!TextUtils.isEmpty(postId)) {
+//                                            } else {
+//                                                postId = dbRef.push().getKey();
+//                                            }
+//                                            while (TextUtils.isEmpty(Title)) {
+//                                                Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                            post.setId(postId);
+//                                            dbRef.child(postId).setValue(post);
+                                            dbRef.child("title").setValue(Title);
+                                            dbRef.child("description").setValue(Description);
+                                            dbRef.child("image").setValue(Image);
+                                            dbRef.child("id").setValue(postId);
                                             Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                                            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
+                                            oldStorageReference.delete();
                                         }
                                     });
 
