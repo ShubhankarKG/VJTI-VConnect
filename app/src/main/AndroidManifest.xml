@@ -10,6 +10,10 @@
 
     <application>
         <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme"></activity>
+        <activity
             android:name=".Feed"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
