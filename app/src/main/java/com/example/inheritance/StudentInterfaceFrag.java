@@ -13,6 +13,6 @@ public class StudentInterfaceFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.student_interface, null);
+        return inflater.inflate(R.layout.student_interface, container, false);
     }
 }
