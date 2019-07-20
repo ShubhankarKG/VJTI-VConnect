@@ -12,7 +12,15 @@
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Feed"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -28,18 +36,12 @@
             android:name=".AddPost"
             android:label="AddPost"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_committee_list"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--<activity-->
+        <!--android:name=".MainActivity"-->
+        <!--android:label="@string/title_activity_committee_list"-->
+        <!--android:theme="@style/AppTheme.NoActionBar">-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
+        <!--</activity>-->
         <activity
             android:name=".loginActivity"
             android:label="@string/title_activity_login"

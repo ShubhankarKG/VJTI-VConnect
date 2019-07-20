@@ -23,7 +23,7 @@ public class Home extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_committees:
-                    fragment = new AccountSettingFrag();
+                    fragment = new MainActivity();
                     break;
                 case R.id.navigation_student:
                     fragment = new StudentInterfaceFrag();
@@ -42,7 +42,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         //loading the default fragment
-        loadFragment(new AccountSettingFrag());
+        loadFragment(new MainActivity());
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navView = findViewById(R.id.nav_view);
