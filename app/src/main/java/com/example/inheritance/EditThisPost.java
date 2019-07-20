@@ -221,7 +221,7 @@ public class EditThisPost extends AppCompatActivity {
                 dbRef.child("image").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        StorageReference oldStorageReference = firebaseStorage.getReferenceFromUrl(imageUrl);
+                        StorageReference oldStorageReference = firebaseStorage.getReferenceFromUrl(dbRef.child("image").toString());
                         oldStorageReference.delete();
                     }
                 });
