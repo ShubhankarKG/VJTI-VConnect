@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -143,7 +142,7 @@ public class Signup extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_student_login, container, false);
+        view = inflater.inflate(R.layout.signup_email, container, false);
         txtEmail = (EditText) view.findViewById(R.id.email_field);
         txtPwd = (EditText) view.findViewById(R.id.password_field);
         bSignUp = (Button) view.findViewById(R.id.sign_up_button);
@@ -152,7 +151,8 @@ public class Signup extends Fragment {
         bSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startSignup();
+                startSignupFirebaseAuth();
+                createSignInIntent();
             }
         });
 
@@ -169,7 +169,7 @@ public class Signup extends Fragment {
 
     }
 
-    private void startSignup() {
+    private void startSignupFirebaseAuth() {
         final String email = txtEmail.getText().toString().trim();
         final String pwd = txtPwd.getText().toString().trim();
         if (!TextUtils.isEmpty(email)) {

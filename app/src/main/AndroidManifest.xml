@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
+        <activity android:name=".StudentSignUp"></activity>
+        <activity android:name=".StudentLogin" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
@@ -35,13 +37,11 @@
         <activity
             android:name=".AddPost"
             android:label="AddPost"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!--<activity-->
-        <!--android:name=".MainActivity"-->
-        <!--android:label="@string/title_activity_committee_list"-->
-        <!--android:theme="@style/AppTheme.NoActionBar">-->
-
-        <!--</activity>-->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
+        <!-- android:name=".MainActivity" -->
+        <!-- android:label="@string/title_activity_committee_list" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- </activity> -->
         <activity
             android:name=".loginActivity"
             android:label="@string/title_activity_login"

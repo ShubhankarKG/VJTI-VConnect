@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Arrays;
 
 public class AccountSettingFrag extends Fragment {
 
@@ -22,6 +26,7 @@ public class AccountSettingFrag extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final int RC_SIGN_IN = 123;
     public FirebaseAuth firebaseAuth;
+    View view;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -49,9 +54,32 @@ public class AccountSettingFrag extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
 //            User isn't signed in
-            return inflater.inflate(R.layout.account_settings_not_logged, container, false);
+            view = inflater.inflate(R.layout.account_settings_not_logged, container, false);
+            bLogin = (Button) view.findViewById(R.id.login_button);
+            bSignup = (Button) view.findViewById(R.id.sign_up_button);
+
+            bLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    changeFragment(new LoginFrag());
+                }
+            });
+
+            bSignup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Fragment transaction/transition to Signup Page here
+
+//                    changeFragment(new Signup());
+                    Intent loginIntent = new Intent(getActivity(), StudentSignUp.class);
+                    startActivity(loginIntent);
+                }
+            });
+            return view;
         } else {
-            return inflater.inflate(R.layout.account_settings_logged, container, false);
+            view = inflater.inflate(R.layout.account_settings_logged, container, false);
+            return view;
+
         }
 
     }
@@ -66,46 +94,38 @@ public class AccountSettingFrag extends Fragment {
 
 //        Maybe no setContentView because onCreateView() takes care of it
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser() == null) {
-//            User isn't logged in
-//            account_settings_not_logged.xml is the layout
-            bLogin = (Button) getView().findViewById(R.id.login_button);
-            bSignup = (Button) getView().findViewById(R.id.sign_up_button);
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        if (firebaseAuth.getCurrentUser() == null) {
+////            User isn't logged in
+////            account_settings_not_logged.xml is the layout
+//            bLogin = (Button) getView().findViewById(R.id.login_button);
+//            bSignup = (Button) getView().findViewById(R.id.sign_up_button);
+//
+//            bLogin.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                     changeFragment(new LoginFrag());
+//                }
+//            });
+//
+//            bSignup.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////                    Fragment transaction/transition to Signup Page here
+//
+//                    changeFragment(new Signup());
+//                }
+//            });
 
-            bLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                     Fragment transaction/transition to Login Page here
-//                    changeFragment(new Login());
-                }
-            });
 
-            bSignup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    Fragment transaction/transition to Signup Page here
+//        } else {
+////            User is logged in
+////            account_settings_logged.xml is the layout
+//        }
 
-                    changeFragment(new Signup());
-                }
-            });
-
-
-        } else {
-//            User is logged in
-//            account_settings_logged.xml is the layout
-        }
 
     }
-
-    private void changeFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
-    }
-
-
-
-
 
 }
+
+
