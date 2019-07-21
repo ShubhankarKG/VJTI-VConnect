@@ -2,11 +2,13 @@ package com.example.inheritance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ComplexColorCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,11 +50,27 @@ public class StudentSignUp extends AppCompatActivity {
         bSignup = (Button) findViewById(R.id.sign_up_button);
         bCancel = (Button) findViewById(R.id.cancel_signup_button);
         bGoogleSignup = (Button) findViewById(R.id.google_signup_button);
+        progressDialog = new ProgressDialog(this);
 
         bSignup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startSignupFirebaseAuth();
+            synchronized public void onClick(View view) {
+                try {
+                    startSignupFirebaseAuth();
+                } catch (Exception e) {
+                    Log.e("myTag", e.toString());
+                }
+
+
+//                if(firebaseAuth.getCurrentUser() != null) {
+//                    Log.w("myTag", "signed in");
+//                    Toast.makeText(StudentSignUp.this, "Signed in", Toast.LENGTH_SHORT).show();
+//                    finish();
+//                }
+//                else {
+//                    Log.w("myTag", "not signed in");
+//                }
+
             }
         });
 
@@ -108,22 +126,29 @@ public class StudentSignUp extends AppCompatActivity {
     private void startSignupFirebaseAuth() {
         final String email = edtxtEmail.getText().toString().trim();
         final String pwd = edtxtPwd.getText().toString().trim();
+        Log.w("myTag", "Email ID and pwd getText() done");
         if (!TextUtils.isEmpty(email)) {
-            if (pwd.length() > 8) {
+            Log.w("myTag", "email isn't empty");
+            if (pwd.length() >= 8) {
+                Log.w("myTag", "Pwd okay");
                 progressDialog.setMessage("Signing up, please wait");
+                Log.w("myTag", "processdialog message set");
                 progressDialog.show();
-                firebaseAuth.createUserWithEmailAndPassword(email, pwd)
+                Log.w("myTag", "processDialog show");
+                firebaseAuth.createUserWithEmailAndPassword(email, pwd) //creates user and signs in if successful
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                            synchronized public void onComplete(@NonNull Task<AuthResult> task) {
+                                Log.w("myTag", "onComplete() evoked");
                                 progressDialog.dismiss();
                                 if (task.isSuccessful()) {
+                                    Log.w("myTag", "Task successful");
                                     // Make database entry for new user
                                     HashMap<String, Object> map = new HashMap<String, Object>();
                                     final FirebaseUser user = task.getResult().getUser();
                                     map.put("user_id", user.getUid());
                                     map.put("email", email);
-                                    map.put("last_connection", Calendar.getInstance(Locale.US).getTimeInMillis());
+                                    map.put("last_connection", Calendar.getInstance(Locale.US).getTimeInMillis()); // Check this out
                                     DatabaseReference userDbRef = FirebaseDatabase.getInstance()
                                             .getReference().child("users")
                                             .child(user.getUid());
@@ -131,18 +156,35 @@ public class StudentSignUp extends AppCompatActivity {
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    //Update username
+                                                    Log.w("myTag", "User added to Firebase Realtime Database");
                                                 }
                                             });
+
+                                    Toast.makeText(StudentSignUp.this, "Sign up successful!", Toast.LENGTH_SHORT).show();
+                                    Log.w("myTag", "Signed up");
+//                                    finish();
+                                    Intent backToHome = new Intent(StudentSignUp.this, Home.class);
+                                    startActivity(backToHome);
+                                    Log.w("myTag", "Intent backToHome sent");
                                 } else {
-                                    // Delete user, because somethibg went wrong
+
+                                    // Delete user, because something went wrong
                                     // user.delete();
-//                                    Above line doesn't work
+//                                    Above line doesn't work. Something went wrong in handling something else that went wrong... Happy Programming!
                                     Toast.makeText(StudentSignUp.this, "Could not add user", Toast.LENGTH_SHORT).show();
+                                    Log.w("myTag", "Task not successful");
                                 }
                             }
                         });
+            } else {
+                Log.w("myTag", "Password too short");
+                Toast.makeText(this, "Your password should be at least 8 characters long", Toast.LENGTH_SHORT).show();
+                edtxtPwd.setText("");
+                edtxtPwd.setHint("Password");
             }
+        } else {
+            Log.w("myTag", "No email entered");
+            Toast.makeText(this, "Please enter an email address", Toast.LENGTH_SHORT).show();
         }
     }
 

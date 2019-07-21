@@ -9,8 +9,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
-        <activity android:name=".StudentSignUp"></activity>
-        <activity android:name=".StudentLogin" />
+        <activity
+            android:name=".StudentSignUp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StudentLogin"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
