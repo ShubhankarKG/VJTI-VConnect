@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -352,6 +353,9 @@ public class MainActivity extends Fragment {
     @Override
     public void onResume() {
 //        setContentView(R.layout.content_committee_list);
+        FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.fragment_container);
+        LayoutInflater.from(getActivity())
+                .inflate(R.layout.content_committee_list, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
