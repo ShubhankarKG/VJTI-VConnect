@@ -370,7 +370,7 @@ public class MainActivity extends Fragment {
                     editor.putString("login_id", null);
                     editor.commit();
                     // Probably add a toast saying "Logging out"
-                    Intent refresh = new Intent(getActivity(), MainActivity.class);
+                    Intent refresh = new Intent(getActivity(), Home.class);
                     startActivity(refresh);
                 }
             });
