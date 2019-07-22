@@ -77,7 +77,8 @@ public class StudentSignUp extends AppCompatActivity {
         bGoogleSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createSignInIntent();
+                Log.w("myTag", "Google sign-up opted");
+                createSGoogleSignUpIntent();
             }
         });
 
@@ -90,7 +91,7 @@ public class StudentSignUp extends AppCompatActivity {
 
     }
 
-    public void createSignInIntent() {
+    public void createSGoogleSignUpIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -112,10 +113,12 @@ public class StudentSignUp extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
+                Log.w("myTag", "Google sign up successful");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(this, "Sign-in successful", Toast.LENGTH_SHORT).show();
             } else {
                 // Sign in failed
+                Log.w("myTag", "Google sign up failed");
                 Toast.makeText(this, "Sign-in failed!", Toast.LENGTH_SHORT).show();
             }
         }

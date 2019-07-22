@@ -14,10 +14,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
@@ -55,21 +57,14 @@ public class StudentLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.w("myTag", "Google sign-in opted");
-                startActivityForResult(
-                        AuthUI.getInstance().createSignInIntentBuilder()
-                                .setAvailableProviders(Arrays.asList(
-                                        new AuthUI.IdpConfig.GoogleBuilder().build()
-//                                            new AuthUI.IdpConfig.EmailBuilder().build() //Requires Dynamic Links, (confirmation email)
-                                ))
-                                .build(),
-                        RC_SIGN_IN);
+                createGoogleSignInIntent();
             }
         });
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login();
+                loginWithEmailPwd();
             }
         });
 
@@ -83,7 +78,7 @@ public class StudentLogin extends AppCompatActivity {
 
     }
 
-    private void login() {
+    private void loginWithEmailPwd() {
         final String email = edtxtEmail.getText().toString().trim();
         final String pwd = edtxtPwd.getText().toString().trim();
 
@@ -123,5 +118,38 @@ public class StudentLogin extends AppCompatActivity {
             Toast.makeText(this, "Please enter your email address", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void createGoogleSignInIntent() {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.GoogleBuilder().build()
+//                                            new AuthUI.IdpConfig.EmailBuilder().build() //Requires Dynamic Links, (confirmation email)
+                        ))
+                        .build(),
+                RC_SIGN_IN);
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    //    @Override
+//    Not overriding!!!!
+    public void OnActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+            if (resultCode == RESULT_OK) {
+//                Successfully signed in
+                Log.w("myTag", "Google sign-in successful");
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Toast.makeText(this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+            } else {
+//                Google sign-in failed
+                Log.w("myTag", "Google sign-in fialed");
+                Toast.makeText(this, "Sign-in failed!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

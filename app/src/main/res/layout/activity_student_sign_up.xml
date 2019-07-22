@@ -22,7 +22,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="108dp"
-                android:layout_marginBottom="72dp"
+                android:layout_marginBottom="48dp"
                 android:src="@drawable/vjti_logo" />
 
             <TextView
@@ -65,24 +65,64 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:hint="Enter password"
-
                 android:inputType="textPassword"
                 android:paddingLeft="12dp"
                 android:textStyle="italic" />
-            <!--
-            <EditText
-                android:id="@+id/confirm_password_field"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="24dp"
-                android:hint="Confirm password"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-                android:inputType="textPassword"
-                android:paddingLeft="12dp"
-                android:textStyle="italic" />
-                -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="64dp"
+                    android:layout_weight="0"
+                    android:text="Year"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/branch_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="0"
+                    android:text="Branch"
+                    android:textSize="20sp"
+
+                    />
+
+                <Spinner
+                    android:id="@+id/year_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,6 +149,7 @@
                     android:text="Sign Up"
                     android:textSize="21sp" />
             </LinearLayout>
+
 
             <Button
                 android:id="@+id/google_signup_button"
