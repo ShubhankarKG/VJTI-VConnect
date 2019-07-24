@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -35,8 +38,26 @@ public class StudentSignUp extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     EditText edtxtEmail, edtxtPwd;
     Button bSignup, bCancel, bGoogleSignup;
+    RadioGroup rgProgram;
+    Spinner yearSpinner, branchSpinner;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+    private String program;
+    private String[] bTechBranchList = {"Civil Engineering", "Computer Engineering", "Electrical Engineering",
+            "Electronics Engineering", "Electronics and Telecommunication Engineering",
+            "Information Technology Engineering", "Mechanical Engineering",
+            "Production Engineering", "Textile Engineering"};
+    private String[] diplomaBranchList = {"Civil Engineering", "Electrical Engineering", "Electronics Engineering", "Mechanical Engineering",
+            "Textile Manufactures", "Chemical Engineering"};
+
+    private String[] mTechBranchList = {"Civil Engineering (Construction Management)", "Civil Engineering (Environmental Engineering)",
+            "Civil Engineering (Structural Engineering)", "Computer Engineering", "Computer Engineering (Network Infrastructure Management Systems)",
+            "Computer Engineering (Software Engineering)", "Electrical Engineering (Power Systems)",
+            "Electrical Engineering (Control Systems)", "Electronics Engineering", "Electronics & Telecommunication Engineering",
+            "Mechanical Engineering (Machine Design)", "Mechanical Engineering (Automobile Engineering)",
+            "Mechanical Engineering (CAD/CAM & Automation)", "Mechanical Engineering (Thermal Engineering)",
+            "Production Engineering", "Project Management", "Textile Technology"};
+
 
 
     @Override
@@ -51,10 +72,49 @@ public class StudentSignUp extends AppCompatActivity {
         bCancel = (Button) findViewById(R.id.cancel_signup_button);
         bGoogleSignup = (Button) findViewById(R.id.google_signup_button);
         progressDialog = new ProgressDialog(this);
+        branchSpinner = (Spinner) findViewById(R.id.branch_spinner);
+        yearSpinner = (Spinner) findViewById(R.id.year_spinner);
+
+//        branchSpinner.setOnItemClickListener();
+
+        rgProgram.clearCheck();
+        rgProgram.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton radioButton = (RadioButton) radioGroup.findViewById(checkedId);
+                switch (radioButton.getText().toString()) {
+                    case "BTech":
+                        program = "BTech";
+
+                        break;
+                    case "Diploma":
+                        program = "Diploma";
+                        break;
+                    case "MTech":
+                        program = "MTech";
+                        break;
+                    case "MCA":
+                        program = "MCA";
+                        break;
+                    default:
+                        break;
+                }
+
+
+            }
+        });
 
         bSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             synchronized public void onClick(View view) {
+
+
+                int selectedId = rgProgram.getCheckedRadioButtonId();
+                if (selectedId == -1) {
+                    Toast.makeText(StudentSignUp.this, "Please select a program to continue", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                Add conditions for no options selected in spinners
                 try {
                     startSignupFirebaseAuth();
                 } catch (Exception e) {
