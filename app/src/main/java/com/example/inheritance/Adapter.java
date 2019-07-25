@@ -24,7 +24,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import static com.example.inheritance.MainActivity.sharedPreferences;
+import static com.example.inheritance.Home.sharedPreferences;
+//import static com.example.inheritance.MainActivity.sharedPreferences;
 
 import android.content.SharedPreferences;
 import android.widget.Toast;

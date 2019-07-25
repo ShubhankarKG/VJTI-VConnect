@@ -19,10 +19,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import static com.example.inheritance.Home.sharedPreferences;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class MainActivity extends Fragment {
-    public static SharedPreferences sharedPreferences;
+
     private FragmentActivity fragmentActivity;
 
     @Nullable

@@ -6,15 +6,19 @@ import androidx.core.content.res.ComplexColorCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -33,30 +37,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class StudentSignUp extends AppCompatActivity {
+import static android.view.View.GONE;
+import static com.example.inheritance.Home.sharedPreferences;
+
+public class StudentSignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final int RC_SIGN_IN = 123;
     EditText edtxtEmail, edtxtPwd;
     Button bSignup, bCancel, bGoogleSignup;
     RadioGroup rgProgram;
+    TextView txtBranch;
     Spinner yearSpinner, branchSpinner;
+    ArrayAdapter<String> yearAdapter, branchAdapter;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-    private String program;
-    private String[] bTechBranchList = {"Civil Engineering", "Computer Engineering", "Electrical Engineering",
+    private String program, year, branch;
+    private String[] BTechBranchList = {"Civil Engineering", "Computer Engineering", "Electrical Engineering",
             "Electronics Engineering", "Electronics and Telecommunication Engineering",
             "Information Technology Engineering", "Mechanical Engineering",
             "Production Engineering", "Textile Engineering"};
     private String[] diplomaBranchList = {"Civil Engineering", "Electrical Engineering", "Electronics Engineering", "Mechanical Engineering",
             "Textile Manufactures", "Chemical Engineering"};
 
-    private String[] mTechBranchList = {"Civil Engineering (Construction Management)", "Civil Engineering (Environmental Engineering)",
+    private String[] MTechBranchList = {"Civil Engineering (Construction Management)", "Civil Engineering (Environmental Engineering)",
             "Civil Engineering (Structural Engineering)", "Computer Engineering", "Computer Engineering (Network Infrastructure Management Systems)",
             "Computer Engineering (Software Engineering)", "Electrical Engineering (Power Systems)",
             "Electrical Engineering (Control Systems)", "Electronics Engineering", "Electronics & Telecommunication Engineering",
             "Mechanical Engineering (Machine Design)", "Mechanical Engineering (Automobile Engineering)",
             "Mechanical Engineering (CAD/CAM & Automation)", "Mechanical Engineering (Thermal Engineering)",
             "Production Engineering", "Project Management", "Textile Technology"};
+
+    private String[] BTechYearList = {"First Year", "Second Year", "Third Year", "Final Year"};
+    private String[] diplomaYearList = {"First Year"};
+    private String[] mastersYearList = {"First Year", "Second Year"};
 
 
 
@@ -72,8 +85,10 @@ public class StudentSignUp extends AppCompatActivity {
         bCancel = (Button) findViewById(R.id.cancel_signup_button);
         bGoogleSignup = (Button) findViewById(R.id.google_signup_button);
         progressDialog = new ProgressDialog(this);
+        rgProgram = (RadioGroup) findViewById(R.id.rg_program);
         branchSpinner = (Spinner) findViewById(R.id.branch_spinner);
         yearSpinner = (Spinner) findViewById(R.id.year_spinner);
+        txtBranch = (TextView) findViewById(R.id.txt_branch);
 
 //        branchSpinner.setOnItemClickListener();
 
@@ -85,16 +100,53 @@ public class StudentSignUp extends AppCompatActivity {
                 switch (radioButton.getText().toString()) {
                     case "BTech":
                         program = "BTech";
-
+                        Log.w("myTag", "program set to BTech");
+                        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, BTechYearList);
+                        yearSpinner.setAdapter(yearAdapter);
+                        yearSpinner.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "yearSpinner set");
+                        ArrayAdapter<String> branchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, BTechBranchList);
+                        branchSpinner.setAdapter(branchAdapter);
+                        branchSpinner.setVisibility(View.VISIBLE);
+                        txtBranch.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "branchSpinner set");
                         break;
                     case "Diploma":
                         program = "Diploma";
+                        Log.w("myTag", "program set to Diploma");
+                        yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, diplomaYearList);
+                        yearSpinner.setAdapter(yearAdapter);
+                        yearSpinner.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "yearSpinner set");
+                        branchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, diplomaBranchList);
+                        branchSpinner.setAdapter(branchAdapter);
+                        branchSpinner.setVisibility(View.VISIBLE);
+                        txtBranch.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "branchSpinner set");
                         break;
                     case "MTech":
                         program = "MTech";
+                        Log.w("myTag", "program set to MTech");
+                        yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mastersYearList);
+                        yearSpinner.setAdapter(yearAdapter);
+                        yearSpinner.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "yearSpinner set");
+                        branchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, MTechBranchList);
+                        branchSpinner.setAdapter(branchAdapter);
+                        branchSpinner.setVisibility(View.VISIBLE);
+                        txtBranch.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "branchSpinner set");
                         break;
                     case "MCA":
                         program = "MCA";
+                        Log.w("myTag", "program set to MCA");
+                        yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mastersYearList);
+                        yearSpinner.setAdapter(yearAdapter);
+                        yearSpinner.setVisibility(View.VISIBLE);
+                        Log.w("myTag", "yearSpinner set");
+                        branchSpinner.setVisibility(GONE);
+                        txtBranch.setVisibility(GONE);
+                        Log.w("myTag", "branchSpinner visibility set to GONE");
                         break;
                     default:
                         break;
@@ -104,6 +156,9 @@ public class StudentSignUp extends AppCompatActivity {
             }
         });
 
+        yearSpinner.setOnItemSelectedListener(this);
+        branchSpinner.setOnItemSelectedListener(this);
+
         bSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             synchronized public void onClick(View view) {
@@ -111,14 +166,33 @@ public class StudentSignUp extends AppCompatActivity {
 
                 int selectedId = rgProgram.getCheckedRadioButtonId();
                 if (selectedId == -1) {
+                    Log.w("myTag", "No program selected:");
                     Toast.makeText(StudentSignUp.this, "Please select a program to continue", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+                    if (!program.equals("MCA") && branch == null) {
+                        Log.w("myTag", "Branch not selected");
+                        Toast.makeText(StudentSignUp.this, "Please enter your branch", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (year == null) {
+                        Log.w("myTag", "Year not selected");
+                        Toast.makeText(StudentSignUp.this, "Please enter your year", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
 //                Add conditions for no options selected in spinners
                 try {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("program", program);
+                    editor.putString("year", year);
+                    if (!program.equals("MCA")) editor.putString("branch", branch);
+                    else editor.putString("branch", null);
+                    editor.commit();
+                    Log.w("myTag", "userCred (sharedPreferences) set");
                     startSignupFirebaseAuth();
                 } catch (Exception e) {
-                    Log.e("myTag", e.toString());
+                    Log.w("myTag", e.toString());
                 }
 
 
@@ -138,7 +212,7 @@ public class StudentSignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.w("myTag", "Google sign-up opted");
-                createSGoogleSignUpIntent();
+                createGoogleSignUpIntent();
             }
         });
 
@@ -151,7 +225,28 @@ public class StudentSignUp extends AppCompatActivity {
 
     }
 
-    public void createSGoogleSignUpIntent() {
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        Spinner spinner = (Spinner) adapterView;
+        if (spinner.getId() == R.id.year_spinner) {
+            Log.w("myTag", "Year spinner item selected");
+            year = spinner.getSelectedItem().toString();
+        } else if (spinner.getId() == R.id.branch_spinner) {
+            Log.w("myTag", "Branch spinner item selected");
+            branch = spinner.getSelectedItem().toString();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        if (((Spinner) adapterView).getId() == R.id.year_spinner) {
+            year = null;
+        } else if (((Spinner) adapterView).getId() == R.id.branch_spinner) {
+            branch = null;
+        }
+    }
+
+    public void createGoogleSignUpIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(

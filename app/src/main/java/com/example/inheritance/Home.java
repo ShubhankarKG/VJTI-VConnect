@@ -1,6 +1,7 @@
 package com.example.inheritance;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 
 public class Home extends AppCompatActivity {
 
+    public static SharedPreferences sharedPreferences;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
