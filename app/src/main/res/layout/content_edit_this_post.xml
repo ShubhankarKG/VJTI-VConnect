@@ -73,6 +73,8 @@
             android:color="#FFFFFF"
             android:gravity="top|left"
             android:inputType="textMultiLine|textCapSentences"
+            android:autoLink="all"
+            android:linksClickable="false"
             android:minLines="10"
             android:scrollbars="vertical" />
 

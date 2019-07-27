@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import static com.example.inheritance.Home.sharedPreferences;
-//import static com.example.inheritance.MainActivity.sharedPreferences;
 import static com.example.inheritance.R.layout.content_login;
 
 public class loginActivity extends AppCompatActivity {

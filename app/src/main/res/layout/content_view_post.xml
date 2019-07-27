@@ -28,6 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
+            android:autoLink="all"
+            android:linksClickable="true"
             android:paddingRight="10dp"
             android:textSize="17sp"
             />

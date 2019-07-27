@@ -75,6 +75,8 @@
         android:gravity="top|left"
         android:layout_margin="5dp"
         android:inputType="textMultiLine|textCapSentences"
+        android:autoLink="all"
+        android:linksClickable="false"
         android:minLines="10"
         android:scrollbars="vertical" />
 

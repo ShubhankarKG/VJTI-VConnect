@@ -68,7 +68,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
             "Production Engineering", "Project Management", "Textile Technology"};
 
     private String[] BTechYearList = {"First Year", "Second Year", "Third Year", "Final Year"};
-    private String[] diplomaYearList = {"First Year"};
+    private String[] diplomaYearList = {"First Year", "Second Year"};
     private String[] mastersYearList = {"First Year", "Second Year"};
 
 

@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -72,6 +73,8 @@ public class Home extends AppCompatActivity {
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
     }
 
     private boolean loadFragment(Fragment fragment) {

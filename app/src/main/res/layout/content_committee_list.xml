@@ -32,10 +32,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Committees"
+                android:text="Student Activities"
                 android:padding="8dp"
                 android:textColor="#FFFFFF"
-                android:textSize="34sp" />
+                android:textSize="32sp" />
             <!--
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -49,16 +49,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="#005b9f"
-                android:text="Login"
+                android:text="Admin\nLogin"
                 android:padding="8dp"
                 android:textColor="#FFFFFF"
-
                 />
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#005b9f"
-                    android:text="logout"
+                    android:text="Logout"
                     android:padding="8dp"
                     android:textColor="#FFFFFF"
                     android:id="@+id/bLogout"

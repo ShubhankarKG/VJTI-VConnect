@@ -101,7 +101,9 @@ public class EditThisPost extends AppCompatActivity {
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                Intent goBack = new Intent(EditThisPost.this, Feed.class);
+                goBack.putExtra("committee", committee);
+                startActivity(goBack);
             }
         });
 
@@ -223,7 +225,9 @@ public class EditThisPost extends AppCompatActivity {
                     Toast.makeText(EditThisPost.this, "Done!", Toast.LENGTH_SHORT).show();
                 }
             });
-            startActivity(new Intent(EditThisPost.this, MainActivity.class));
+            Intent goBack = new Intent(EditThisPost.this, Feed.class);
+            goBack.putExtra("committee", committee);
+            startActivity(goBack);
         }
         else{
             if(oldImage){
@@ -234,7 +238,9 @@ public class EditThisPost extends AppCompatActivity {
                 dbRef.child("date").setValue(date);
                 dbRef.child("id").setValue(postId);
                 Toast.makeText(EditThisPost.this, "Update successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditThisPost.this, MainActivity.class));
+                Intent goBack = new Intent(EditThisPost.this, Feed.class);
+                goBack.putExtra("committee", committee);
+                startActivity(goBack);
             }
             else{
                 dbRef.child("image").removeValue();
@@ -264,10 +270,13 @@ public class EditThisPost extends AppCompatActivity {
                                             dbRef.child("description").setValue(Description);
                                             dbRef.child("image").setValue(Image);
                                             dbRef.child("id").setValue(postId);
-                                            Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(EditThisPost.this, MainActivity.class));
-                                            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
+                                            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl); //Causes Runtime error!!
                                             oldStorageReference.delete();
+                                            Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
+                                            Intent goBack = new Intent(EditThisPost.this, Feed.class);
+                                            goBack.putExtra("committee", committee);
+                                            startActivity(goBack);
+
                                         }
                                     });
 

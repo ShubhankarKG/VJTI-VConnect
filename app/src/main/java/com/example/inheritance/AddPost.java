@@ -181,7 +181,7 @@ public class AddPost extends AppCompatActivity {
                                     post.setId(id);
                                     dbRef.child(id).setValue(post);
                                     Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AddPost.this, MainActivity.class));
+                                    startActivity(new Intent(AddPost.this, Home.class));
                                 }
                             });
 
@@ -203,7 +203,7 @@ public class AddPost extends AppCompatActivity {
             post.setId(id);
             dbRef.child(id).setValue(post);
             Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(AddPost.this, MainActivity.class));
+            startActivity(new Intent(AddPost.this, Home.class));
         }
 
     }
