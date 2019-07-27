@@ -187,6 +187,7 @@ public class Feed extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Adding a new post", Toast.LENGTH_SHORT).show();
                 Intent addPost = new Intent(Feed.this, AddPost.class);
                 addPost.putExtra("adminOf", committee);
+                addPost.putExtra("purpose", "post");
                 startActivity(addPost);
             }
         });

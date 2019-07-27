@@ -177,7 +177,15 @@ public class loginActivity extends AppCompatActivity {
                     clear_fields();
                 }
 
-                else {
+//                CR logins:
+                else if (ed1.getText().toString().equals("cr@SYBTechIT") && ed2.getText().toString().equals("SYBTechIT2k19")) {
+                    editor.putBoolean("cr_logged", true);
+                    editor.commit();
+                    Toast.makeText(loginActivity.this, "Redirecting...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(loginActivity.this, Home.class);
+                    startActivity(intent);
+                    clear_fields();
+                } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
                     clear_fields();
                 }

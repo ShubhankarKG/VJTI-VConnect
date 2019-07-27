@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,7 +45,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private List<Post> postList;
     private Context context;
     private String committee, adminCred;
+    private String program, year, branch;
     private StorageReference sr;
+
+    public Adapter(Context mContext, List<Post> noticesList, String program, String branch, String year) {
+        context = mContext;
+        postList = noticesList;
+        this.program = program;
+        this.branch = branch;
+        this.year = year;
+    }
 
     public Adapter(Context mcontext, List<Post> list) {
         context = mcontext;
@@ -72,7 +82,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.postDescription.setText(postCurrent.getDescription());
         holder.postDate.setText(postCurrent.getDate());
         holder.postId = postCurrent.getId();
-        if(!TextUtils.isEmpty(postCurrent.getImage())){
+        if (!TextUtils.isEmpty(postCurrent.getImage())) {
             Picasso.get()
                     .load(postCurrent.getImage())
                     .into(holder.postImage);
@@ -109,7 +119,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            if (postCurrent.getImage()!=null){
+                                            if (postCurrent.getImage() != null) {
                                                 FirebaseStorage storage = FirebaseStorage.getInstance();
                                                 sr = storage.getReferenceFromUrl(postCurrent.getImage());
                                                 sr.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -125,19 +135,20 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                                         Toast.makeText(context, "Oops! An error occurred", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
-                                            }else {
+                                            } else {
                                                 DatabaseReference db = FirebaseDatabase.getInstance().getReference(committee).child(holder.postId);
                                                 db.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(context, "Post deleted ", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.e("error", Objects.requireNonNull(e.getMessage()));
-                                                }
-                                            });;
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(context, "Post deleted ", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e("error", Objects.requireNonNull(e.getMessage()));
+                                                    }
+                                                });
+                                                ;
 
                                             }
                                         }
@@ -159,9 +170,85 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             });
 
 
+        } else if (sharedPreferences.getBoolean("cr_logged", false)) {
+            holder.overflow.setVisibility(View.VISIBLE);
+            holder.overflow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    PopupMenu popup = new PopupMenu(context, holder.overflow);
+                    popup.inflate(R.menu.overflow);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.edit_post:
+                                    Intent editIntent = new Intent(view.getContext(), EditThisPost.class);
+                                    editIntent.putExtra("program", program);
+                                    editIntent.putExtra("branch", branch);
+                                    editIntent.putExtra("year", year);
+                                    editIntent.putExtra("postID", holder.postId);
+                                    view.getContext().startActivity(editIntent);
+                                    break;
+
+                                case R.id.delete_post:
+                                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+                                    alertDialog.setTitle("Confirm delete...");
+                                    alertDialog.setMessage("Are you sure you want to delete this?");
+
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            if (postCurrent.getImage() != null) {
+                                                FirebaseStorage storage = FirebaseStorage.getInstance();
+                                                sr = storage.getReferenceFromUrl(postCurrent.getImage());
+                                                sr.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        DatabaseReference db;
+                                                        if (!program.equals("MCA")) {
+                                                            db = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year).child(holder.postId);
+                                                        } else {
+                                                            db = FirebaseDatabase.getInstance().getReference(program).child(year).child(holder.postId);
+                                                        }
+                                                        db.removeValue();
+                                                        Toast.makeText(context, "Notice deleted", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e("error", Objects.requireNonNull(e.getMessage()));
+                                                        Toast.makeText(context, "Oops! An error occured", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            } else {
+                                                DatabaseReference db;
+                                                if (!program.equals("MCA")) {
+                                                    db = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year).child(holder.postId);
+                                                } else {
+                                                    db = FirebaseDatabase.getInstance().getReference(program).child(year).child(holder.postId);
+                                                }
+                                                db.removeValue();
+                                                Toast.makeText(context, "Notice deleted", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+
+
+                                    });
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
+
+                        }
+                    });
+
+                }
+            });
+
+
         }
-
-
     }
 
 
