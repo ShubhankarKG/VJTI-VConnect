@@ -57,7 +57,7 @@ public class StudentInterfaceFrag extends Fragment {
         progressCircle = view.findViewById(R.id.progress_circle);
         bLogin = (Button) view.findViewById(R.id.login_button);
         bLogout = (Button) view.findViewById(R.id.logout_button);
-        fabAdd = view.findViewById(R.id.fabAdd);
+        fabAdd = (FloatingActionButton) view.findViewById(R.id.fabAdd);
 
         sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
@@ -71,7 +71,7 @@ public class StudentInterfaceFrag extends Fragment {
             if (!program.equals("MCA")) {
                 branch = sharedPreferences.getString("branch", null);
                 txtClassDetails.setText(program + '/' + branch + '/' + year);
-                dbRef = FirebaseDatabase.getInstance().getReference().child("program").child("branch").child("year");
+                dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
                 dbRef.keepSynced(true);
                 dbRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -97,7 +97,7 @@ public class StudentInterfaceFrag extends Fragment {
                 });
             } else {
                 txtClassDetails.setText(program + '/' + '/' + year);
-                dbRef = FirebaseDatabase.getInstance().getReference().child("program").child("year");
+                dbRef = FirebaseDatabase.getInstance().getReference(program).child(year);
                 dbRef.keepSynced(true);
                 dbRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -129,8 +129,8 @@ public class StudentInterfaceFrag extends Fragment {
                 bLogout.setVisibility(View.VISIBLE);
             } else {
                 fabAdd.hide();
-                bLogout.setVisibility(View.VISIBLE);
-                bLogin.setVisibility(View.GONE);
+                bLogout.setVisibility(View.GONE);
+                bLogin.setVisibility(View.VISIBLE);
             }
 
             bLogin.setOnClickListener(new View.OnClickListener() {

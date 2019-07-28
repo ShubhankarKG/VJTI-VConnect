@@ -38,7 +38,7 @@
                         android:padding="8dp"
                         android:text="Class Notices"
                         android:textColor="#FFFFFF"
-                        android:textSize="32sp" />
+                        android:textSize="28sp" />
 
                     <TextView
                         android:id="@+id/class_details"
@@ -48,7 +48,7 @@
                         android:layout_marginBottom="8dp"
                         android:text="program/branch/year"
                         android:textColor="#FFFFFF"
-                        android:textSize="20sp" />
+                        android:textSize="14sp" />
                     <!--
                             <android.support.v7.widget.Toolbar
                                 android:id="@+id/toolbar"
@@ -75,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:background="#005b9f"
                     android:padding="8dp"
-                    android:text="Logout"
+                    android:text="CR Logout"
                     android:textColor="#FFFFFF"
                     android:visibility="gone" />
             </LinearLayout>
@@ -102,6 +102,16 @@
 
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -118,12 +128,5 @@
             android:textSize="24sp" />
     </RelativeLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
 </LinearLayout>

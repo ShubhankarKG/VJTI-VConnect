@@ -96,7 +96,7 @@ public class AddPost extends AppCompatActivity {
             program = intent.getStringExtra("program");
             branch = intent.getStringExtra("branch");
             year = intent.getStringExtra("year");
-            if (program.equals("MCA")) {
+            if (!program.equals("MCA")) {
                 dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
                 storageReference = FirebaseStorage.getInstance().getReference(program).child(branch).child(year);
             } else {
