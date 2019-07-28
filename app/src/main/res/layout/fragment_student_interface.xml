@@ -61,7 +61,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/bLogin"
+                    android:id="@+id/login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#005b9f"
@@ -70,7 +70,7 @@
                     android:textColor="#FFFFFF" />
 
                 <Button
-                    android:id="@+id/bLogout"
+                    android:id="@+id/logout_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#005b9f"
