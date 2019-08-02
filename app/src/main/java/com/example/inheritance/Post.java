@@ -11,7 +11,7 @@ public class Post {
 
 
 
-    public Post(String title, String description, String image, String date) {
+    public Post(String title, String description, String image , String date) {
         this.title = title;
         this.description = description;
         this.image = image;

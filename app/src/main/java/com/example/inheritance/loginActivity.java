@@ -44,6 +44,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "AeroVJTI");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -55,6 +56,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "COC");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -66,6 +68,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "DLA");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -77,6 +80,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "ECell");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -88,6 +92,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "Enthusia");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -99,6 +104,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "IEEE");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -110,8 +116,11 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "Pratibimb");
                     startActivity(intent);
+                    finish();
                     clear_fields();
-                } else if (ed1.getText().toString().equals("admin@Rangawardhan") && ed2.getText().toString().equals("Rangawardhan2k19")) {
+                }
+
+                else if (ed1.getText().toString().equals("admin@Rangawardhan") && ed2.getText().toString().equals("Rangawardhan2k19")) {
                     editor.putBoolean("logged", true);
                     editor.putString("login_id", "admin@ranga");
                     editor.commit();
@@ -119,6 +128,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "Rangawardhan");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -130,6 +140,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "SRA");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -141,6 +152,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "Swachh VJTI");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -152,6 +164,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "Technovanza");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -163,6 +176,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "VJTI Alumni");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 
@@ -174,6 +188,7 @@ public class loginActivity extends AppCompatActivity {
                     Intent intent = new Intent(loginActivity.this, Feed.class);
                     intent.putExtra("committee", "VJTI Racing");
                     startActivity(intent);
+                    finish();
                     clear_fields();
                 }
 

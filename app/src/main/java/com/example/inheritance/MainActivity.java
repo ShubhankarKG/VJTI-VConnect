@@ -34,7 +34,6 @@ public class MainActivity extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Toast.makeText(getActivity(), "Welcome to the VJTI App", Toast.LENGTH_SHORT).show();
         sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
         Button bLogin = (Button) view.findViewById(R.id.bLogin);
 
@@ -47,6 +46,7 @@ public class MainActivity extends Fragment {
                     editor.putString("login_id", null);
                     editor.commit();
                     // Probably add a toast saying "Logging out"
+                    Toast.makeText(getContext(), "Logged out successfully!", Toast.LENGTH_SHORT).show();
                     Intent refresh = new Intent(getActivity(), Home.class);
                     startActivity(refresh);
                 }

@@ -20,6 +20,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class AccountSettingFrag extends Fragment {
 
@@ -81,7 +82,7 @@ public class AccountSettingFrag extends Fragment {
 //                    changeFragment(new Signup());
                     Intent signupIntent = new Intent(getActivity(), StudentSignUp.class);
                     Log.w("myTag", "loginIntent created");
-                    ((Home) getActivity()).startActivity(signupIntent);
+                    Objects.requireNonNull(getActivity()).startActivity(signupIntent);
                     Log.w("myTag", "startActivity(signupIntent) done");
 
 //                    Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
