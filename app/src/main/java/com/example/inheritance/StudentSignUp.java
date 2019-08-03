@@ -320,6 +320,9 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
 
                                     Toast.makeText(StudentSignUp.this, "Sign up successful!", Toast.LENGTH_SHORT).show();
                                     Log.w("myTag", "Signed up");
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("student_logged", true);
+                                    editor.commit();
 //                                    finish();
                                     Intent backToHome = new Intent(StudentSignUp.this, Home.class);
                                     startActivity(backToHome);

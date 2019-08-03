@@ -10,6 +10,17 @@
 
     <application>
         <activity
+            android:name=".AddNotice"
+            android:label="AddNotice"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            <action android:name="android.intent.action.VIEW" />
+        </intent-filter>
+        </activity>
+        <activity
             android:name=".StudentSignUp"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -19,11 +30,12 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-            <!--</intent-filter>-->
+
+             <!--<intent-filter>-->
+             <!--<action android:name="android.intent.action.MAIN" />-->
+             <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--<action android:name="android.intent.action.VIEW" />-->
+             <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".Feed"

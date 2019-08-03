@@ -61,7 +61,7 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class AddPost extends AppCompatActivity {
 
-    String committee, Image, id;
+    String committee, Image, id, purpose, program, year, branch;
     EditText inputDate, inputTitle, inputDescription;
     String date, Title, Description, pathToFile;
     Button bPicture, bCamera;
@@ -87,9 +87,23 @@ public class AddPost extends AppCompatActivity {
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
         Intent intent = getIntent();
-        committee = intent.getStringExtra("adminOf");
-        dbRef = FirebaseDatabase.getInstance().getReference(committee);
-        storageReference = FirebaseStorage.getInstance().getReference(committee);
+        purpose = intent.getStringExtra("purpose");
+        if (purpose.equals("post")) {
+            committee = intent.getStringExtra("adminOf");
+            dbRef = FirebaseDatabase.getInstance().getReference(committee);
+            storageReference = FirebaseStorage.getInstance().getReference(committee);
+        } else if (purpose.equals("notice")) {
+            program = intent.getStringExtra("program");
+            branch = intent.getStringExtra("branch");
+            year = intent.getStringExtra("year");
+            if (!program.equals("MCA")) {
+                dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
+                storageReference = FirebaseStorage.getInstance().getReference(program).child(branch).child(year);
+            } else {
+                dbRef = FirebaseDatabase.getInstance().getReference(program).child(year);
+                storageReference = FirebaseStorage.getInstance().getReference(program).child(year);
+            }
+        }
 
 
 //        inputDate.setText(date);
