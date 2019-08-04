@@ -128,7 +128,7 @@ public class AddNotice extends AppCompatActivity {
         if(resultCode == RESULT_OK){
             if(requestCode == ACTION_PDF && data!= null){
                 pdfUri = data.getData();
-                tvStatus.setText("A file is selected : " + data.getData().getLastPathSegment());
+                tvStatus.setText("File selected : " + data.getData().getLastPathSegment());
             }
         }
     }

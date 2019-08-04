@@ -8,7 +8,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AddPost"
     tools:showIn="@layout/activity_add_new_post"
-    android:layout_margin="8dp"
     android:padding="8dp"
     >
 
@@ -125,6 +124,29 @@
         />
 
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bSelectPdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="8dp"
+                android:text="Select a PDF" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextDescription"
+                android:text="No file selected"
+                android:textSize="21sp" />
+        </LinearLayout>
 
 
     <Button

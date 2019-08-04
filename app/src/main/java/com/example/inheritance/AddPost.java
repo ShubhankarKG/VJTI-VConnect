@@ -1,16 +1,21 @@
 package com.example.inheritance;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -25,12 +30,14 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,16 +68,22 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class AddPost extends AppCompatActivity {
 
-    String committee, Image, id, purpose, program, year, branch;
-    EditText inputDate, inputTitle, inputDescription;
-    String date, Title, Description, pathToFile;
-    Button bPicture, bCamera;
+    public static final int ACTION_PDF = 10;
+    public static final int ACTION_PIC = 20;
+    String committee, imageUrl, pdfUrl, id, purpose, program, year, branch;
+    EditText inputTitle, inputDescription;
     public static final int IMAGE_GALLERY_REQUEST = 20;
     public static final int IMAGE_CAMERA_REQUEST = 30;
+    String date, title, description, pathToFile;
+    Button bPicture, bCamera, bSelectPdf;
+    ProgressDialog progressDialog;
     ImageView ivPicture;
     DatabaseReference dbRef;
+    private TextView tvStatus;
+    private Uri pdfUri, picUri;
     Uri imageUri, file = null;
     private StorageReference storageReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +96,16 @@ public class AddPost extends AppCompatActivity {
         inputTitle = (EditText) findViewById(R.id.inputTitle);
         inputDescription = (EditText) findViewById(R.id.inputDescription);
         ivPicture = (ImageView) findViewById(R.id.ivPicture);
-        Button btnCreateProduct = findViewById(R.id.btnCreatePost);
+        Button btnCreatePost = findViewById(R.id.btnCreatePost);
+        bSelectPdf = (Button) findViewById(R.id.bSelectPdf);
+        tvStatus = findViewById(R.id.tvStatus);
+
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
+
 
         Intent intent = getIntent();
         purpose = intent.getStringExtra("purpose");
-        if (purpose.equals("post")) {
+        if (purpose.equals("student_activity")) {
             committee = intent.getStringExtra("adminOf");
             dbRef = FirebaseDatabase.getInstance().getReference(committee);
             storageReference = FirebaseStorage.getInstance().getReference(committee);
@@ -108,10 +125,30 @@ public class AddPost extends AppCompatActivity {
 
 //        inputDate.setText(date);
 
-        btnCreateProduct.setOnClickListener(new View.OnClickListener() {
+        bSelectPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadFile();
+                if (ContextCompat.checkSelfPermission(AddPost.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    selectPdf();
+                } else {
+                    ActivityCompat.requestPermissions(AddPost.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 30);
+                }
+            }
+        });
+
+//        bUploadPdf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(pdfUri!= null){
+//                    uploadFile();
+//                }
+//            }
+//        });
+
+        btnCreatePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadPost();
             }
 
         });
@@ -148,8 +185,103 @@ public class AddPost extends AppCompatActivity {
 
     }
 
+    private void selectPdf() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, ACTION_PDF);
+    }
+
+//    @SuppressLint("SetTextI18n")
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode == RESULT_OK){
+//            if(requestCode == ACTION_PDF && data!= null){
+//                pdfUri = data.getData();
+//                tvStatus.setText("File selected : " + data.getData().getLastPathSegment());
+//            }
+//        }
+//    }
 
 
+    //  THIS!
+    private void uploadPost() {
+        progressDialog = new ProgressDialog(AddPost.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setTitle("Uploading post...");
+        progressDialog.setProgress(0);
+        progressDialog.show();
+        boolean pdfUp, imageUp;
+        title = inputTitle.getText().toString();
+        if (pdfUri != null) {
+            storageReference.putFile(pdfUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Log.w("myTag", "File uploaded successfully");
+
+                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    pdfUrl = uri.toString();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setProgress(currentProgress);
+
+                }
+            });
+        }
+        if (imageUri != null) {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            fileReference.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    imageUrl = uri.toString();
+                                }
+                            });
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+        description = inputDescription.getText().toString();
+        Post post = new Post(title, description, imageUrl, date, pdfUrl);
+        if (TextUtils.isEmpty(id)) {
+            id = dbRef.push().getKey();
+        }
+        if (TextUtils.isEmpty(title)) {
+            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
+        }
+        post.setId(id);
+        dbRef.child(id).setValue(post);
+        Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+        Intent goBack = new Intent(AddPost.this, Home.class);
+        startActivity(goBack);
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -161,6 +293,9 @@ public class AddPost extends AppCompatActivity {
                 ivPicture.setImageBitmap(bitmap);
                 assert bitmap != null;
                 imageUri = getImageUri(getApplicationContext(), bitmap);
+            } else if (requestCode == ACTION_PDF && data != null && data.getData() != null) {
+                pdfUri = data.getData();
+                tvStatus.setText("File selected : " + data.getData().getLastPathSegment());
             }
         }
     }
@@ -171,9 +306,10 @@ public class AddPost extends AppCompatActivity {
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
+    /*
     private void uploadFile() {
-        Title = inputTitle.getText().toString();
-        Description = inputDescription.getText().toString();
+        title = inputTitle.getText().toString();
+        description = inputDescription.getText().toString();
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             fileReference.putFile(imageUri)
@@ -183,20 +319,20 @@ public class AddPost extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Image = uri.toString();
-                                    Post post = new Post(Title, Description, Image, date);
+                                    imageUrl = uri.toString();
+                                    Post post = new Post(title, description, Image, date);
                                     if (!TextUtils.isEmpty(id)) {
                                     } else {
                                         id = dbRef.push().getKey();
                                     }
-                                    while (TextUtils.isEmpty(Title)) {
+                                    while (TextUtils.isEmpty(title)) {
                                         Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
                                     }
                                     post.setId(id);
                                     dbRef.child(id).setValue(post);
                                     Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(AddPost.this, Home.class));
-                                }
+                                } //HERE
                             });
 
                         }
@@ -209,7 +345,7 @@ public class AddPost extends AppCompatActivity {
                     });
         } else {
 
-            Post post = new Post(Title, Description,date);
+            Post post = new Post(title, description,date);
             if (!TextUtils.isEmpty(id)) {
             } else {
                 id = dbRef.push().getKey();
@@ -222,14 +358,23 @@ public class AddPost extends AppCompatActivity {
 
     }
 
-
+*/
     private Uri getImageUri(Context context, Bitmap inImage){
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100 , bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, Title, null );
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, title, null);
         return Uri.parse(path);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 10 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            selectPdf();
+        } else {
+            Toast.makeText(AddPost.this, "Please provide permission", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
 

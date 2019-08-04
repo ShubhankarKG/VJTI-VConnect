@@ -69,107 +69,107 @@
                 android:inputType="textPassword"
                 android:paddingLeft="12dp"
                 android:textStyle="italic" />
+            <!--
+                        <TextView
+                            android:id="@+id/txt_select_program"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Select program"
+                            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/txt_select_program"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:text="Select program"
-                android:textSize="20sp" />
+                        <RadioGroup
+                            android:id="@+id/rg_program"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp">
 
-            <RadioGroup
-                android:id="@+id/rg_program"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp">
+                            <RadioButton
+                                android:id="@+id/rb_btech"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BTech"
+                                android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/rb_btech"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BTech"
-                    android:textSize="18sp" />
+                            <RadioButton
+                                android:id="@+id/rb_diploma"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Diploma"
+                                android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/rb_diploma"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Diploma"
-                    android:textSize="18sp" />
+                            <RadioButton
+                                android:id="@+id/rb_mtech"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MTech"
+                                android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/rb_mtech"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MTech"
-                    android:textSize="18sp" />
+                            <RadioButton
+                                android:id="@+id/rb_mca"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MCA"
+                                android:textSize="18sp" />
+                        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/rb_mca"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MCA"
-                    android:textSize="18sp" />
-            </RadioGroup>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                            <TextView
+                                android:id="@+id/txt_year"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="64dp"
+                                android:layout_weight="0"
+                                android:text="Year"
+                                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/txt_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="64dp"
-                    android:layout_weight="0"
-                    android:text="Year"
-                    android:textSize="20sp" />
+                            <Spinner
+                                android:id="@+id/year_spinner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_weight="1" />
+                        </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/year_spinner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                            <TextView
+                                android:id="@+id/txt_branch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="16dp"
+                                android:layout_weight="0"
+                                android:text="Branch"
+                                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/txt_branch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="0"
-                    android:text="Branch"
-                    android:textSize="20sp" />
-
-                <Spinner
-                    android:id="@+id/branch_spinner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:gravity="right" />
-            </LinearLayout>
-
+                            <Spinner
+                                android:id="@+id/branch_spinner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_weight="1"
+                                android:gravity="right" />
+                        </LinearLayout>
+            -->
             <!--
                 <TextView
                     android:id="@+id/password"

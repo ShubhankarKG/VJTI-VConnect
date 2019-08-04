@@ -146,6 +146,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                         Log.w("myTag", "yearSpinner set");
                         branchSpinner.setVisibility(GONE);
                         txtBranch.setVisibility(GONE);
+                        branch = null;
                         Log.w("myTag", "branchSpinner visibility set to GONE");
                         break;
                     default:
@@ -183,13 +184,13 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                 }
 //                Add conditions for no options selected in spinners
                 try {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("program", program);
-                    editor.putString("year", year);
-                    if (!program.equals("MCA")) editor.putString("branch", branch);
-                    else editor.putString("branch", null);
-                    editor.commit();
-                    Log.w("myTag", "userCred (sharedPreferences) set");
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString("program", program);
+//                    editor.putString("year", year);
+//                    if (!program.equals("MCA")) editor.putString("branch", branch);
+//                    else editor.putString("branch", null);
+//                    editor.commit();
+//                    Log.w("myTag", "userCred (sharedPreferences) set");
                     startSignupFirebaseAuth();
                 } catch (Exception e) {
                     Log.w("myTag", e.toString());
@@ -298,7 +299,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                             @Override
                             synchronized public void onComplete(@NonNull Task<AuthResult> task) {
                                 Log.w("myTag", "onComplete() evoked");
-                                progressDialog.dismiss();
+
                                 if (task.isSuccessful()) {
                                     Log.w("myTag", "Task successful");
                                     // Make database entry for new user
@@ -307,6 +308,9 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                                     map.put("user_id", user.getUid());
                                     map.put("email", email);
                                     map.put("last_connection", Calendar.getInstance(Locale.US).getTimeInMillis()); // Check this out
+                                    map.put("year", year);
+                                    map.put("branch", branch);
+                                    map.put("program", program);
                                     DatabaseReference userDbRef = FirebaseDatabase.getInstance()
                                             .getReference().child("users")
                                             .child(user.getUid());
@@ -317,12 +321,18 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                                                     Log.w("myTag", "User added to Firebase Realtime Database");
                                                 }
                                             });
-
-                                    Toast.makeText(StudentSignUp.this, "Sign up successful!", Toast.LENGTH_SHORT).show();
-                                    Log.w("myTag", "Signed up");
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putBoolean("student_logged", true);
+                                    editor.putString("program", program);
+                                    editor.putString("branch", branch);
+                                    editor.putString("year", year);
                                     editor.commit();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(StudentSignUp.this, "Sign up successful!", Toast.LENGTH_SHORT).show();
+                                    Log.w("myTag", "Signed up");
+//                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                    editor.putBoolean("student_logged", true);
+//                                    editor.commit();
 //                                    finish();
                                     Intent backToHome = new Intent(StudentSignUp.this, Home.class);
                                     startActivity(backToHome);

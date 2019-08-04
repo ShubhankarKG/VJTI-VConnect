@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnUploadPic"
         android:layout_below="@id/buttonUploadPdf"
-        android:text="Select a Photo"
+        android:text="Select an image"
         />
 
     <ProgressBar

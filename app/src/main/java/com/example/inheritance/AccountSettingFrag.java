@@ -1,6 +1,7 @@
 package com.example.inheritance;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static com.example.inheritance.Home.sharedPreferences;
 
 public class AccountSettingFrag extends Fragment {
 
@@ -59,8 +62,9 @@ public class AccountSettingFrag extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         Log.w("myTag", "onCreateView() evoked");
-        if (firebaseAuth.getCurrentUser() == null) {
+//        if (firebaseAuth.getCurrentUser() == null) {
 //            User isn't signed in
+        if (!sharedPreferences.getBoolean("student_logged", false)) {
             view = inflater.inflate(R.layout.account_settings_not_logged, container, false);
             bLogin = (Button) view.findViewById(R.id.login_button);
             bSignup = (Button) view.findViewById(R.id.sign_up_button);
@@ -103,6 +107,12 @@ public class AccountSettingFrag extends Fragment {
                 public void onClick(View view) {
                     if (firebaseAuth.getCurrentUser() != null) {
                         firebaseAuth.signOut();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("program");
+                        editor.remove("branch");
+                        editor.remove("year");
+                        editor.putBoolean("student_logged", false);
+                        editor.commit();
                         Log.w("myTag", "User logged out");
                         Toast.makeText(getActivity(), "Logged out", Toast.LENGTH_SHORT).show();
                         Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);

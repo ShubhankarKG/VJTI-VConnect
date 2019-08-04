@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +44,7 @@ public class StudentInterfaceFrag extends Fragment {
     private Adapter adapter;
     private ProgressBar progressCircle;
     private String program, branch, year;
+    FirebaseAuth firebaseAuth;
 
     @Nullable
     @Override
@@ -62,13 +64,15 @@ public class StudentInterfaceFrag extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
         if (sharedPreferences.getBoolean("student_logged", false)) {
+//        if(firebaseAuth.getCurrentUser() != null) {
             notLoggedLayout.setVisibility(View.GONE);
             loggedLayout.setVisibility(View.VISIBLE);
             noticesData = new ArrayList<>();
             program = sharedPreferences.getString("program", null);
             year = sharedPreferences.getString("year", null);
 
-            if (!program.equals("MCA")) {
+
+            if (program != "MCA") {
                 branch = sharedPreferences.getString("branch", null);
                 txtClassDetails.setText(program + '/' + branch + '/' + year);
                 dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
