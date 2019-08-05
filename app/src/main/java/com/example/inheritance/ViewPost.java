@@ -35,7 +35,7 @@ public class ViewPost extends AppCompatActivity {
   //      vpPostDate.setText(date);
         Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
-        if (Objects.equals(intent.getStringExtra("purpose"), "student_activity")) {
+        if (intent.getStringExtra("purpose").equals("student_activity")) {
             committee = intent.getStringExtra("committee");
 //        if (postID.equals(null) || committee.equals(null))
 //            Toast.makeText(this, "PostID or committee error occurred!", Toast.LENGTH_SHORT).show();
@@ -70,17 +70,45 @@ public class ViewPost extends AppCompatActivity {
                     Toast.makeText(this, "PostID is null!", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (Objects.equals(intent.getStringExtra("purpose"), "notice")) {
+        } else if (intent.getStringExtra("purpose").equals("notice")) {
             program = intent.getStringExtra("program");
             branch = intent.getStringExtra("branch");
             year = intent.getStringExtra("year");
 
             if (program != null && year != null) {
-                if (program == "MCA") {
+                if (program.equals("MCA")) {
                     if (postID != null) {
                         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(program).child(year).child(postID);
                         dbRef.keepSynced(true);
                         dbRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    Post post = dataSnapshot.getValue(Post.class);
+                                    assert post != null;
+                                    vpPostTitle.setText(post.getTitle());
+                                    vpPostDate.setText(post.getDate());
+                                    vpPostDescription.setText(post.getDescription());
+//                                    if (!TextUtils.isEmpty(post.getImage())) {
+//                                        Picasso.get()
+//                                                .load(post.getImage())
+//                                                .into(vpImage);
+//                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.e("error", databaseError.toException().toString());
+                            }
+                        });
+
+                    } else Toast.makeText(this, "Post ID is null", Toast.LENGTH_SHORT).show();
+                } else if (branch != null) {
+                    if (postID != null) {
+                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year).child(postID);
+                        dbRef.keepSynced(true);
+                        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
@@ -102,13 +130,6 @@ public class ViewPost extends AppCompatActivity {
                                 Log.e("error", databaseError.toException().toString());
                             }
                         });
-
-                    } else Toast.makeText(this, "Post ID is null", Toast.LENGTH_SHORT).show();
-                } else if (branch != null) {
-                    if (postID != null) {
-                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year).child(postID);
-                        dbRef.keepSynced(true);
-
                     } else Toast.makeText(this, "Post ID is null", Toast.LENGTH_SHORT).show();
                 }
             }

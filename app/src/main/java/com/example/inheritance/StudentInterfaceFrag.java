@@ -66,8 +66,8 @@ public class StudentInterfaceFrag extends Fragment {
 
 //        sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
-        if (sharedPreferences.getBoolean("student_logged", false)) {
-            Log.w("myTag", "inside OnCreateView() of StudentInterface, student_logged == true");
+        if (firebaseAuth.getCurrentUser() != null) {
+            Log.w("myTag", "inside OnCreateView() of StudentInterface, firebase user != null");
             notLoggedLayout.setVisibility(View.GONE);
             loggedLayout.setVisibility(View.VISIBLE);
             noticesData = new ArrayList<>();
@@ -181,7 +181,8 @@ public class StudentInterfaceFrag extends Fragment {
             loggedLayout.setVisibility(View.GONE);
             progressCircle.setVisibility(View.GONE);
             txtClassDetails.setVisibility(View.GONE);
-
+            bLogout.setVisibility(View.GONE);
+            bLogin.setVisibility(View.GONE);
         }
 
 
@@ -194,39 +195,19 @@ public class StudentInterfaceFrag extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 //        final Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
+        final Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 Log.w("myTag", "onAuthStateChanged called in StudentInterfaceFrag");
 
-//                List<Fragment> frags = getFragmentManager().getFragments();
-//                Log.w("myTag", "Traversing through all fragments");
-//                for(Fragment f : frags) {
-////                    Log.w("myTag", f.toString());
-//                    if(f instanceof  StudentInterfaceFrag) {
-//                        Log.w("myTag", "Found");
-//
-//                        Fragment reload = new StudentInterfaceFrag();
-//                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                        ft.detach(f);
-//                        ft.attach(f);
-//                        ft.commit();
-//                        Log.w("myTag","Replace fragment transaction committed");
-//                        break;
-//                    }
-//                }
-//                Fragment reload = new StudentInterfaceFrag();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.replace(R.id.fragment_container, reload);
-//                ft.commit();
-
-//                if(currentFrag instanceof StudentInterfaceFrag) {
-//                    Log.w("myTag", "currentFrag is instanceof StudentInterfaceFrag");
-//                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//                    fragmentTransaction.detach(currentFrag);
-//                    fragmentTransaction.attach(currentFrag);
-//                    fragmentTransaction.commit();
-//                }
+                if (currentFrag instanceof AccountSettingFrag) {
+                    Log.w("myTag", "currentFrag is instanceof StudentInterfaceFrag");
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.detach(currentFrag);
+                    fragmentTransaction.attach(currentFrag);
+                    fragmentTransaction.commit();
+                }
             }
         });
 //        notLoggedLayout = view.findViewById(R.id.not_logged_msg);
@@ -355,5 +336,26 @@ public class StudentInterfaceFrag extends Fragment {
 //
 //        }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.w("myTag", "onAuthStateChanged called in StudentInterfaceFrag in onResume()");
+
+                if (currentFrag instanceof AccountSettingFrag) {
+                    Log.w("myTag", "currentFrag is instanceof StudentInterfaceFrag in onResume()");
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.detach(currentFrag);
+                    fragmentTransaction.attach(currentFrag);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
     }
 }

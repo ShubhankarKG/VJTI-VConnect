@@ -2,10 +2,13 @@ package com.example.inheritance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -296,6 +299,10 @@ public class StudentLogin extends AppCompatActivity {
 //                                    while (!done) {
 //                                    } //wait
 // ******************************************************************************************************************************** */
+
+                                    while (firebaseAuth.getCurrentUser() != null && sharedPreferences.getBoolean("student_logged", false)) {
+
+                                    }
                                     progressDialog.dismiss();
                                     Intent backToHome = new Intent(StudentLogin.this, Home.class);
                                     startActivity(backToHome);

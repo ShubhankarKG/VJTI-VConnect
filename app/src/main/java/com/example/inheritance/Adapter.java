@@ -286,8 +286,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ViewPost.class);
                     if (committee != null) {
+                        intent.putExtra("purpose", "student_activity");
                         intent.putExtra("committee", committee);
                     } else {
+                        intent.putExtra("purpose", "notice");
                         intent.putExtra("program", program);
                         intent.putExtra("branch", branch);
                         intent.putExtra("year", year);

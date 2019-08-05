@@ -114,13 +114,16 @@ public class AccountSettingFrag extends Fragment {
                         editor.commit();
                         Log.w("myTag", "User logged out");
                         Toast.makeText(getActivity(), "Logged out", Toast.LENGTH_SHORT).show();
-                        Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
-                        if (currentFrag instanceof AccountSettingFrag) {
-                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                            fragmentTransaction.detach(currentFrag);
-                            fragmentTransaction.attach(currentFrag);
-                            fragmentTransaction.commit();
-                        }
+//                        Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
+//                        if (currentFrag instanceof AccountSettingFrag) {
+//                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                            fragmentTransaction.detach(currentFrag);
+//                            fragmentTransaction.attach(currentFrag);
+//                            fragmentTransaction.commit();
+//                        }
+
+                        Intent intent = new Intent(getActivity(), Home.class);
+                        startActivity(intent);
 
                     }
                 }
@@ -212,6 +215,21 @@ public class AccountSettingFrag extends Fragment {
         super.onResume();
         Log.w("myTag", "onResume() evoked");
 
+        final Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.w("myTag", "onAuthStateChanged called in AccountSettingsFrag in OnResume()");
+
+                if (currentFrag instanceof AccountSettingFrag) {
+                    Log.w("myTag", "currentFrag is instanceof AccountSettingsFrag");
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.detach(currentFrag);
+                    fragmentTransaction.attach(currentFrag);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
 
 //        Uncomment this, and you'll see a nice infinite loop
 //        Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);

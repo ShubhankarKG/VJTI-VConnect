@@ -85,6 +85,7 @@ public class AddPost extends AppCompatActivity {
     private Uri pdfUri, picUri;
     Uri imageUri, file = null;
     private StorageReference storageReference;
+    private boolean imageDone, pdfDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,15 +218,16 @@ public class AddPost extends AppCompatActivity {
         boolean pdfUp, imageUp;
         title = inputTitle.getText().toString();
         description = inputDescription.getText().toString();
-        Post post = new Post(title, description, date);
-        if (TextUtils.isEmpty(id)) {
-            id = dbRef.push().getKey();
-        }
-        if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
-        }
-        post.setId(id);
-        dbRef.child(id).setValue(post);
+
+//        Post post = new Post(title, description, date);
+//        if (TextUtils.isEmpty(id)) {
+//            id = dbRef.push().getKey();
+//        }
+//        if (TextUtils.isEmpty(title)) {
+//            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
+//        }
+//        post.setId(id);
+//        dbRef.child(id).setValue(post);
         if (pdfUri != null) {
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(pdfUri));
             fileReference.putFile(pdfUri)
@@ -236,13 +238,15 @@ public class AddPost extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             pdfUrl = uri.toString();
-                            dbRef.child(id).child("pdfUri").setValue(pdfUrl);
+//                            pdfDone = true;
+//                            dbRef.child(id).child("pdfUrl").setValue(pdfUrl);
                         }
                     });
                 }
             });
 
         }
+//        else    pdfDone = true;
 
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
@@ -254,7 +258,8 @@ public class AddPost extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     imageUrl = uri.toString();
-                                    dbRef.child(id).child("imageUri").setValue(imageUrl);
+                                    imageDone = true;
+//                                    dbRef.child(id).child("imageUrl").setValue(imageUrl);
                                 }
                             });
                         }
@@ -266,9 +271,20 @@ public class AddPost extends AppCompatActivity {
                         }
                     });
         }
+//        else    imageDone = true;
 
 
-
+//        while(!imageDone && !pdfDone) {}
+        Post post = new Post(title, description, imageUrl, pdfUrl, date);
+        if (TextUtils.isEmpty(id)) {
+            id = dbRef.push().getKey();
+        }
+        if (TextUtils.isEmpty(title)) {
+            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
+        }
+        post.setId(id);
+        dbRef.child(id).setValue(post);
+        progressDialog.dismiss();
         Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
         Intent goBack = new Intent(AddPost.this, Home.class);
         startActivity(goBack);
