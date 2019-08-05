@@ -74,61 +74,63 @@ public class StudentInterfaceFrag extends Fragment {
             program = sharedPreferences.getString("program", null);
             year = sharedPreferences.getString("year", null);
 
-            if (!program.equals("MCA")) {
-                branch = sharedPreferences.getString("branch", null);
-                txtClassDetails.setText(program + '/' + branch + '/' + year);
-                dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
-                dbRef.keepSynced(true);
-                dbRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        noticesData.clear();
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                Post post1 = dataSnapshot1.getValue(Post.class);
-                                noticesData.add(post1);
+            if(program!=null) {
+                if (!program.equals("MCA")) {
+                    branch = sharedPreferences.getString("branch", null);
+                    txtClassDetails.setText(program + '/' + branch + '/' + year);
+                    dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
+                    dbRef.keepSynced(true);
+                    dbRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            noticesData.clear();
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    Post post1 = dataSnapshot1.getValue(Post.class);
+                                    noticesData.add(post1);
+                                }
+                                adapter = new Adapter(getActivity(), noticesData, program, branch, year);
+                                mNoticesList.setAdapter(adapter);
+
                             }
-                            adapter = new Adapter(getActivity(), noticesData, program, branch, year);
-                            mNoticesList.setAdapter(adapter);
-
+                            progressCircle.setVisibility(View.INVISIBLE);
                         }
-                        progressCircle.setVisibility(View.INVISIBLE);
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                        progressCircle.setVisibility(View.INVISIBLE);
-                    }
-                });
-            } else {
-                txtClassDetails.setText(program + '/' + '/' + year);
-                dbRef = FirebaseDatabase.getInstance().getReference(program).child(year);
-                dbRef.keepSynced(true);
-                dbRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        noticesData.clear();
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                Post post1 = dataSnapshot1.getValue(Post.class);
-                                noticesData.add(post1);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressCircle.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                } else {
+                    txtClassDetails.setText(program + '/' + '/' + year);
+                    dbRef = FirebaseDatabase.getInstance().getReference(program).child(year);
+                    dbRef.keepSynced(true);
+                    dbRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            noticesData.clear();
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    Post post1 = dataSnapshot1.getValue(Post.class);
+                                    noticesData.add(post1);
+                                }
+                                adapter = new Adapter(getActivity(), noticesData, program, branch, year);
+                                mNoticesList.setAdapter(adapter);
+
                             }
-                            adapter = new Adapter(getActivity(), noticesData, program, branch, year);
-                            mNoticesList.setAdapter(adapter);
-
+                            progressCircle.setVisibility(View.INVISIBLE);
                         }
-                        progressCircle.setVisibility(View.INVISIBLE);
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                        progressCircle.setVisibility(View.INVISIBLE);
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressCircle.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+
             }
-
             if (sharedPreferences.getBoolean("cr_logged", false)) {
                 fabAdd.show();  //show FAB for adding post to CR
                 bLogin.setVisibility(View.GONE);

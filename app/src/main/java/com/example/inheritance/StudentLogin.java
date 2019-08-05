@@ -175,9 +175,6 @@ public class StudentLogin extends AppCompatActivity {
 //        yearSpinner.setOnItemSelectedListener(this);
 //        branchSpinner.setOnItemSelectedListener(this);
 
-
-
-
         bGoogleSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -339,7 +336,7 @@ public class StudentLogin extends AppCompatActivity {
 
     //    @Override
 //    Not overriding!!!!
-    public void OnActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {

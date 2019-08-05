@@ -22,6 +22,7 @@ import android.widget.Toast;
 public class Home extends AppCompatActivity {
     public static SharedPreferences sharedPreferences;
     private ViewPagerAdapter viewPagerAdapter;
+    BottomNavigationView bView;
     MenuItem prevMenuItem;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,24 +31,27 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.viewpager);
 
         final ViewPager viewPager = findViewById(R.id.viewpager);
-        final BottomNavigationView bView = findViewById(R.id.nav_view);
+        bView = findViewById(R.id.nav_view);
+
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
-        bView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+
+        bView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
-                    case R.id.navigation_committees :
-                        viewPager.setCurrentItem(0);
-                        break;
-                    case R.id.navigation_student :
-                        viewPager.setCurrentItem(1);
-                        break;
-                    case R.id.navigation_account :
-                        viewPager.setCurrentItem(2);
-                        break;
+                    case R.id.navigation_committees:
+                    viewPager.setCurrentItem(0);
+                    break;
+                case R.id.navigation_student:
+                    viewPager.setCurrentItem(1);
+                    break;
+                case R.id.navigation_account:
+                    viewPager.setCurrentItem(2);
+                    break;
                 }
+                return false;
             }
         });
 
@@ -74,6 +78,7 @@ public class Home extends AppCompatActivity {
 
             }
         });
+
     }
 
     @Override
@@ -164,4 +169,6 @@ public class Home extends AppCompatActivity {
         super.onRestart();
 
     }
+
+
 }

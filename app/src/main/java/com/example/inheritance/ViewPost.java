@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class ViewPost extends AppCompatActivity {
     private String committee, program, year, branch, postID;
     @Override
@@ -33,7 +35,7 @@ public class ViewPost extends AppCompatActivity {
   //      vpPostDate.setText(date);
         Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
-        if (intent.getStringExtra("purpose").equals("student_activity")) {
+        if (Objects.equals(intent.getStringExtra("purpose"), "student_activity")) {
             committee = intent.getStringExtra("committee");
 //        if (postID.equals(null) || committee.equals(null))
 //            Toast.makeText(this, "PostID or committee error occurred!", Toast.LENGTH_SHORT).show();
@@ -68,7 +70,7 @@ public class ViewPost extends AppCompatActivity {
                     Toast.makeText(this, "PostID is null!", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (intent.getStringExtra("purpose").equals("notice")) {
+        } else if (Objects.equals(intent.getStringExtra("purpose"), "notice")) {
             program = intent.getStringExtra("program");
             branch = intent.getStringExtra("branch");
             year = intent.getStringExtra("year");

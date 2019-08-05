@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public ViewPagerAdapter(FragmentManager fm){
@@ -25,6 +27,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public int getCount(){
         return 3;
+    }
+
+    public int getItemPosition(@NotNull Object object){
+        return POSITION_NONE;
     }
 
 }

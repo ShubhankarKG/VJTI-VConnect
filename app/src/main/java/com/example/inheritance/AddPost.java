@@ -40,6 +40,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -214,34 +216,34 @@ public class AddPost extends AppCompatActivity {
         progressDialog.show();
         boolean pdfUp, imageUp;
         title = inputTitle.getText().toString();
+        description = inputDescription.getText().toString();
+        Post post = new Post(title, description, date);
+        if (TextUtils.isEmpty(id)) {
+            id = dbRef.push().getKey();
+        }
+        if (TextUtils.isEmpty(title)) {
+            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
+        }
+        post.setId(id);
+        dbRef.child(id).setValue(post);
         if (pdfUri != null) {
-            storageReference.putFile(pdfUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(pdfUri));
+            fileReference.putFile(pdfUri)
+            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Log.w("myTag", "File uploaded successfully");
-
-                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    pdfUrl = uri.toString();
-                                }
-                            });
+                        public void onSuccess(Uri uri) {
+                            pdfUrl = uri.toString();
+                            dbRef.child(id).child("pdfUri").setValue(pdfUrl);
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    progressDialog.setProgress(currentProgress);
-
+                    });
                 }
             });
+
         }
+
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             fileReference.putFile(imageUri)
@@ -252,9 +254,9 @@ public class AddPost extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     imageUrl = uri.toString();
+                                    dbRef.child(id).child("imageUri").setValue(imageUrl);
                                 }
                             });
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -265,22 +267,13 @@ public class AddPost extends AppCompatActivity {
                     });
         }
 
-        description = inputDescription.getText().toString();
-        Post post = new Post(title, description, imageUrl, date, pdfUrl);
-        if (TextUtils.isEmpty(id)) {
-            id = dbRef.push().getKey();
-        }
-        if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
-        }
-        post.setId(id);
-        dbRef.child(id).setValue(post);
+
+
         Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
         Intent goBack = new Intent(AddPost.this, Home.class);
         startActivity(goBack);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -306,59 +299,57 @@ public class AddPost extends AppCompatActivity {
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    /*
-    private void uploadFile() {
-        title = inputTitle.getText().toString();
-        description = inputDescription.getText().toString();
-        if (imageUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-            fileReference.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    imageUrl = uri.toString();
-                                    Post post = new Post(title, description, Image, date);
-                                    if (!TextUtils.isEmpty(id)) {
-                                    } else {
-                                        id = dbRef.push().getKey();
-                                    }
-                                    while (TextUtils.isEmpty(title)) {
-                                        Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
-                                    }
-                                    post.setId(id);
-                                    dbRef.child(id).setValue(post);
-                                    Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AddPost.this, Home.class));
-                                } //HERE
-                            });
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-
-            Post post = new Post(title, description,date);
-            if (!TextUtils.isEmpty(id)) {
-            } else {
-                id = dbRef.push().getKey();
-            }
-            post.setId(id);
-            dbRef.child(id).setValue(post);
-            Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(AddPost.this, Home.class));
-        }
-
-    }
-
-*/
+    //
+    //private void uploadFile() {
+    //title = inputTitle.getText().toString();
+    //description = inputDescription.getText().toString();
+    //if (imageUri != null) {
+    //final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+    //fileReference.putFile(imageUri)
+    //.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    //@Override
+    //public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+    //fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+    //@Override
+    //public void onSuccess(Uri uri) {
+    //imageUrl = uri.toString();
+    //Post post = new Post(title, description, Image, date);
+    //if (!TextUtils.isEmpty(id)) {
+    //} else {
+    //id = dbRef.push().getKey();
+    //}
+    //while (TextUtils.isEmpty(title)) {
+    //Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+    //}
+    //post.setId(id);
+    //dbRef.child(id).setValue(post);
+    //Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+    //startActivity(new Intent(AddPost.this, Home.class));
+    //} //HERE
+    //});
+    //
+    //}
+    //})
+    //.addOnFailureListener(new OnFailureListener() {
+    //@Override
+    //public void onFailure(@NonNull Exception e) {
+    //Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+    //}
+    //});
+    //} else {
+    //
+    //Post post = new Post(title, description,date);
+    //if (!TextUtils.isEmpty(id)) {
+    //} else {
+    //id = dbRef.push().getKey();
+    //}
+    //post.setId(id);
+    //dbRef.child(id).setValue(post);
+    //Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+    //startActivity(new Intent(AddPost.this, Home.class));
+    //}
+    //
+    //}
     private Uri getImageUri(Context context, Bitmap inImage){
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100 , bytes);
