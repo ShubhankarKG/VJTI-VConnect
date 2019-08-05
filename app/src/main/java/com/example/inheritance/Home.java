@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 public class Home extends AppCompatActivity {
     public static SharedPreferences sharedPreferences;
+    private ViewPagerAdapter viewPagerAdapter;
     MenuItem prevMenuItem;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,7 +31,8 @@ public class Home extends AppCompatActivity {
 
         final ViewPager viewPager = findViewById(R.id.viewpager);
         final BottomNavigationView bView = findViewById(R.id.nav_view);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
         sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
         bView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
@@ -72,6 +74,14 @@ public class Home extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewPagerAdapter != null) {
+            viewPagerAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -148,4 +158,10 @@ public class Home extends AppCompatActivity {
 //        return false;
 //    }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+    }
 }

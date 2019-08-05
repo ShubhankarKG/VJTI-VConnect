@@ -102,7 +102,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                             switch (item.getItemId()) {
                                 case R.id.edit_post:
                                     Intent editIntent = new Intent(v.getContext(), EditThisPost.class);
-                                    editIntent.putExtra("committee", committee);
+                                    if (committee != null) {
+                                        editIntent.putExtra("committee", committee);
+                                    } else {
+                                        editIntent.putExtra("program", program);
+                                        editIntent.putExtra("branch", branch);
+                                        editIntent.putExtra("year", year);
+                                    }
                                     editIntent.putExtra("postID", holder.postId);
                                     v.getContext().startActivity(editIntent);
                                     break;
@@ -279,7 +285,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ViewPost.class);
-                    intent.putExtra("committee", committee);
+                    if (committee != null) {
+                        intent.putExtra("committee", committee);
+                    } else {
+                        intent.putExtra("program", program);
+                        intent.putExtra("branch", branch);
+                        intent.putExtra("year", year);
+                    }
                     intent.putExtra("postID", postId);
                     itemView.getContext().startActivity(intent);
                 }

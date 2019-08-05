@@ -62,9 +62,8 @@ public class AccountSettingFrag extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         Log.w("myTag", "onCreateView() evoked");
-//        if (firebaseAuth.getCurrentUser() == null) {
+        if (firebaseAuth.getCurrentUser() == null) {
 //            User isn't signed in
-        if (!sharedPreferences.getBoolean("student_logged", false)) {
             view = inflater.inflate(R.layout.account_settings_not_logged, container, false);
             bLogin = (Button) view.findViewById(R.id.login_button);
             bSignup = (Button) view.findViewById(R.id.sign_up_button);
@@ -86,7 +85,7 @@ public class AccountSettingFrag extends Fragment {
 //                    changeFragment(new Signup());
                     Intent signupIntent = new Intent(getActivity(), StudentSignUp.class);
                     Log.w("myTag", "loginIntent created");
-                    Objects.requireNonNull(getActivity()).startActivity(signupIntent);
+                    ((Home) getActivity()).startActivity(signupIntent);
                     Log.w("myTag", "startActivity(signupIntent) done");
 
 //                    Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
@@ -155,7 +154,24 @@ public class AccountSettingFrag extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         firebaseAuth = FirebaseAuth.getInstance();
+
+
         Log.w("myTag", "onCreate() evoked");
+        final Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.w("myTag", "onAuthStateChanged called in AccountSettingsFrag");
+
+                if (currentFrag instanceof AccountSettingFrag) {
+                    Log.w("myTag", "currentFrag is instanceof AccountSettingsFrag");
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.detach(currentFrag);
+                    fragmentTransaction.attach(currentFrag);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
 
 //        Maybe no setContentView because onCreateView() takes care of it
 

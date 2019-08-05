@@ -44,6 +44,7 @@ public class StudentLogin extends AppCompatActivity {
     Button bGoogleSignin, bLogin, bCancel;
     EditText edtxtEmail, edtxtPwd;
     private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
     boolean done;
     private ProgressDialog progressDialog;
     private DatabaseReference dbRef;
@@ -85,6 +86,16 @@ public class StudentLogin extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null) {
+                    Toast.makeText(StudentLogin.this, "You're logged in!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
 
 //        rgProgram = (RadioGroup) findViewById(R.id.rg_program);
 //        branchSpinner = (Spinner) findViewById(R.id.branch_spinner);
@@ -238,6 +249,13 @@ public class StudentLogin extends AppCompatActivity {
 //        }
 //    }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
     private void loginWithEmailPwd() {
         final String email = edtxtEmail.getText().toString().trim();
         final String pwd = edtxtPwd.getText().toString().trim();
@@ -255,14 +273,14 @@ public class StudentLogin extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Log.w("myTag", "Task successful");
                                     Toast.makeText(StudentLogin.this, "Logging in", Toast.LENGTH_SHORT).show();
-
-                                    dbRef = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getUid());
+///********************************************************************************************************************************
+                                    dbRef = FirebaseDatabase.getInstance().getReference("users").child(firebaseAuth.getCurrentUser().getUid());
                                     ValueEventListener valueEventListener = new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            program = dataSnapshot.child(program).getValue(String.class);
-                                            branch = dataSnapshot.child(branch).getValue(String.class);
-                                            year = dataSnapshot.child(year).getValue(String.class);
+                                            program = dataSnapshot.child("program").getValue(String.class);
+                                            branch = dataSnapshot.child("branch").getValue(String.class);
+                                            year = dataSnapshot.child("year").getValue(String.class);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putBoolean("student_logged", true);
                                             editor.putString("program", program);
@@ -278,8 +296,9 @@ public class StudentLogin extends AppCompatActivity {
                                         }
                                     };
                                     dbRef.addValueEventListener(valueEventListener);
-                                    while (!done) {
-                                    } //wait
+//                                    while (!done) {
+//                                    } //wait
+// ******************************************************************************************************************************** */
                                     progressDialog.dismiss();
                                     Intent backToHome = new Intent(StudentLogin.this, Home.class);
                                     startActivity(backToHome);

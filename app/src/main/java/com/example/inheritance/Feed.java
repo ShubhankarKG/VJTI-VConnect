@@ -44,7 +44,7 @@ public class Feed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
+//        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
         tvHeading =  findViewById(R.id.heading);
         tvTagline =  findViewById(R.id.tagline);

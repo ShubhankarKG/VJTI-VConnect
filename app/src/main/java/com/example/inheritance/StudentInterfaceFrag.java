@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +51,7 @@ public class StudentInterfaceFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.w("myTag", "onCreateView() of Student Interface Frag called!");
         view = inflater.inflate(R.layout.fragment_student_interface, container, false);
         notLoggedLayout = view.findViewById(R.id.not_logged_msg);
         loggedLayout = view.findViewById(R.id.notices_feed);
@@ -61,18 +64,17 @@ public class StudentInterfaceFrag extends Fragment {
         bLogout = (Button) view.findViewById(R.id.logout_button);
         fabAdd = (FloatingActionButton) view.findViewById(R.id.fabAdd);
 
-        sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
+//        sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
         if (sharedPreferences.getBoolean("student_logged", false)) {
-//        if(firebaseAuth.getCurrentUser() != null) {
+            Log.w("myTag", "inside OnCreateView() of StudentInterface, student_logged == true");
             notLoggedLayout.setVisibility(View.GONE);
             loggedLayout.setVisibility(View.VISIBLE);
             noticesData = new ArrayList<>();
             program = sharedPreferences.getString("program", null);
             year = sharedPreferences.getString("year", null);
 
-
-            if (program != "MCA") {
+            if (!program.equals("MCA")) {
                 branch = sharedPreferences.getString("branch", null);
                 txtClassDetails.setText(program + '/' + branch + '/' + year);
                 dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year);
@@ -172,6 +174,7 @@ public class StudentInterfaceFrag extends Fragment {
 
 
         } else {
+            Log.w("myTag", "inside onCreateView() of Student Interface frag, student_logged == false");
             notLoggedLayout.setVisibility(View.VISIBLE);
             loggedLayout.setVisibility(View.GONE);
             progressCircle.setVisibility(View.GONE);
@@ -186,6 +189,44 @@ public class StudentInterfaceFrag extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+//        final Fragment currentFrag = getFragmentManager().findFragmentById(R.id.fragment_container);
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.w("myTag", "onAuthStateChanged called in StudentInterfaceFrag");
+
+//                List<Fragment> frags = getFragmentManager().getFragments();
+//                Log.w("myTag", "Traversing through all fragments");
+//                for(Fragment f : frags) {
+////                    Log.w("myTag", f.toString());
+//                    if(f instanceof  StudentInterfaceFrag) {
+//                        Log.w("myTag", "Found");
+//
+//                        Fragment reload = new StudentInterfaceFrag();
+//                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                        ft.detach(f);
+//                        ft.attach(f);
+//                        ft.commit();
+//                        Log.w("myTag","Replace fragment transaction committed");
+//                        break;
+//                    }
+//                }
+//                Fragment reload = new StudentInterfaceFrag();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.replace(R.id.fragment_container, reload);
+//                ft.commit();
+
+//                if(currentFrag instanceof StudentInterfaceFrag) {
+//                    Log.w("myTag", "currentFrag is instanceof StudentInterfaceFrag");
+//                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                    fragmentTransaction.detach(currentFrag);
+//                    fragmentTransaction.attach(currentFrag);
+//                    fragmentTransaction.commit();
+//                }
+            }
+        });
 //        notLoggedLayout = view.findViewById(R.id.not_logged_msg);
 //        loggedLayout = view.findViewById(R.id.notices_feed);
 //        txtClassDetails = view.findViewById(R.id.class_details);

@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class ViewPost extends AppCompatActivity {
-
+    private String committee, program, year, branch, postID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,47 +32,85 @@ public class ViewPost extends AppCompatActivity {
 
   //      vpPostDate.setText(date);
         Intent intent = getIntent();
-        String postID = intent.getStringExtra("postID");
-        String committee = intent.getStringExtra("committee");
+        postID = intent.getStringExtra("postID");
+        if (intent.getStringExtra("purpose").equals("student_activity")) {
+            committee = intent.getStringExtra("committee");
 //        if (postID.equals(null) || committee.equals(null))
 //            Toast.makeText(this, "PostID or committee error occurred!", Toast.LENGTH_SHORT).show();
-        if(committee!=null) {
-            if (postID != null) {
-                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postID);
-                dbRef.keepSynced(true);
-                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            assert post != null;
-                            vpPostTitle.setText(post.getTitle());
-                            vpPostDate.setText(post.getDate());
-                            vpPostDescription.setText(post.getDescription());
-                            if (!TextUtils.isEmpty(post.getImage())) {
-                                Picasso.get()
-                                        .load(post.getImage())
-                                        .into(vpImage);
-                            }
-                            else {
+            if (committee != null) {
+                if (postID != null) {
+                    DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postID);
+                    dbRef.keepSynced(true);
+                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Post post = dataSnapshot.getValue(Post.class);
+                                assert post != null;
                                 vpPostTitle.setText(post.getTitle());
                                 vpPostDate.setText(post.getDate());
                                 vpPostDescription.setText(post.getDescription());
+                                if (!TextUtils.isEmpty(post.getImage())) {
+                                    Picasso.get()
+                                            .load(post.getImage())
+                                            .into(vpImage);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("error", databaseError.toException().toString());
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("error", databaseError.toException().toString());
+                        }
+                    });
 
+                } else {
+                    Toast.makeText(this, "PostID is null!", Toast.LENGTH_SHORT).show();
+                }
             }
-            else {
-                Toast.makeText(this, "PostID is null!", Toast.LENGTH_SHORT).show();
+        } else if (intent.getStringExtra("purpose").equals("notice")) {
+            program = intent.getStringExtra("program");
+            branch = intent.getStringExtra("branch");
+            year = intent.getStringExtra("year");
+
+            if (program != null && year != null) {
+                if (program == "MCA") {
+                    if (postID != null) {
+                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(program).child(year).child(postID);
+                        dbRef.keepSynced(true);
+                        dbRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    Post post = dataSnapshot.getValue(Post.class);
+                                    assert post != null;
+                                    vpPostTitle.setText(post.getTitle());
+                                    vpPostDate.setText(post.getDate());
+                                    vpPostDescription.setText(post.getDescription());
+                                    if (!TextUtils.isEmpty(post.getImage())) {
+                                        Picasso.get()
+                                                .load(post.getImage())
+                                                .into(vpImage);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.e("error", databaseError.toException().toString());
+                            }
+                        });
+
+                    } else Toast.makeText(this, "Post ID is null", Toast.LENGTH_SHORT).show();
+                } else if (branch != null) {
+                    if (postID != null) {
+                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year).child(postID);
+                        dbRef.keepSynced(true);
+
+                    } else Toast.makeText(this, "Post ID is null", Toast.LENGTH_SHORT).show();
+                }
             }
-        }else {
+        } else {
             Toast.makeText(this, "Committee error occurred!", Toast.LENGTH_SHORT).show();
         }
 
