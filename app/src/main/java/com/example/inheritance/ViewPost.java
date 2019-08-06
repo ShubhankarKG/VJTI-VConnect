@@ -52,9 +52,9 @@ public class ViewPost extends AppCompatActivity {
                                 vpPostTitle.setText(post.getTitle());
                                 vpPostDate.setText(post.getDate());
                                 vpPostDescription.setText(post.getDescription());
-                                if (!TextUtils.isEmpty(post.getImage())) {
+                                if (!TextUtils.isEmpty(post.getImageUrl())) {
                                     Picasso.get()
-                                            .load(post.getImage())
+                                            .load(post.getImageUrl())
                                             .into(vpImage);
                                 }
                             }
@@ -117,9 +117,9 @@ public class ViewPost extends AppCompatActivity {
                                     vpPostTitle.setText(post.getTitle());
                                     vpPostDate.setText(post.getDate());
                                     vpPostDescription.setText(post.getDescription());
-                                    if (!TextUtils.isEmpty(post.getImage())) {
+                                    if (!TextUtils.isEmpty(post.getImageUrl())) {
                                         Picasso.get()
-                                                .load(post.getImage())
+                                                .load(post.getImageUrl())
                                                 .into(vpImage);
                                     }
                                 }

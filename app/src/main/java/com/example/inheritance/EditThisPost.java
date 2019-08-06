@@ -120,11 +120,11 @@ public class EditThisPost extends AppCompatActivity {
                     editTitle.setText(post.getTitle());
 //                    editDate.setText(post.getDate());
                     editDescription.setText(post.getDescription());
-                    if(!TextUtils.isEmpty(post.getImage())) {
-                        Picasso.get().load(post.getImage()).into(ivPost);
+                    if(!TextUtils.isEmpty(post.getImageUrl())) {
+                        Picasso.get().load(post.getImageUrl()).into(ivPost);
                         isEmpty = false;
                         oldImage = true;
-                        imageUrl = post.getImage();
+                        imageUrl = post.getImageUrl();
                     }else {
                         isEmpty = true;
                     }

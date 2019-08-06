@@ -10,6 +10,15 @@ public class Post {
     private String date;
     private String id;
 
+    public String getPdfUrl() {
+        return pdfUrl;
+    }
+
+    public void setPdfUrl(String pdfUrl) {
+        this.pdfUrl = pdfUrl;
+    }
+
+
     public Post(String title, String description, String imageUrl, String pdfUrl, String date) {
         this.title = title;
         this.description = description;
@@ -64,13 +73,11 @@ public class Post {
         this.description = description;
     }
 
-    public String getImage() {
-
+    public String getImageUrl() {
         return imageUrl;
-
     }
 
-    public void setImage(String image) {
-        this.imageUrl = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

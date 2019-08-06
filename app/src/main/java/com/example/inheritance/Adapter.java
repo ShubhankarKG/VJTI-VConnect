@@ -82,9 +82,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.postDescription.setText(postCurrent.getDescription());
         holder.postDate.setText(postCurrent.getDate());
         holder.postId = postCurrent.getId();
-        if (!TextUtils.isEmpty(postCurrent.getImage())) {
+        if (!TextUtils.isEmpty(postCurrent.getImageUrl())) {
             Picasso.get()
-                    .load(postCurrent.getImage())
+                    .load(postCurrent.getImageUrl())
                     .into(holder.postImage);
         }
 
@@ -125,9 +125,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            if (postCurrent.getImage() != null) {
+                                            if (postCurrent.getImageUrl() != null) {
                                                 FirebaseStorage storage = FirebaseStorage.getInstance();
-                                                sr = storage.getReferenceFromUrl(postCurrent.getImage());
+                                                sr = storage.getReferenceFromUrl(postCurrent.getImageUrl());
                                                 sr.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
@@ -204,9 +204,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int which) {
-                                            if (postCurrent.getImage() != null) {
+                                            if (postCurrent.getImageUrl() != null) {
                                                 FirebaseStorage storage = FirebaseStorage.getInstance();
-                                                sr = storage.getReferenceFromUrl(postCurrent.getImage());
+                                                sr = storage.getReferenceFromUrl(postCurrent.getImageUrl());
                                                 sr.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {

@@ -72,7 +72,7 @@ public class AddPost extends AppCompatActivity {
 
     public static final int ACTION_PDF = 10;
     public static final int ACTION_PIC = 20;
-    String committee, imageUrl, pdfUrl, id, purpose, program, year, branch;
+    String committee, imageUrl, id, purpose, program, year, branch;
     EditText inputTitle, inputDescription;
     public static final int IMAGE_GALLERY_REQUEST = 20;
     public static final int IMAGE_CAMERA_REQUEST = 30;
@@ -82,10 +82,8 @@ public class AddPost extends AppCompatActivity {
     ImageView ivPicture;
     DatabaseReference dbRef;
     private TextView tvStatus;
-    private Uri pdfUri, picUri;
     Uri imageUri, file = null;
     private StorageReference storageReference;
-    private boolean imageDone, pdfDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +98,6 @@ public class AddPost extends AppCompatActivity {
         inputDescription = (EditText) findViewById(R.id.inputDescription);
         ivPicture = (ImageView) findViewById(R.id.ivPicture);
         Button btnCreatePost = findViewById(R.id.btnCreatePost);
-        bSelectPdf = (Button) findViewById(R.id.bSelectPdf);
-        tvStatus = findViewById(R.id.tvStatus);
 
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
@@ -128,16 +124,6 @@ public class AddPost extends AppCompatActivity {
 
 //        inputDate.setText(date);
 
-        bSelectPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(AddPost.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectPdf();
-                } else {
-                    ActivityCompat.requestPermissions(AddPost.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 30);
-                }
-            }
-        });
 
 //        bUploadPdf.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -188,24 +174,8 @@ public class AddPost extends AppCompatActivity {
 
     }
 
-    private void selectPdf() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, ACTION_PDF);
-    }
 
-//    @SuppressLint("SetTextI18n")
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode == RESULT_OK){
-//            if(requestCode == ACTION_PDF && data!= null){
-//                pdfUri = data.getData();
-//                tvStatus.setText("File selected : " + data.getData().getLastPathSegment());
-//            }
-//        }
-//    }
+//
 
 
     //  THIS!
@@ -219,35 +189,6 @@ public class AddPost extends AppCompatActivity {
         title = inputTitle.getText().toString();
         description = inputDescription.getText().toString();
 
-//        Post post = new Post(title, description, date);
-//        if (TextUtils.isEmpty(id)) {
-//            id = dbRef.push().getKey();
-//        }
-//        if (TextUtils.isEmpty(title)) {
-//            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
-//        }
-//        post.setId(id);
-//        dbRef.child(id).setValue(post);
-        if (pdfUri != null) {
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(pdfUri));
-            fileReference.putFile(pdfUri)
-            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            pdfUrl = uri.toString();
-//                            pdfDone = true;
-//                            dbRef.child(id).child("pdfUrl").setValue(pdfUrl);
-                        }
-                    });
-                }
-            });
-
-        }
-//        else    pdfDone = true;
-
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             fileReference.putFile(imageUri)
@@ -258,8 +199,20 @@ public class AddPost extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     imageUrl = uri.toString();
-                                    imageDone = true;
-//                                    dbRef.child(id).child("imageUrl").setValue(imageUrl);
+                                    Post post = new Post(title, description, imageUrl, date);
+                                    if (TextUtils.isEmpty(id)) {
+                                        id = dbRef.push().getKey();
+                                    }
+                                    if (TextUtils.isEmpty(title)) {
+                                        Toast.makeText(AddPost.this, "Please add a title", Toast.LENGTH_SHORT).show();
+                                    }
+                                    post.setId(id);
+                                    dbRef.child(id).setValue(post);
+                                    progressDialog.dismiss();
+                                    Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                                    Intent goBack = new Intent(AddPost.this, Home.class);
+                                    startActivity(goBack);
+
                                 }
                             });
                         }
@@ -269,25 +222,20 @@ public class AddPost extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            int progress = (int) (100 * (taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount()));
+                            progressDialog.setProgress(progress);
+                        }
                     });
         }
 //        else    imageDone = true;
 
 
-//        while(!imageDone && !pdfDone) {}
-        Post post = new Post(title, description, imageUrl, pdfUrl, date);
-        if (TextUtils.isEmpty(id)) {
-            id = dbRef.push().getKey();
-        }
-        if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "Please add a title", Toast.LENGTH_SHORT).show();
-        }
-        post.setId(id);
-        dbRef.child(id).setValue(post);
-        progressDialog.dismiss();
-        Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-        Intent goBack = new Intent(AddPost.this, Home.class);
-        startActivity(goBack);
+
+
     }
 
     @Override
@@ -302,9 +250,6 @@ public class AddPost extends AppCompatActivity {
                 ivPicture.setImageBitmap(bitmap);
                 assert bitmap != null;
                 imageUri = getImageUri(getApplicationContext(), bitmap);
-            } else if (requestCode == ACTION_PDF && data != null && data.getData() != null) {
-                pdfUri = data.getData();
-                tvStatus.setText("File selected : " + data.getData().getLastPathSegment());
             }
         }
     }
@@ -373,15 +318,6 @@ public class AddPost extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 10 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            selectPdf();
-        } else {
-            Toast.makeText(AddPost.this, "Please provide permission", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }
 

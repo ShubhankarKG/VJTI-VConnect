@@ -154,8 +154,6 @@ public class Feed extends AppCompatActivity {
                     }
                     adapter = new Adapter(Feed.this, postData, committee, adminCred);
                     mPostList.setAdapter(adapter);
-
-
                 }
                 progressCircle.setVisibility(View.INVISIBLE);
             }
