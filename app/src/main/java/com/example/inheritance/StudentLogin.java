@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -264,19 +263,14 @@ public class StudentLogin extends AppCompatActivity {
         if (!TextUtils.isEmpty(email)) {
             if (!TextUtils.isEmpty(pwd)) {
                 //Add login code
-
-                if (pwd.length() < 8) {
-                    Log.w("myTag", "Password length less than 8");
-                    Toast.makeText(StudentLogin.this, "Minimum length of password is 8 characters", Toast.LENGTH_SHORT).show();
-                } else {
-                    progressDialog.setMessage("Validating, please wait");
-                    progressDialog.show();
-                    firebaseAuth.signInWithEmailAndPassword(email, pwd)
-                            .addOnSuccessListener(StudentLogin.this, new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    progressDialog.dismiss();
-
+                progressDialog.setMessage("Validating, please wait");
+                progressDialog.show();
+                firebaseAuth.signInWithEmailAndPassword(email, pwd)
+                        .addOnCompleteListener(StudentLogin.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                progressDialog.dismiss();
+                                if (task.isSuccessful()) {
                                     Log.w("myTag", "Task successful");
                                     Toast.makeText(StudentLogin.this, "Logging in", Toast.LENGTH_SHORT).show();
 ///********************************************************************************************************************************
@@ -312,13 +306,17 @@ public class StudentLogin extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     Intent backToHome = new Intent(StudentLogin.this, Home.class);
                                     startActivity(backToHome);
-                                }
-                            });
-                }
-            } else {
+                                } else {
+                                    if (pwd.length() < 8) {
+                                        Log.w("myTag", "Password length less than 8");
+                                        Toast.makeText(StudentLogin.this, "Minimum length of password is 8 characters", Toast.LENGTH_SHORT).show();
+                                    } else {
                                         Log.w("myTag", "Invalid email or pwd");
                                         Toast.makeText(StudentLogin.this, "Invalid email address or password", Toast.LENGTH_SHORT).show();
                                     }
+                                }
+                            }
+                        });
             } else {
                 Log.w("myTag", "Password field empty");
                 Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
