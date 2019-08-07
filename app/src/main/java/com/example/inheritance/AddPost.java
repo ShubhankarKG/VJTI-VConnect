@@ -12,6 +12,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +62,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,6 +88,7 @@ public class AddPost extends AppCompatActivity {
     private TextView tvStatus;
     Uri imageUri, file = null;
     private StorageReference storageReference;
+    String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,26 +127,11 @@ public class AddPost extends AppCompatActivity {
         }
 
 
-//        inputDate.setText(date);
-
-
-//        bUploadPdf.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(pdfUri!= null){
-//                    uploadFile();
-//                }
-//            }
-//        });
 
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (haveNetworkConnection()) {
-                    uploadPost();
-                } else {
-                    Toast.makeText(AddPost.this, "There is no internet connection right now!", Toast.LENGTH_LONG).show();
-                }
+                uploadPost();
             }
 
         });
@@ -170,10 +158,10 @@ public class AddPost extends AppCompatActivity {
         bCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
-                }
+               Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+               if(intent.resolveActivity(getPackageManager()) != null) {
+                   startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
+               }
             }
         });
 
@@ -259,10 +247,6 @@ public class AddPost extends AppCompatActivity {
                 }
             });
         }
-//        else    imageDone = true;
-
-
-
 
     }
 
@@ -277,7 +261,7 @@ public class AddPost extends AppCompatActivity {
                 Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ivPicture.setImageBitmap(bitmap);
                 assert bitmap != null;
-                imageUri = getImageUri(getApplicationContext(), bitmap);
+                imageUri = getImageUri(AddPost.this, bitmap);
             }
         }
     }
@@ -288,81 +272,25 @@ public class AddPost extends AppCompatActivity {
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    //
-    //private void uploadFile() {
-    //title = inputTitle.getText().toString();
-    //description = inputDescription.getText().toString();
-    //if (imageUri != null) {
-    //final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-    //fileReference.putFile(imageUri)
-    //.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-    //@Override
-    //public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-    //fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-    //@Override
-    //public void onSuccess(Uri uri) {
-    //imageUrl = uri.toString();
-    //Post post = new Post(title, description, Image, date);
-    //if (!TextUtils.isEmpty(id)) {
-    //} else {
-    //id = dbRef.push().getKey();
-    //}
-    //while (TextUtils.isEmpty(title)) {
-    //Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
-    //}
-    //post.setId(id);
-    //dbRef.child(id).setValue(post);
-    //Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-    //startActivity(new Intent(AddPost.this, Home.class));
-    //} //HERE
-    //});
-    //
-    //}
-    //})
-    //.addOnFailureListener(new OnFailureListener() {
-    //@Override
-    //public void onFailure(@NonNull Exception e) {
-    //Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-    //}
-    //});
-    //} else {
-    //
-    //Post post = new Post(title, description,date);
-    //if (!TextUtils.isEmpty(id)) {
-    //} else {
-    //id = dbRef.push().getKey();
-    //}
-    //post.setId(id);
-    //dbRef.child(id).setValue(post);
-    //Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-    //startActivity(new Intent(AddPost.this, Home.class));
-    //}
-    //
-    //}
-    private Uri getImageUri(Context context, Bitmap inImage){
+    private Uri getImageUri(Context context, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100 , bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, title, null);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert cm != null;
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
-    }
+//    private File createImageFile() throws IOException {
+//        String name = System.currentTimeMillis() + "." ;
+//        File storageDir =getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File image = File.createTempFile(
+//                name,
+//                ".jpg",
+//                storageDir
+//        );
+//
+//        imagePath = image.getAbsolutePath();
+//        return image;
+//    }
 }
 
 
