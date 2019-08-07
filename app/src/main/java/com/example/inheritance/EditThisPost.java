@@ -16,6 +16,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.icu.text.CaseMap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,7 +66,8 @@ public class EditThisPost extends AppCompatActivity {
     public String committee, Image, postId;
     EditText editDate, editTitle, editDescription;
     Button bCancel, bSave, bRemove;
-    String date, Title, Description, newTitle, newDescription;
+    public Boolean isEmpty, oldImage,
+            isOldEmpty = false;
     ImageView ivPost;
     Uri oldImageUri, newImageUri;
     DatabaseReference dbRef;
@@ -72,7 +75,7 @@ public class EditThisPost extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
     String imageUrl;
     StorageReference storageReference, oldStorageReference;
-    public Boolean isEmpty, oldImage;
+    String date, Title, Description, oldImageString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,12 +124,14 @@ public class EditThisPost extends AppCompatActivity {
 //                    editDate.setText(post.getDate());
                     editDescription.setText(post.getDescription());
                     if(!TextUtils.isEmpty(post.getImageUrl())) {
+                        oldImageString = post.getImageUrl();
                         Picasso.get().load(post.getImageUrl()).into(ivPost);
                         isEmpty = false;
                         oldImage = true;
                         imageUrl = post.getImageUrl();
                     }else {
                         isEmpty = true;
+                        isOldEmpty = true;
                     }
 
                 }
@@ -163,6 +168,7 @@ public class EditThisPost extends AppCompatActivity {
                 uploadFile();
             }
         });
+
 
     }
 
@@ -214,11 +220,7 @@ public class EditThisPost extends AppCompatActivity {
 //            });
             Title = editTitle.getText().toString();
             Description = editDescription.getText().toString();
-            HashMap<String, String> post = new HashMap<>();
-            post.put("title", Title);
-            post.put("description", Description);
-            post.put("date", date);
-            post.put("id", postId);
+            Post post = new Post(Title, Description, date);
             dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -228,16 +230,26 @@ public class EditThisPost extends AppCompatActivity {
             Intent goBack = new Intent(EditThisPost.this, Feed.class);
             goBack.putExtra("committee", committee);
             startActivity(goBack);
+
         }
         else{
+
+
             if(oldImage){
                 Title = editTitle.getText().toString();
                 Description = editDescription.getText().toString();
-                dbRef.child("title").setValue(Title);
-                dbRef.child("description").setValue(Description);
-                dbRef.child("date").setValue(date);
-                dbRef.child("id").setValue(postId);
-                Toast.makeText(EditThisPost.this, "Update successful!", Toast.LENGTH_SHORT).show();
+//                dbRef.child("title").setValue(Title);
+//                dbRef.child("description").setValue(Description);
+//                dbRef.child("date").setValue(date);
+//                dbRef.child("id").setValue(postId);
+                Post post = new Post(Title, Description, oldImageString);
+                dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(EditThisPost.this, "Update successful!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 Intent goBack = new Intent(EditThisPost.this, Feed.class);
                 goBack.putExtra("committee", committee);
                 startActivity(goBack);
@@ -256,23 +268,15 @@ public class EditThisPost extends AppCompatActivity {
                                             Title = editTitle.getText().toString();
                                             Description = editDescription.getText().toString();
                                             Image = uri.toString();
-//                                            Post post = new Post(Title, Description, Image, date);
-//                                            if (!TextUtils.isEmpty(postId)) {
-//                                            } else {
-//                                                postId = dbRef.push().getKey();
-//                                            }
-//                                            while (TextUtils.isEmpty(Title)) {
-//                                                Toast.makeText(EditThisPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                            post.setId(postId);
-//                                            dbRef.child(postId).setValue(post);
-                                            dbRef.child("title").setValue(Title);
-                                            dbRef.child("description").setValue(Description);
-                                            dbRef.child("image").setValue(Image);
-                                            dbRef.child("id").setValue(postId);
-                                            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl); //Causes Runtime error!!
-                                            oldStorageReference.delete();
-                                            Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
+                                            Post post = new Post(Title, Description, Image, date);
+                                            dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+
                                             Intent goBack = new Intent(EditThisPost.this, Feed.class);
                                             goBack.putExtra("committee", committee);
                                             startActivity(goBack);
@@ -291,7 +295,14 @@ public class EditThisPost extends AppCompatActivity {
                 }
             }
         }
+
+        if (!isOldEmpty) {
+            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl); //Causes Runtime error!!
+            oldStorageReference.delete();
+        }
     }
+
+
 }
 
 

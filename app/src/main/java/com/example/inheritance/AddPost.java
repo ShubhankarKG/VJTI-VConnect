@@ -22,6 +22,8 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -137,7 +139,11 @@ public class AddPost extends AppCompatActivity {
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadPost();
+                if (haveNetworkConnection()) {
+                    uploadPost();
+                } else {
+                    Toast.makeText(AddPost.this, "There is no internet connection right now!", Toast.LENGTH_LONG).show();
+                }
             }
 
         });
@@ -180,16 +186,17 @@ public class AddPost extends AppCompatActivity {
 
     //  THIS!
     private void uploadPost() {
-        progressDialog = new ProgressDialog(AddPost.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle("Uploading post...");
-        progressDialog.setProgress(0);
-        progressDialog.show();
+
         boolean pdfUp, imageUp;
         title = inputTitle.getText().toString();
         description = inputDescription.getText().toString();
 
         if (imageUri != null) {
+            progressDialog = new ProgressDialog(AddPost.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setTitle("Uploading post...");
+            progressDialog.setProgress(0);
+            progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -230,6 +237,27 @@ public class AddPost extends AppCompatActivity {
                             progressDialog.setProgress(progress);
                         }
                     });
+
+        } else {
+            Post post = new Post(title, description, date);
+            if (TextUtils.isEmpty(id)) {
+                id = dbRef.push().getKey();
+            }
+            if (TextUtils.isEmpty(title)) {
+                Toast.makeText(AddPost.this, "Please add a title", Toast.LENGTH_SHORT).show();
+            }
+            post.setId(id);
+            dbRef.child(id).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(AddPost.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddPost.this, "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 //        else    imageDone = true;
 
@@ -318,7 +346,23 @@ public class AddPost extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
 }
 
 
