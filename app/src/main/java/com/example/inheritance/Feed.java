@@ -34,6 +34,7 @@ public class Feed extends AppCompatActivity {
     ImageView ivLogo;
     private List<Post> postData;
     private DatabaseReference dbRef;
+    private FirebaseDatabase firebaseDatabase;
     private Adapter adapter;
     private String committee;
     private String tagline;
@@ -42,6 +43,7 @@ public class Feed extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 //        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
@@ -141,7 +143,10 @@ public class Feed extends AppCompatActivity {
                 break;
         }
 
-        dbRef = FirebaseDatabase.getInstance().getReference(committee);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+
+        dbRef = firebaseDatabase.getReference(committee);
         dbRef.keepSynced(true);
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override

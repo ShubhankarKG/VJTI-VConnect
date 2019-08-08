@@ -104,7 +104,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                     Intent editIntent = new Intent(v.getContext(), EditThisPost.class);
                                     if (committee != null) {
                                         editIntent.putExtra("committee", committee);
+                                        editIntent.putExtra("purpose", "student_activity");
                                     } else {
+                                        editIntent.putExtra("purpose", "notice");
                                         editIntent.putExtra("program", program);
                                         editIntent.putExtra("branch", branch);
                                         editIntent.putExtra("year", year);
@@ -189,6 +191,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                             switch (item.getItemId()) {
                                 case R.id.edit_post:
                                     Intent editIntent = new Intent(view.getContext(), EditThisPost.class);
+                                    editIntent.putExtra("purpose", "notice");
                                     editIntent.putExtra("program", program);
                                     editIntent.putExtra("branch", branch);
                                     editIntent.putExtra("year", year);
@@ -249,10 +252,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
                         }
                     });
+                    popup.show();
 
                 }
             });
-
 
         }
     }
