@@ -63,7 +63,7 @@ public class EditThisPost extends AppCompatActivity {
 
     public static final int IMAGE_GALLERY_REQUEST = 10;
     public static final int IMAGE_CAMERA_REQUEST = 20;
-    public String committee, Image, postId;
+    public String committee, Image, postId, program, branch, year;
     EditText editDate, editTitle, editDescription;
     Button bCancel, bSave, bRemove;
     public Boolean isEmpty, oldImage,
@@ -98,7 +98,6 @@ public class EditThisPost extends AppCompatActivity {
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
         Intent intent = getIntent();
-        committee = intent.getStringExtra("committee");
         postId = intent.getStringExtra("postID");
 
         bCancel.setOnClickListener(new View.OnClickListener() {
@@ -110,42 +109,91 @@ public class EditThisPost extends AppCompatActivity {
             }
         });
 
-        if ((postId == null) || (committee == null))
-            Toast.makeText(this, "PostID or commmittee error occured!", Toast.LENGTH_SHORT).show();
-        dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postId);
-        dbRef.keepSynced(true);
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    Post post = dataSnapshot.getValue(Post.class);
-                    assert post != null;
-                    editTitle.setText(post.getTitle());
+        if ((postId == null))
+            Toast.makeText(this, "PostID error occured!", Toast.LENGTH_SHORT).show();
+        else if (intent.getStringExtra("purpose").equals("student_activity")) {
+            committee = intent.getStringExtra("committee");
+            dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postId);
+            dbRef.keepSynced(true);
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Post post = dataSnapshot.getValue(Post.class);
+                        assert post != null;
+                        editTitle.setText(post.getTitle());
 //                    editDate.setText(post.getDate());
-                    editDescription.setText(post.getDescription());
-                    if(!TextUtils.isEmpty(post.getImageUrl())) {
-                        oldImageString = post.getImageUrl();
-                        Picasso.get().load(post.getImageUrl()).into(ivPost);
-                        isEmpty = false;
-                        oldImage = true;
-                        imageUrl = post.getImageUrl();
-                    }else {
-                        isEmpty = true;
-                        isOldEmpty = true;
+                        editDescription.setText(post.getDescription());
+                        if (!TextUtils.isEmpty(post.getImageUrl())) {
+                            oldImageString = post.getImageUrl();
+                            Picasso.get().load(post.getImageUrl()).into(ivPost);
+                            isEmpty = false;
+                            oldImage = true;
+                            imageUrl = post.getImageUrl();
+                        } else {
+                            isEmpty = true;
+                            isOldEmpty = true;
+                        }
+
                     }
-
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("error", databaseError.toException().toString());
+                }
+            });
+
+
+            firebaseStorage = FirebaseStorage.getInstance();
+            storageReference = firebaseStorage.getReference(committee);
+        } else if (intent.getStringExtra("purpose").equals("notice")) {
+            program = intent.getStringExtra("program");
+            branch = intent.getStringExtra("branch");
+            year = intent.getStringExtra("year");
+            if (!program.equals("MCA")) {
+                dbRef = FirebaseDatabase.getInstance().getReference(program).child(branch).child(year).child(postId);
+            } else {  // MCA Condition
+                dbRef = FirebaseDatabase.getInstance().getReference(program).child(year).child(postId);
             }
+            dbRef.keepSynced(true);
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Post post = dataSnapshot.getValue(Post.class);
+                        assert post != null;
+                        editTitle.setText(post.getTitle());
+//                    editDate.setText(post.getDate());
+                        editDescription.setText(post.getDescription());
+                        if (!TextUtils.isEmpty(post.getImageUrl())) {
+                            oldImageString = post.getImageUrl();
+                            Picasso.get().load(post.getImageUrl()).into(ivPost);
+                            isEmpty = false;
+                            oldImage = true;
+                            imageUrl = post.getImageUrl();
+                        } else {
+                            isEmpty = true;
+                            isOldEmpty = true;
+                        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("error", databaseError.toException().toString());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("error", databaseError.toException().toString());
+                }
+            });
+
+
+            firebaseStorage = FirebaseStorage.getInstance();
+            if (!program.equals("MCA")) {
+                storageReference = firebaseStorage.getReference(program).child(branch).child(year);
+            } else {
+                storageReference = firebaseStorage.getReference(program).child(year);
             }
-        });
-
-        firebaseStorage = FirebaseStorage.getInstance();
-        storageReference = firebaseStorage.getReference(committee);
-
+        }
 
         bRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,7 +290,7 @@ public class EditThisPost extends AppCompatActivity {
 //                dbRef.child("description").setValue(Description);
 //                dbRef.child("date").setValue(date);
 //                dbRef.child("id").setValue(postId);
-                Post post = new Post(Title, Description, oldImageString);
+                Post post = new Post(Title, Description, oldImageString, date);
                 dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
