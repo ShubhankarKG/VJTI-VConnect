@@ -55,7 +55,7 @@ public class MainActivity extends Fragment {
             });
 
         } else {
-            bLogin.setText(R.string.Login);
+            bLogin.setText("Admin Login");
             bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -358,7 +358,7 @@ public class MainActivity extends Fragment {
         Button bLogin = Objects.requireNonNull(getView()).findViewById(R.id.bLogin);
 
         if (sharedPreferences.getBoolean("logged", false)) {
-            bLogin.setText(R.string.Logout);
+            bLogin.setText("Admin Logout");
             bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("ApplySharedPref")

@@ -5,22 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background1"
+    android:background="#F5F5F5"
     tools:context=".Home">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Account Settings (logged in)" />
+        android:text="Account Settings (logged in)"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:layout_margin="16dp"
         android:text="Log out"
+        android:layout_marginTop="78dp"
+        android:background="@color/colorSecondary"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@color/textOnS"
+
         android:textSize="24sp" />
 
 </LinearLayout>

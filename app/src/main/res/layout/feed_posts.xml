@@ -12,7 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="48dp"
-        app:cardCornerRadius="3dp"
+        android:background="#FFFFFF"
+        android:outlineAmbientShadowColor="@color/cardview_dark_background"
+        app:cardCornerRadius="18dp"
+        app:contentPadding="16dp"
         >
 
         <LinearLayout
@@ -74,6 +77,7 @@
                 android:layout_below="@id/post_description"
                 android:layout_centerHorizontal="true"
                 android:backgroundTintMode="add"
+                android:background="#EEEEEE"
                 android:id="@+id/view_post"
                 android:fontFamily="sans-serif-light"
                 android:text="View Post"

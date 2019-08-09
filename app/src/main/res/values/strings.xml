@@ -23,6 +23,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_add_notice">AddNotice</string>
-    <string name="title_activity_login">AddNotice</string>
+    <string name="title_activity_login">loginActivity</string>
 
 </resources>

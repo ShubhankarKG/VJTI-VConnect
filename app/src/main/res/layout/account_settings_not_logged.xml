@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background1"
+    android:background="#F5F5F5"
     tools:context=".Home">
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="180dp"
         android:gravity="center"
+        android:textColor="@color/textOnS"
         android:text="Hey Stranger!\nYou aren't logged in :-("
         android:textSize="24sp" />
 
@@ -25,6 +26,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:text="Log in"
+        android:background="@color/colorSecondary"
+        android:textColor="@color/textOnS"
         android:textSize="20sp" />
 
     <Button
@@ -32,9 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:text="Sign up"
+        android:background="@color/colorSecondary"
+        android:textColor="@color/textOnS"
         android:textSize="20sp" />
 
 </LinearLayout>

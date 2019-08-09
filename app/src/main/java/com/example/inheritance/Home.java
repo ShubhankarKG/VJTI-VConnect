@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +28,7 @@ public class Home extends AppCompatActivity {
         Toast.makeText(this, "Welcome to the VJTI App", Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
-
+        FirebaseApp.initializeApp(this);
         final ViewPager viewPager = findViewById(R.id.viewpager);
         bView = findViewById(R.id.nav_view);
 
@@ -96,7 +97,7 @@ public class Home extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
+                        finishAffinity();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

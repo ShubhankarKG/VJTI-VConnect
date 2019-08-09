@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background1"
+    android:background="#f5f5f5"
     tools:context=".StudentSignUp">
 
     <androidx.core.widget.NestedScrollView
@@ -91,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BTech"
+                    android:buttonTint="@color/colorSecondaryDark"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -98,6 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Diploma"
+                    android:buttonTint="@color/colorSecondaryDark"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -105,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MTech"
+                    android:buttonTint="@color/colorSecondaryDark"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -112,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MCA"
+                    android:buttonTint="@color/colorSecondaryDark"
                     android:textSize="18sp" />
             </RadioGroup>
             <LinearLayout
@@ -126,6 +130,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="64dp"
                     android:layout_weight="0"
@@ -138,6 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:background="@color/colorSecondaryLight"
                     android:layout_weight="1" />
             </LinearLayout>
 
@@ -166,6 +172,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:background="@color/colorSecondaryLight"
                     android:layout_weight="1"
                     android:gravity="right" />
             </LinearLayout>
@@ -183,6 +190,8 @@
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="16dp"
                     android:layout_weight="1"
+                    android:background="@color/colorSecondary"
+                    android:textColor="@color/textOnS"
                     android:text="Cancel"
                     android:textSize="21sp" />
 
@@ -193,20 +202,31 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="32dp"
                     android:layout_weight="1"
+                    android:background="@color/colorSecondary"
+                    android:textColor="@color/textOnS"
                     android:text="Sign Up"
                     android:textSize="21sp" />
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/google_signup_button"
+            <!--<Button-->
+            <!--android:id="@+id/google_signup_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_margin="16dp"-->
+            <!--android:text="Sign up with Google instead"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="20sp" />-->
+
+            <com.google.android.gms.common.SignInButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/google_signin_button"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="16dp"
-                android:text="Sign up with Google instead"
-                android:textAllCaps="false"
-                android:textSize="20sp" />
+                android:layout_marginTop="16dp">
+
+            </com.google.android.gms.common.SignInButton>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

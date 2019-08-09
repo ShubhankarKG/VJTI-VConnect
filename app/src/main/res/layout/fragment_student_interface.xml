@@ -6,6 +6,7 @@
     android:id="@+id/student_interface"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#F5F5F5"
     tools:context=".Home">
 
     <RelativeLayout
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="#005b9f"
+            android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -37,7 +38,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="Class Notices"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/textOnP"
                         android:textSize="28sp" />
 
                     <TextView
@@ -47,7 +48,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginBottom="8dp"
                         android:text="program/branch/year"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/textOnP"
                         android:textSize="14sp" />
                     <!--
                             <android.support.v7.widget.Toolbar
@@ -64,19 +65,19 @@
                     android:id="@+id/login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="#005b9f"
+                    android:background="@color/colorPrimaryDark"
                     android:padding="8dp"
                     android:text="CR Login"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/textOnP" />
 
                 <Button
                     android:id="@+id/logout_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="#005b9f"
+                    android:background="@color/colorPrimaryDark"
                     android:padding="8dp"
                     android:text="CR Logout"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/textOnP"
                     android:visibility="gone" />
             </LinearLayout>
 

@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#005b9f"
+        android:background="@color/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -28,7 +28,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/activity_horizontal_margin"
                     android:text="Edit Post"
-                    android:textColor="#ffffff"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/textOnP"
                     android:textSize="30sp" />
 
             </RelativeLayout>

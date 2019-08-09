@@ -11,12 +11,15 @@
 
     <application>
         <activity android:name=".PasswordReset"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".StudentSignUp"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StudentLogin"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Home"
@@ -36,18 +39,22 @@
         <activity
             android:name=".EditThisPost"
             android:label="EditThisPost"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ViewPost"
             android:label="ViewPost"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddPost"
             android:label="AddPost"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
 
         <activity
             android:name=".loginActivity"
+            android:noHistory="true"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
 

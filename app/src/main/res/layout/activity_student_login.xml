@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background1"
+    android:background="#F5F5F5"
     tools:context=".StudentLogin">
 
     <androidx.core.widget.NestedScrollView
@@ -85,6 +85,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:text="Cancel"
+                    android:background="@color/colorSecondary"
                     android:textSize="21sp" />
 
                 <Button
@@ -95,6 +96,7 @@
                     android:layout_marginRight="32dp"
                     android:layout_weight="1"
                     android:text="Login"
+                    android:background="@color/colorSecondary"
                     android:textSize="21sp" />
             </LinearLayout>
 
@@ -108,19 +110,38 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:textSize="19sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
                 />
+            <!--
+                        <Button
+                            android:id="@+id/google_signin_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="16dp"
+                            android:text="Sign in with Google instead"
+                            android:background="@color/colorSecondary"
+                            android:textAllCaps="false"
+                            android:textSize="21sp" />
+            -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:text="Alternative sign-in options:"
+                android:textColor="@color/textOnS"
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/google_signin_button"
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_signup_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="16dp"
-                android:text="Sign in with Google instead"
-                android:textAllCaps="false"
-                android:textSize="21sp" />
+                android:layout_marginTop="16dp">
 
+            </com.google.android.gms.common.SignInButton>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

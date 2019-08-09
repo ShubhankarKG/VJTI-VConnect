@@ -8,6 +8,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AddPost"
     tools:showIn="@layout/activity_add_new_post"
+    android:background="#F5F5F5"
     android:padding="8dp"
     >
 
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/inputTitle"
         android:layout_weight="0"
+        android:background="#FFFFFF"
         android:inputType="textCapWords"
         android:layout_margin="5dp"
         android:layout_marginBottom="15dp"/>
@@ -52,6 +54,7 @@
         android:layout_weight="1"
         android:color="#FFFFFF"
         android:gravity="top|left"
+        android:background="#FFFFFF"
         android:layout_margin="5dp"
         android:inputType="textMultiLine|textCapSentences"
         android:autoLink="all"
@@ -80,18 +83,24 @@
 
         <Button
             android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:id="@+id/bPicture"
             android:text="Choose From Gallery"
-            android:textAllCaps="false"/>
+            android:background="@color/colorSecondary"
+            android:textAllCaps="true"
+            android:textColor="@color/textOnS" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Post"
         android:id="@+id/btnCreatePost"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorSecondary"
+        android:textColor="@color/textOnS"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         />
