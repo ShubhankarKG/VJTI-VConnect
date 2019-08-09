@@ -83,7 +83,7 @@ public class AddPost extends AppCompatActivity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
     public static final int IMAGE_CAMERA_REQUEST = 30;
     String date, title, description;
-    Button bPicture, bCamera, bSelectPdf;
+    Button bPicture;
     ProgressDialog progressDialog;
     ImageView ivPicture;
     DatabaseReference dbRef;
@@ -102,7 +102,6 @@ public class AddPost extends AppCompatActivity {
         ivPicture =  findViewById(R.id.ivPicture);
 
         Button btnCreatePost = findViewById(R.id.btnCreatePost);
-        bCamera =  findViewById(R.id.bCamera);
         bPicture =  findViewById(R.id.bPicture);
 
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
@@ -153,41 +152,10 @@ public class AddPost extends AppCompatActivity {
             }
         });
 
-
-        bCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              dispatchPictureTakeIntent();
-            }
-        });
-
-
     }
 
-
-    private void dispatchPictureTakeIntent(){
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
-            File photoFile = null;
-            try{
-                photoFile = createImageFile();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
-            if(photoFile!= null){
-                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(takePictureIntent, IMAGE_CAMERA_REQUEST);
-            }
-
-        }
-    }
-//
-    //  THIS!
     private void uploadPost() {
 
-        boolean pdfUp, imageUp;
         title = inputTitle.getText().toString();
         description = inputDescription.getText().toString();
 
@@ -239,8 +207,13 @@ public class AddPost extends AppCompatActivity {
                     });
 
         } else {
+            progressDialog = new ProgressDialog(AddPost.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setTitle("Uploading post...");
+            progressDialog.show();
             Post post = new Post(title, description, date);
             if (TextUtils.isEmpty(id)) {
+
                 id = dbRef.push().getKey();
             }
             if (TextUtils.isEmpty(title)) {
@@ -257,6 +230,11 @@ public class AddPost extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(AddPost.this, "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+            }).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    progressDialog.dismiss();
+                }
             });
         }
 
@@ -269,9 +247,6 @@ public class AddPost extends AppCompatActivity {
             if (requestCode == IMAGE_GALLERY_REQUEST && data != null && data.getData() != null) {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(ivPicture);
-            } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
-                imageUri = data.getData();
-                Picasso.get().load(imageUri).into(ivPicture);
             }
         }
     }
@@ -282,18 +257,6 @@ public class AddPost extends AppCompatActivity {
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    private File createImageFile() throws IOException{
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 }
 
 

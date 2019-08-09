@@ -95,40 +95,25 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/bPicture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:text="Choose from gallery" />
-
-            <Button
-                android:id="@+id/bCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:text="Take a picture" />
-
-        </LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
+            android:id="@+id/bPicture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="Choose from gallery"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Remove Picture"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:id="@+id/bRemove"
+            android:textAllCaps="false"
             />
 
         <LinearLayout

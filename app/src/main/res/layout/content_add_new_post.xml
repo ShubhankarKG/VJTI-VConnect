@@ -88,6 +88,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"/>
 
+
         <ImageView
             android:id="@+id/ivPicture"
             android:layout_width="match_parent"
@@ -97,42 +98,14 @@
             android:adjustViewBounds="true"
             />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:orientation="horizontal">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/bPicture"
-        android:text="Choose from gallery"
-        android:layout_weight="1"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bCamera"
-        android:layout_weight="1"
-        android:text="Take a picture"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="8dp"
-        />
-
-    </LinearLayout>
-
-        <LinearLayout
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:id="@+id/bPicture"
+            android:text="Choose From Gallery"
+            android:textAllCaps="false"/>
 
     <Button
         android:layout_width="match_parent"

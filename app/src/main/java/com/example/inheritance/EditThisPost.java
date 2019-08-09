@@ -59,8 +59,6 @@ import java.util.Objects;
 
 public class EditThisPost extends AppCompatActivity {
 
-    String userChoosenTask;
-
     public static final int IMAGE_GALLERY_REQUEST = 10;
     public static final int IMAGE_CAMERA_REQUEST = 20;
     public String committee, Image, postId, program, branch, year;
@@ -71,7 +69,7 @@ public class EditThisPost extends AppCompatActivity {
     ImageView ivPost;
     Uri oldImageUri, newImageUri;
     DatabaseReference dbRef;
-    Button bCamera, bPicture;
+    Button bPicture;
     FirebaseStorage firebaseStorage;
     String imageUrl;
     StorageReference storageReference, oldStorageReference;
@@ -90,7 +88,6 @@ public class EditThisPost extends AppCompatActivity {
         ivPost =  findViewById(R.id.ivPicture);
         bSave =  findViewById(R.id.bSave);
         bCancel =  findViewById(R.id.bCancel);
-        bCamera = findViewById(R.id.bCamera);
         bPicture = findViewById(R.id.bPicture);
         bRemove = findViewById(R.id.bRemove);
 
