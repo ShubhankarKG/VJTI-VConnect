@@ -1,96 +1,56 @@
 package com.example.inheritance;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.text.format.Formatter;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.internal.Storage;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.core.utilities.Utilities;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-//import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
-import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class AddPost extends AppCompatActivity {
-//  Variable declarations
-    public static final int ACTION_PDF = 10;
-    public static final int ACTION_PIC = 20;
+
+    //  Variable declarations
+
     String committee, imageUrl, id, purpose, program, year, branch;
     EditText inputTitle, inputDescription;
     public static final int IMAGE_GALLERY_REQUEST = 20;
-    public static final int IMAGE_CAMERA_REQUEST = 30;
     String date, title, description;
     Button bPicture;
     ProgressDialog progressDialog;
     ImageView ivPicture;
     DatabaseReference dbRef;
-    private TextView tvStatus;
-    Uri imageUri, file = null;
+    Uri imageUri;
     private StorageReference storageReference;
-    String currentPhotoPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +99,7 @@ public class AddPost extends AppCompatActivity {
         if(Build.VERSION.SDK_INT>=23){
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
+
 
         bPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +167,8 @@ public class AddPost extends AppCompatActivity {
                         }
                     });
 
-        } else {
+        }
+        else {
             progressDialog = new ProgressDialog(AddPost.this);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setTitle("Uploading post...");
@@ -234,6 +196,7 @@ public class AddPost extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     progressDialog.dismiss();
+                    startActivity(new Intent(AddPost.this, Home.class));
                 }
             });
         }

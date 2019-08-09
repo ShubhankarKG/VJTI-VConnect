@@ -15,27 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!--
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Date"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textSize="17sp"
-                android:id="@+id/tvPostDate"
-                />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/inputDate"
-                android:inputType="text"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="15dp"
-                />
-        -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

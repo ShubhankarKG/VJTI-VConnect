@@ -6,33 +6,37 @@ public class Post {
     private String title;
     private String description;
     private String imageUrl;
-    private String pdfUrl;
+    private String docUrl;
     private String date;
     private String id;
 
-    public String getPdfUrl() {
-        return pdfUrl;
+    public String getDocUrl() {
+        return docUrl;
     }
 
-    public void setPdfUrl(String pdfUrl) {
-        this.pdfUrl = pdfUrl;
+    public void setDocUrl(String docUrl) {
+        this.docUrl = docUrl;
     }
 
-
-    public Post(String title, String description, String imageUrl, String pdfUrl, String date) {
+    public Post(String title, String description, String imageUrl, String docUrl, String date) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.pdfUrl = pdfUrl;
+        this.docUrl = docUrl;
         this.date = date;
     }
 
-    public Post(String title, String description, String image , String date) {
+    public Post(String title, String description, String docUrl , String date) {
         this.title = title;
         this.description = description;
-        this.imageUrl = image;
+        this.docUrl = docUrl;
         this.date = date;
     }
+
+    public Post(String title) {
+        this.title = title;
+    }
+
 
     public Post(){
 
