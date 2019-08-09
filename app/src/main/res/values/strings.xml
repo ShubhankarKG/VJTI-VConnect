@@ -1,41 +1,23 @@
 <resources>
-    <string name="app_name">Inheritance</string>
-    <string name="title_activity_login">loginActivity</string>
-    <string name="title_activity_committee_list">Committees</string>
-    <string name="title_activity_feed_aero">FeedActivityAero</string>
-    <string name="title_activity_feed_coc">FeedActivityCoc</string>
-    <string name="title_activity_feed_dla">FeedActivityDla</string>
-    <string name="title_activity_feed_ecell">FeedActivityEcell</string>
-    <string name="title_activity_feed_enthusia">FeedActivityEnthusia</string>
-    <string name="title_activity_feed_ieee">FeedActivityIeee</string>
-    <string name="title_activity_feed_pratibimb">FeedActivityPratibimb</string>
-    <string name="title_activity_feed_rangawardhan">FeedActivityRangawardhan</string>
-    <string name="title_activity_feed_java">FeedActivityJava</string>
-    <string name="title_activity_feed_swachh_vjti">FeedActivitySwachhVjti</string>
-    <string name="title_activity_feed_technovanza">FeedActivityTechnovanza</string>
-    <string name="title_activity_feed_alumni">ActivityFeedAlumni</string>
-    <string name="title_activity_feed_racing">ActivityFeedRacing</string>
-    <string name="title_activity_main_aero">MainAero</string>
-    <string name="title_activity_main_coc">MainCoc</string>
-    <string name="title_activity_main_dla">MainDla</string>
-    <string name="title_activity_main_ecell">MainEcell</string>
-    <string name="title_activity_main_enthu">MainEnthu</string>
-    <string name="title_activity_main_ieee">MainIeee</string>
-    <string name="title_activity_main_prati">MainPrati</string>
-    <string name="title_activity_main_ranga">MainRanga</string>
-    <string name="title_activity_main_sra">MainSra</string>
-    <string name="title_activity_main_swachh">MainSwachh</string>
-    <string name="title_activity_main_techno">MainTechno</string>
-    <string name="title_activity_main_alumni">MainAlumni</string>
-    <string name="title_activity_main_racing">MainRacing</string>
-    <string name="title_activity_add_post">AddPost</string>
-    <string name="title_activity_add_new_post">AddNewPost</string>
-    <string name="title_activity_edit_post">EditPost</string>
-    <string name="title_activity_delete">DeleteActivity</string>
-    <string name="title_activity_test_bottom_navigation">TestBottomNavigation</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="AeroVjti"> AeroVJTI </string>
+    <string name="AeroVjti_tagline"> Born to Fly </string>
+    <string name="COC"> Community Of Coders </string>
+    <string name="COC_tagline"> Imagine. Believe. Achieve. </string>
+    <string name="DLA"> Debate and Literary Activities </string>
+    <string name="ECell"> Entrepreneurship Cell </string>
+    <string name="Enthusia"> Enthusia </string>
+    <string name="IEEE"> IEEE VJTI </string>
+    <string name="Pratibimb"> Pratibimb </string>
+    <string name="VJTI_Racing"> VJTI Racing </string>
+    <string name="Rangawardhan"> Rangawardhan </string>
+    <string name="SRA"> Society of Robotics and Automation </string>
+    <string name="Swachh_VJTI"> Swachh VJTI </string>
+    <string name="Technovanza"> Technovanza </string>
+    <string name="Alumni">VJTI Alumni Association </string>
+
+    <string name="Logout"> Logout </string>
+    <string name="Login"> Login </string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

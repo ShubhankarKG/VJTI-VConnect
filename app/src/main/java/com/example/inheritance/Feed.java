@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,21 +22,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.inheritance.Home.sharedPreferences;
 
 public class Feed extends AppCompatActivity {
-
+    //Variable declarations
     public RecyclerView mPostList;
     TextView tvHeading;
     TextView tvTagline;
     ImageView ivLogo;
     private List<Post> postData;
-    private DatabaseReference dbRef;
-    private FirebaseDatabase firebaseDatabase;
     private Adapter adapter;
     private String committee;
-    private String tagline;
     private String adminCred;
     private ProgressBar progressCircle;
 
@@ -46,7 +43,6 @@ public class Feed extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-//        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
         tvHeading =  findViewById(R.id.heading);
         tvTagline =  findViewById(R.id.tagline);
@@ -62,91 +58,92 @@ public class Feed extends AppCompatActivity {
         Intent intent = getIntent();
         committee = intent.getStringExtra("committee");
 
-        switch (committee) {
-            case "AeroVJTI":
-                tvHeading.setText("AeroVJTI");
-                tvTagline.setText("Born to fly");
-                ivLogo.setImageResource(R.drawable.aerovjti);
-                adminCred = "admin@aero";
-                break;
-            case "COC":
-                tvHeading.setText("Community Of Coders");
-                tvTagline.setText("Imagine. Believe. Achieve.");
-                ivLogo.setImageResource(R.drawable.coc);
-                adminCred = "admin@coc";
-                break;
-            case "DLA":
-                tvHeading.setText("Debate and Literary Activities");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.dla);
-                adminCred = "admin@dla";
-                break;
-            case "ECell":
-                tvHeading.setText("Entrepreneurship Cell");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.ecell);
-                adminCred = "admin@ecell";
-                break;
-            case "Enthusia":
-                tvHeading.setText("Enthusia");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.enthu);
-                adminCred = "admin@enthu";
-                break;
-            case "IEEE":
-                tvHeading.setText("IEEE VJTI");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.ieeesq);
-                adminCred = "admin@ieee";
-                break;
-            case "Pratibimb":
-                tvHeading.setText("Pratibimb");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.prati);
-                adminCred = "admin@prati";
-                break;
-            case "VJTI Racing":
-                tvHeading.setText("VJTI Racing");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.racing);
-                adminCred = "admin@racing";
-                break;
-            case "Rangawardhan":
-                tvHeading.setText("Rangawardhan");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.ranga);
-                adminCred = "admin@ranga";
-                break;
-            case "SRA":
-                tvHeading.setText("Society of Robotics and Automation");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.sra);
-                adminCred = "admin@sra";
-                break;
-            case "Swachh VJTI":
-                tvHeading.setText("Swachh VJTI");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.swachh);
-                adminCred = "admin@swachh";
-                break;
-            case "Technovanza":
-                tvHeading.setText("Technovanza");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.techno);
-                adminCred = "admin@techno";
-                break;
-            case "VJTI Alumni":
-                tvHeading.setText("VJTI Alumni Association");
-                tvTagline.setText("");
-                ivLogo.setImageResource(R.drawable.alumni);
-                adminCred = "admin@alumni";
-                break;
+        if (committee != null) {
+            switch (committee) {
+                case "AeroVJTI":
+                    tvHeading.setText(R.string.AeroVjti);
+                    tvTagline.setText(R.string.AeroVjti_tagline);
+                    ivLogo.setImageResource(R.drawable.aerovjti);
+                    adminCred = "admin@aero";
+                    break;
+                case "COC":
+                    tvHeading.setText(R.string.COC);
+                    tvTagline.setText(R.string.COC_tagline);
+                    ivLogo.setImageResource(R.drawable.coc);
+                    adminCred = "admin@coc";
+                    break;
+                case "DLA":
+                    tvHeading.setText(R.string.DLA);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.dla);
+                    adminCred = "admin@dla";
+                    break;
+                case "ECell":
+                    tvHeading.setText(R.string.ECell);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.ecell);
+                    adminCred = "admin@ecell";
+                    break;
+                case "Enthusia":
+                    tvHeading.setText(R.string.Enthusia);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.enthu);
+                    adminCred = "admin@enthu";
+                    break;
+                case "IEEE":
+                    tvHeading.setText(R.string.IEEE);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.ieeesq);
+                    adminCred = "admin@ieee";
+                    break;
+                case "Pratibimb":
+                    tvHeading.setText(R.string.Pratibimb);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.prati);
+                    adminCred = "admin@prati";
+                    break;
+                case "VJTI Racing":
+                    tvHeading.setText(R.string.VJTI_Racing);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.racing);
+                    adminCred = "admin@racing";
+                    break;
+                case "Rangawardhan":
+                    tvHeading.setText(R.string.Rangawardhan);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.ranga);
+                    adminCred = "admin@ranga";
+                    break;
+                case "SRA":
+                    tvHeading.setText(R.string.SRA);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.sra);
+                    adminCred = "admin@sra";
+                    break;
+                case "Swachh VJTI":
+                    tvHeading.setText(R.string.Swachh_VJTI);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.swachh);
+                    adminCred = "admin@swachh";
+                    break;
+                case "Technovanza":
+                    tvHeading.setText(R.string.Technovanza);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.techno);
+                    adminCred = "admin@techno";
+                    break;
+                case "VJTI Alumni":
+                    tvHeading.setText(R.string.Alumni);
+                    tvTagline.setText("");
+                    ivLogo.setImageResource(R.drawable.alumni);
+                    adminCred = "admin@alumni";
+                    break;
+            }
         }
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-
-        dbRef = firebaseDatabase.getReference(committee);
+        DatabaseReference dbRef = firebaseDatabase.getReference(committee);
         dbRef.keepSynced(true);
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -174,7 +171,7 @@ public class Feed extends AppCompatActivity {
 
         FloatingActionButton fabAdd =  findViewById(R.id.fabAdd);
 
-        if (sharedPreferences.getBoolean("logged", false) && sharedPreferences.getString("login_id", null).equals(adminCred)) {
+        if (sharedPreferences.getBoolean("logged", false) && Objects.equals(sharedPreferences.getString("login_id", null), adminCred)) {
 
             fabAdd.show();  //show FAB for adding post to admin
 

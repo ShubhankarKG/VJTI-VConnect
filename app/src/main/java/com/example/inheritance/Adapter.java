@@ -8,13 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.Image;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +21,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import static com.example.inheritance.Home.sharedPreferences;
-import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private String program, year, branch;
     private StorageReference sr;
 
-    public Adapter(Context mContext, List<Post> noticesList, String program, String branch, String year) {
+    Adapter(Context mContext, List<Post> noticesList, String program, String branch, String year) {
         context = mContext;
         postList = noticesList;
         this.program = program;
@@ -56,12 +50,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         this.year = year;
     }
 
-    public Adapter(Context mcontext, List<Post> list) {
-        context = mcontext;
-        postList = list;
-    }
-
-    public Adapter(Context mContext, List<Post> postList, String committee, String adminCred) {
+    Adapter(Context mContext, List<Post> postList, String committee, String adminCred) {
         context = mContext;
         this.postList = postList;
         this.committee = committee;
@@ -156,7 +145,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                                                         Log.e("error", Objects.requireNonNull(e.getMessage()));
                                                     }
                                                 });
-                                                ;
 
                                             }
                                         }
@@ -267,7 +255,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView postTitle, postDescription, postDate;
         ImageView postImage;
@@ -275,7 +263,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String postId;
         Button viewPost;
 
-        public ViewHolder(@NonNull final View itemView) {
+        ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             postTitle = itemView.findViewById(R.id.post_title);

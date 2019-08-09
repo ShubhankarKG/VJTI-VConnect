@@ -2,31 +2,16 @@ package com.example.inheritance;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.icu.text.CaseMap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -46,28 +31,22 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
 public class EditThisPost extends AppCompatActivity {
-
+    // Variable declarations
     public static final int IMAGE_GALLERY_REQUEST = 10;
-    public static final int IMAGE_CAMERA_REQUEST = 20;
     public String committee, Image, postId, program, branch, year;
-    EditText editDate, editTitle, editDescription;
+    EditText editTitle, editDescription;
     Button bCancel, bSave, bRemove;
     public Boolean isEmpty, oldImage,
             isOldEmpty = false;
     ImageView ivPost;
-    Uri oldImageUri, newImageUri;
+    Uri newImageUri;
     DatabaseReference dbRef;
     Button bPicture;
     FirebaseStorage firebaseStorage;
@@ -82,15 +61,15 @@ public class EditThisPost extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        editDate = (EditText) findViewById(R.id.inputDate);
         editTitle =  findViewById(R.id.inputTitle);
         editDescription =  findViewById(R.id.inputDescription);
+
         ivPost =  findViewById(R.id.ivPicture);
+
         bSave =  findViewById(R.id.bSave);
         bCancel =  findViewById(R.id.bCancel);
         bPicture = findViewById(R.id.bPicture);
         bRemove = findViewById(R.id.bRemove);
-
 
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
@@ -119,7 +98,6 @@ public class EditThisPost extends AppCompatActivity {
                         Post post = dataSnapshot.getValue(Post.class);
                         assert post != null;
                         editTitle.setText(post.getTitle());
-//                    editDate.setText(post.getDate());
                         editDescription.setText(post.getDescription());
                         if (!TextUtils.isEmpty(post.getImageUrl())) {
                             oldImageString = post.getImageUrl();
@@ -141,10 +119,9 @@ public class EditThisPost extends AppCompatActivity {
                 }
             });
 
-
             firebaseStorage = FirebaseStorage.getInstance();
             storageReference = firebaseStorage.getReference(committee);
-        } else if (intent.getStringExtra("purpose").equals("notice")) {
+        } else if (Objects.equals(intent.getStringExtra("purpose"), "notice")) {
             program = intent.getStringExtra("program");
             branch = intent.getStringExtra("branch");
             year = intent.getStringExtra("year");
@@ -161,7 +138,6 @@ public class EditThisPost extends AppCompatActivity {
                         Post post = dataSnapshot.getValue(Post.class);
                         assert post != null;
                         editTitle.setText(post.getTitle());
-//                    editDate.setText(post.getDate());
                         editDescription.setText(post.getDescription());
                         if (!TextUtils.isEmpty(post.getImageUrl())) {
                             oldImageString = post.getImageUrl();
@@ -257,7 +233,7 @@ public class EditThisPost extends AppCompatActivity {
             Description = editDescription.getText().toString();
             Post post = new Post(Title, Description, date);
             post.setId(postId);
-            dbRef.getParent().child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            Objects.requireNonNull(dbRef.getParent()).child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(EditThisPost.this, "Done!", Toast.LENGTH_SHORT).show();
@@ -276,7 +252,7 @@ public class EditThisPost extends AppCompatActivity {
                 Description = editDescription.getText().toString();
                 Post post = new Post(Title, Description, oldImageString, date);
                 post.setId(postId);
-                dbRef.getParent().child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                Objects.requireNonNull(dbRef.getParent()).child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(EditThisPost.this, "Update successful!", Toast.LENGTH_SHORT).show();
@@ -302,7 +278,7 @@ public class EditThisPost extends AppCompatActivity {
                                             Image = uri.toString();
                                             Post post = new Post(Title, Description, Image, date);
                                             post.setId(postId);
-                                            dbRef.getParent().child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            Objects.requireNonNull(dbRef.getParent()).child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();

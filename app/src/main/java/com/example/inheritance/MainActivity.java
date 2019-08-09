@@ -1,14 +1,13 @@
 package com.example.inheritance;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,12 +18,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import static com.example.inheritance.Home.sharedPreferences;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class MainActivity extends Fragment {
 
-    private FragmentActivity fragmentActivity;
+    private Button bAeroVjti, bCoc, bDla, bEcell, bEnthu, bIeee, bPrati, bRanga, bSra, bSwachh, bTechno, bAlumni, bRacing;
+    private ImageButton ibAeroVjti, ibCoc, ibDla, ibEcell, ibEnthu, ibIeee, ibPrati, ibRanga, ibSra, ibSwachh, ibTechno, ibAlumni, ibRacing;
 
     @Nullable
     @Override
@@ -34,18 +35,19 @@ public class MainActivity extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
-        Button bLogin = (Button) view.findViewById(R.id.bLogin);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("userCred", Context.MODE_PRIVATE);
+        Button bLogin =  view.findViewById(R.id.bLogin);
 
         if (sharedPreferences.getBoolean("logged", false)) {
-            bLogin.setText("Logout");
+            bLogin.setText(R.string.Logout);
+            bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ApplySharedPref")
                 public void onClick(View v) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("logged", false);
                     editor.putString("login_id", null);
                     editor.commit();
-                    // Probably add a toast saying "Logging out"
                     Toast.makeText(getContext(), "Logged out successfully!", Toast.LENGTH_SHORT).show();
                     Intent refresh = new Intent(getActivity(), Home.class);
                     startActivity(refresh);
@@ -53,7 +55,8 @@ public class MainActivity extends Fragment {
             });
 
         } else {
-            bLogin.setText("Login");
+            bLogin.setText(R.string.Login);
+            bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -63,32 +66,44 @@ public class MainActivity extends Fragment {
             });
         }
 
-        Button bAeroVjti = (Button) view.findViewById(R.id.bAeroVjti);
-        ImageButton ibAeroVjti = (ImageButton) view.findViewById(R.id.ibAero);
-        Button bCoc = (Button) view.findViewById(R.id.bCoc);
-        ImageButton ibCoc = (ImageButton) view.findViewById(R.id.ibCoc);
-        Button bDla = (Button) view.findViewById(R.id.bDla);
-        ImageButton ibDla = (ImageButton) view.findViewById(R.id.ibDla);
-        Button bEcell = (Button) view.findViewById(R.id.bEcell);
-        ImageButton ibEcell = (ImageButton) view.findViewById(R.id.ibEcell);
-        Button bEnthu = (Button) view.findViewById(R.id.bEnthu);
-        ImageButton ibEnthu = (ImageButton) view.findViewById(R.id.ibEnthu);
-        Button bIeee = (Button) view.findViewById(R.id.bIeee);
-        ImageButton ibIeee = (ImageButton) view.findViewById(R.id.ibIeee);
-        Button bPrati = (Button) view.findViewById(R.id.bPrati);
-        ImageButton ibPrati = (ImageButton) view.findViewById(R.id.ibPrati);
-        Button bRanga = (Button) view.findViewById(R.id.bRanga);
-        ImageButton ibRanga = (ImageButton) view.findViewById(R.id.ibRanga);
-        Button bSra = (Button) view.findViewById(R.id.bSra);
-        ImageButton ibSra = (ImageButton) view.findViewById(R.id.ibSra);
-        Button bSwachh = (Button) view.findViewById(R.id.bSwachh);
-        ImageButton ibSwachh = (ImageButton) view.findViewById(R.id.ibSwachh);
-        Button bTechno = (Button) view.findViewById(R.id.bTechno);
-        ImageButton ibTechno = (ImageButton) view.findViewById(R.id.ibTechno);
-        Button bAlumni = (Button) view.findViewById(R.id.bAlumni);
-        ImageButton ibAlumni = (ImageButton) view.findViewById(R.id.ibAlumni);
-        Button bRacing = (Button) view.findViewById(R.id.bRacing);
-        ImageButton ibRacing = (ImageButton) view.findViewById(R.id.ibRacing);
+        bAeroVjti =  view.findViewById(R.id.bAeroVjti);
+        ibAeroVjti =  view.findViewById(R.id.ibAero);
+
+        bCoc =  view.findViewById(R.id.bCoc);
+        ibCoc =  view.findViewById(R.id.ibCoc);
+
+        bDla =  view.findViewById(R.id.bDla);
+        ibDla =  view.findViewById(R.id.ibDla);
+
+        bEcell =  view.findViewById(R.id.bEcell);
+        ibEcell =  view.findViewById(R.id.ibEcell);
+
+        bEnthu =  view.findViewById(R.id.bEnthu);
+        ibEnthu =  view.findViewById(R.id.ibEnthu);
+
+        bIeee =  view.findViewById(R.id.bIeee);
+        ibIeee =  view.findViewById(R.id.ibIeee);
+
+        bPrati =  view.findViewById(R.id.bPrati);
+        ibPrati =  view.findViewById(R.id.ibPrati);
+
+        bRanga =  view.findViewById(R.id.bRanga);
+        ibRanga =  view.findViewById(R.id.ibRanga);
+
+        bSra =  view.findViewById(R.id.bSra);
+        ibSra =  view.findViewById(R.id.ibSra);
+
+        bSwachh =  view.findViewById(R.id.bSwachh);
+        ibSwachh =  view.findViewById(R.id.ibSwachh);
+
+        bTechno =  view.findViewById(R.id.bTechno);
+        ibTechno =  view.findViewById(R.id.ibTechno);
+
+        bAlumni =  view.findViewById(R.id.bAlumni);
+        ibAlumni =  view.findViewById(R.id.ibAlumni);
+
+        bRacing =  view.findViewById(R.id.bRacing);
+        ibRacing =  view.findViewById(R.id.ibRacing);
 
         bAeroVjti.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +123,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +140,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bDla.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +159,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bEcell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +176,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bEnthu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +195,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bIeee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +212,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bPrati.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +231,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bRanga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +248,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bSra.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,7 +267,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bSwachh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,7 +284,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bTechno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,7 +303,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bAlumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,7 +320,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bRacing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -336,7 +339,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -345,39 +347,34 @@ public class MainActivity extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//    }
-
     @Override
     public void onResume() {
-//        setContentView(R.layout.content_committee_list);
-        FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.fragment_container);
+        FrameLayout container =  Objects.requireNonNull(getActivity()).findViewById(R.id.fragment_container);
         LayoutInflater.from(getActivity())
                 .inflate(R.layout.content_committee_list, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences("userCred", Context.MODE_PRIVATE);
 
-        Button bLogin = (Button) getView().findViewById(R.id.bLogin);
+        Button bLogin = Objects.requireNonNull(getView()).findViewById(R.id.bLogin);
 
         if (sharedPreferences.getBoolean("logged", false)) {
-            bLogin.setText("Logout");
+            bLogin.setText(R.string.Logout);
+            bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ApplySharedPref")
                 public void onClick(View v) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("logged", false);
                     editor.putString("login_id", null);
                     editor.commit();
-                    // Probably add a toast saying "Logging out"
                     Intent refresh = new Intent(getActivity(), Home.class);
                     startActivity(refresh);
                 }
             });
 
         } else {
-            bLogin.setText("Login");
+            bLogin.setText(R.string.Login);
+            bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -387,32 +384,44 @@ public class MainActivity extends Fragment {
             });
         }
 
-        Button bAeroVjti = (Button) getView().findViewById(R.id.bAeroVjti);
-        ImageButton ibAeroVjti = (ImageButton) getView().findViewById(R.id.ibAero);
-        Button bCoc = (Button) getView().findViewById(R.id.bCoc);
-        ImageButton ibCoc = (ImageButton) getView().findViewById(R.id.ibCoc);
-        Button bDla = (Button) getView().findViewById(R.id.bDla);
-        ImageButton ibDla = (ImageButton) getView().findViewById(R.id.ibDla);
-        Button bEcell = (Button) getView().findViewById(R.id.bEcell);
-        ImageButton ibEcell = (ImageButton) getView().findViewById(R.id.ibEcell);
-        Button bEnthu = (Button) getView().findViewById(R.id.bEnthu);
-        ImageButton ibEnthu = (ImageButton) getView().findViewById(R.id.ibEnthu);
-        Button bIeee = (Button) getView().findViewById(R.id.bIeee);
-        ImageButton ibIeee = (ImageButton) getView().findViewById(R.id.ibIeee);
-        Button bPrati = (Button) getView().findViewById(R.id.bPrati);
-        ImageButton ibPrati = (ImageButton) getView().findViewById(R.id.ibPrati);
-        Button bRanga = (Button) getView().findViewById(R.id.bRanga);
-        ImageButton ibRanga = (ImageButton) getView().findViewById(R.id.ibRanga);
-        Button bSra = (Button) getView().findViewById(R.id.bSra);
-        ImageButton ibSra = (ImageButton) getView().findViewById(R.id.ibSra);
-        Button bSwachh = (Button) getView().findViewById(R.id.bSwachh);
-        ImageButton ibSwachh = (ImageButton) getView().findViewById(R.id.ibSwachh);
-        Button bTechno = (Button) getView().findViewById(R.id.bTechno);
-        ImageButton ibTechno = (ImageButton) getView().findViewById(R.id.ibTechno);
-        Button bAlumni = (Button) getView().findViewById(R.id.bAlumni);
-        ImageButton ibAlumni = (ImageButton) getView().findViewById(R.id.ibAlumni);
-        Button bRacing = (Button) getView().findViewById(R.id.bRacing);
-        ImageButton ibRacing = (ImageButton) getView().findViewById(R.id.ibRacing);
+        bAeroVjti =  getView().findViewById(R.id.bAeroVjti);
+        ibAeroVjti =  getView().findViewById(R.id.ibAero);
+
+        bCoc =  getView().findViewById(R.id.bCoc);
+        ibCoc =  getView().findViewById(R.id.ibCoc);
+
+        bDla =  getView().findViewById(R.id.bDla);
+        ibDla =  getView().findViewById(R.id.ibDla);
+
+        bEcell =  getView().findViewById(R.id.bEcell);
+        ibEcell =  getView().findViewById(R.id.ibEcell);
+
+        bEnthu =  getView().findViewById(R.id.bEnthu);
+        ibEnthu =  getView().findViewById(R.id.ibEnthu);
+
+        bIeee =  getView().findViewById(R.id.bIeee);
+        ibIeee =  getView().findViewById(R.id.ibIeee);
+
+        bPrati =  getView().findViewById(R.id.bPrati);
+        ibPrati =  getView().findViewById(R.id.ibPrati);
+
+        bRanga =  getView().findViewById(R.id.bRanga);
+        ibRanga =  getView().findViewById(R.id.ibRanga);
+
+        bSra =  getView().findViewById(R.id.bSra);
+        ibSra =  getView().findViewById(R.id.ibSra);
+
+        bSwachh =  getView().findViewById(R.id.bSwachh);
+        ibSwachh =  getView().findViewById(R.id.ibSwachh);
+
+        bTechno =  getView().findViewById(R.id.bTechno);
+        ibTechno =  getView().findViewById(R.id.ibTechno);
+
+        bAlumni =  getView().findViewById(R.id.bAlumni);
+        ibAlumni =  getView().findViewById(R.id.ibAlumni);
+
+        bRacing =  getView().findViewById(R.id.bRacing);
+        ibRacing =  getView().findViewById(R.id.ibRacing);
 
         bAeroVjti.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -432,7 +441,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -450,7 +458,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bDla.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -470,7 +477,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bEcell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -488,7 +494,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bEnthu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -508,7 +513,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bIeee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -526,7 +530,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bPrati.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -546,7 +549,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bRanga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -564,7 +566,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bSra.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -584,7 +585,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bSwachh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -602,7 +602,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bTechno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -622,7 +621,6 @@ public class MainActivity extends Fragment {
             }
         });
 
-
         bAlumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -640,7 +638,6 @@ public class MainActivity extends Fragment {
                 startActivity(intent);
             }
         });
-
 
         bRacing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -662,12 +659,5 @@ public class MainActivity extends Fragment {
 
         super.onResume();
     }
-
-//    @Override
-//    public void onRestart() {
-//        super.onRestart();
-//
-//
-//    }
 
 }

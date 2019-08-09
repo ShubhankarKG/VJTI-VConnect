@@ -2,24 +2,17 @@ package com.example.inheritance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.IntentCompat;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
-import static android.view.View.GONE;
 import static com.example.inheritance.Home.sharedPreferences;
 
 public class StudentLogin extends AppCompatActivity {
@@ -53,21 +45,18 @@ public class StudentLogin extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DatabaseReference dbRef;
     private String program, branch, year;
-    private TextView tvForgot;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login);
 
-        bGoogleSignin = (Button) findViewById(R.id.google_signin_button);
-        bLogin = (Button) findViewById(R.id.login_button);
-        bCancel = (Button) findViewById(R.id.cancel_login_button);
-        edtxtEmail = (EditText) findViewById(R.id.email_field);
-        edtxtPwd = (EditText) findViewById(R.id.password_field);
-        tvForgot = findViewById(R.id.tvForgot);
+        bGoogleSignin =  findViewById(R.id.google_signin_button);
+        bLogin =  findViewById(R.id.login_button);
+        bCancel =  findViewById(R.id.cancel_login_button);
+        edtxtEmail =  findViewById(R.id.email_field);
+        edtxtPwd =  findViewById(R.id.password_field);
+        TextView tvForgot = findViewById(R.id.tvForgot);
 
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -118,7 +107,6 @@ public class StudentLogin extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -138,13 +126,13 @@ public class StudentLogin extends AppCompatActivity {
                         .addOnCompleteListener(StudentLogin.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-//                                progressDialog.dismiss();
                                 if (task.isSuccessful()) {
                                     Log.w("myTag", "Task successful");
                                     Toast.makeText(StudentLogin.this, "Logging in", Toast.LENGTH_SHORT).show();
 ///********************************************************************************************************************************
                                     dbRef = FirebaseDatabase.getInstance().getReference("users").child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
                                     ValueEventListener valueEventListener = new ValueEventListener() {
+                                        @SuppressLint("ApplySharedPref")
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             program = dataSnapshot.child("program").getValue(String.class);
@@ -199,7 +187,7 @@ public class StudentLogin extends AppCompatActivity {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setAvailableProviders(Arrays.asList(
+                        .setAvailableProviders(Collections.singletonList(
                                 new AuthUI.IdpConfig.GoogleBuilder().build()
 //                                            new AuthUI.IdpConfig.EmailBuilder().build() //Requires Dynamic Links, (confirmation email)
                         ))

@@ -21,7 +21,6 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 public class ViewPost extends AppCompatActivity {
-    private String committee, program, year, branch, postID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,14 +30,10 @@ public class ViewPost extends AppCompatActivity {
         final TextView vpPostDescription = findViewById(R.id.tvviewpost_description);
         final ImageView vpImage = findViewById(R.id.ivviewpost_image);
 
-
-  //      vpPostDate.setText(date);
         Intent intent = getIntent();
-        postID = intent.getStringExtra("postID");
-        if (intent.getStringExtra("purpose").equals("student_activity")) {
-            committee = intent.getStringExtra("committee");
-//        if (postID.equals(null) || committee.equals(null))
-//            Toast.makeText(this, "PostID or committee error occurred!", Toast.LENGTH_SHORT).show();
+        String postID = intent.getStringExtra("postID");
+        if (Objects.equals(intent.getStringExtra("purpose"), "student_activity")) {
+            String committee = intent.getStringExtra("committee");
             if (committee != null) {
                 if (postID != null) {
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postID);
@@ -70,10 +65,10 @@ public class ViewPost extends AppCompatActivity {
                     Toast.makeText(this, "PostID is null!", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (intent.getStringExtra("purpose").equals("notice")) {
-            program = intent.getStringExtra("program");
-            branch = intent.getStringExtra("branch");
-            year = intent.getStringExtra("year");
+        } else if (Objects.equals(intent.getStringExtra("purpose"), "notice")) {
+            String program = intent.getStringExtra("program");
+            String branch = intent.getStringExtra("branch");
+            String year = intent.getStringExtra("year");
 
             if (program != null && year != null) {
                 if (program.equals("MCA")) {
@@ -89,11 +84,6 @@ public class ViewPost extends AppCompatActivity {
                                     vpPostTitle.setText(post.getTitle());
                                     vpPostDate.setText(post.getDate());
                                     vpPostDescription.setText(post.getDescription());
-//                                    if (!TextUtils.isEmpty(post.getImage())) {
-//                                        Picasso.get()
-//                                                .load(post.getImage())
-//                                                .into(vpImage);
-//                                    }
                                 }
                             }
 

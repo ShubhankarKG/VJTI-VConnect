@@ -1,5 +1,6 @@
 package com.example.inheritance;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,8 +23,6 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(content_login);
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final Button b1 = findViewById(R.id.login_button);
@@ -33,6 +32,7 @@ public class loginActivity extends AppCompatActivity {
 
         b1.setOnClickListener(new View.OnClickListener() {
 
+            @SuppressLint("ApplySharedPref")
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -212,7 +212,6 @@ public class loginActivity extends AppCompatActivity {
                     clear_fields();
                 }
 
-
             }
         });
 
@@ -222,7 +221,6 @@ public class loginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
     }
 

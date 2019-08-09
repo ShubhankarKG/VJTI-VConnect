@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -20,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class Home extends AppCompatActivity {
+    // Variable declaration
     public static SharedPreferences sharedPreferences;
     private ViewPagerAdapter viewPagerAdapter;
     BottomNavigationView bView;
@@ -110,65 +108,10 @@ public class Home extends AppCompatActivity {
         alert.show();
     }
 
-//    public static SharedPreferences sharedPreferences;
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            Fragment fragment = null;
-//
-//            switch (item.getItemId()) {
-//                case R.id.navigation_committees:
-//                    fragment = new MainActivity();
-//                    break;
-//                case R.id.navigation_student:
-//                    fragment = new StudentInterfaceFrag();
-//                    break;
-//                case R.id.navigation_account:
-//                    fragment = new AccountSettingFrag();
-//                    break;
-//            }
-//            return loadFragment(fragment);
-//
-//        }
-//    };
-//
-
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_home);
-//        //loading the default fragment
-//        loadFragment(new MainActivity());
-//
-//        //getting bottom navigation view and attaching the listener
-//        BottomNavigationView navView = findViewById(R.id.nav_view);
-//        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//
-//        sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
-//    }
-//
-//    private boolean loadFragment(Fragment fragment) {
-//        //switching fragment
-//        if (fragment != null) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, fragment)
-////                    .addToBackStack(null)
-//                    .commit();
-//            return true;
-//        }
-//        return false;
-//    }
-
-
     @Override
     protected void onRestart() {
         super.onRestart();
 
     }
-
 
 }

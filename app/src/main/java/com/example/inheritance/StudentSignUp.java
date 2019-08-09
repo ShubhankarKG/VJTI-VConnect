@@ -2,8 +2,8 @@ package com.example.inheritance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ComplexColorCompat;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,11 +31,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static android.view.View.GONE;
 import static com.example.inheritance.Home.sharedPreferences;
@@ -48,7 +49,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
     RadioGroup rgProgram;
     TextView txtBranch;
     Spinner yearSpinner, branchSpinner;
-    ArrayAdapter<String> yearAdapter, branchAdapter;
+
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private String program, year, branch;
@@ -79,33 +80,31 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_student_sign_up);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        edtxtEmail = (EditText) findViewById(R.id.email_field);
-        edtxtPwd = (EditText) findViewById(R.id.password_field);
-        bSignup = (Button) findViewById(R.id.sign_up_button);
-        bCancel = (Button) findViewById(R.id.cancel_signup_button);
-        bGoogleSignup = (Button) findViewById(R.id.google_signup_button);
+        edtxtEmail =  findViewById(R.id.email_field);
+        edtxtPwd =  findViewById(R.id.password_field);
+        bSignup =  findViewById(R.id.sign_up_button);
+        bCancel =  findViewById(R.id.cancel_signup_button);
+        bGoogleSignup =  findViewById(R.id.google_signup_button);
         progressDialog = new ProgressDialog(this);
-        rgProgram = (RadioGroup) findViewById(R.id.rg_program);
-        branchSpinner = (Spinner) findViewById(R.id.branch_spinner);
-        yearSpinner = (Spinner) findViewById(R.id.year_spinner);
-        txtBranch = (TextView) findViewById(R.id.txt_branch);
-
-//        branchSpinner.setOnItemClickListener();
+        rgProgram =  findViewById(R.id.rg_program);
+        branchSpinner =  findViewById(R.id.branch_spinner);
+        yearSpinner =  findViewById(R.id.year_spinner);
+        txtBranch =  findViewById(R.id.txt_branch);
 
         rgProgram.clearCheck();
         rgProgram.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                RadioButton radioButton = (RadioButton) radioGroup.findViewById(checkedId);
+                RadioButton radioButton =  radioGroup.findViewById(checkedId);
                 switch (radioButton.getText().toString()) {
                     case "BTech":
                         program = "BTech";
                         Log.w("myTag", "program set to BTech");
-                        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, BTechYearList);
+                        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, BTechYearList);
                         yearSpinner.setAdapter(yearAdapter);
                         yearSpinner.setVisibility(View.VISIBLE);
                         Log.w("myTag", "yearSpinner set");
-                        ArrayAdapter<String> branchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, BTechBranchList);
+                        ArrayAdapter<String> branchAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, BTechBranchList);
                         branchSpinner.setAdapter(branchAdapter);
                         branchSpinner.setVisibility(View.VISIBLE);
                         txtBranch.setVisibility(View.VISIBLE);
@@ -114,11 +113,11 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                     case "Diploma":
                         program = "Diploma";
                         Log.w("myTag", "program set to Diploma");
-                        yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, diplomaYearList);
+                        yearAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, diplomaYearList);
                         yearSpinner.setAdapter(yearAdapter);
                         yearSpinner.setVisibility(View.VISIBLE);
                         Log.w("myTag", "yearSpinner set");
-                        branchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, diplomaBranchList);
+                        branchAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, diplomaBranchList);
                         branchSpinner.setAdapter(branchAdapter);
                         branchSpinner.setVisibility(View.VISIBLE);
                         txtBranch.setVisibility(View.VISIBLE);
@@ -127,11 +126,11 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                     case "MTech":
                         program = "MTech";
                         Log.w("myTag", "program set to MTech");
-                        yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mastersYearList);
+                        yearAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mastersYearList);
                         yearSpinner.setAdapter(yearAdapter);
                         yearSpinner.setVisibility(View.VISIBLE);
                         Log.w("myTag", "yearSpinner set");
-                        branchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, MTechBranchList);
+                        branchAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, MTechBranchList);
                         branchSpinner.setAdapter(branchAdapter);
                         branchSpinner.setVisibility(View.VISIBLE);
                         txtBranch.setVisibility(View.VISIBLE);
@@ -140,7 +139,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                     case "MCA":
                         program = "MCA";
                         Log.w("myTag", "program set to MCA");
-                        yearAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mastersYearList);
+                        yearAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mastersYearList);
                         yearSpinner.setAdapter(yearAdapter);
                         yearSpinner.setVisibility(View.VISIBLE);
                         Log.w("myTag", "yearSpinner set");
@@ -196,16 +195,6 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                     Log.w("myTag", e.toString());
                 }
 
-
-//                if(firebaseAuth.getCurrentUser() != null) {
-//                    Log.w("myTag", "signed in");
-//                    Toast.makeText(StudentSignUp.this, "Signed in", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
-//                else {
-//                    Log.w("myTag", "not signed in");
-//                }
-
             }
         });
 
@@ -240,9 +229,9 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        if (((Spinner) adapterView).getId() == R.id.year_spinner) {
+        if (( adapterView).getId() == R.id.year_spinner) {
             year = null;
-        } else if (((Spinner) adapterView).getId() == R.id.branch_spinner) {
+        } else if (( adapterView).getId() == R.id.branch_spinner) {
             branch = null;
         }
     }
@@ -250,7 +239,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
     public void createGoogleSignUpIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
+        List<AuthUI.IdpConfig> providers = Collections.singletonList(
                 new AuthUI.IdpConfig.GoogleBuilder().build());
         startActivityForResult(
                 AuthUI.getInstance()
@@ -281,7 +270,6 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-
     private void startSignupFirebaseAuth() {
         final String email = edtxtEmail.getText().toString().trim();
         final String pwd = edtxtPwd.getText().toString().trim();
@@ -296,6 +284,7 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                 Log.w("myTag", "processDialog show");
                 firebaseAuth.createUserWithEmailAndPassword(email, pwd) //creates user and signs in if successful
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @SuppressLint("ApplySharedPref")
                             @Override
                             synchronized public void onComplete(@NonNull Task<AuthResult> task) {
                                 Log.w("myTag", "onComplete() evoked");
@@ -303,8 +292,8 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                                 if (task.isSuccessful()) {
                                     Log.w("myTag", "Task successful");
                                     // Make database entry for new user
-                                    HashMap<String, Object> map = new HashMap<String, Object>();
-                                    final FirebaseUser user = task.getResult().getUser();
+                                    HashMap<String, Object> map = new HashMap<>();
+                                    final FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();
                                     map.put("user_id", user.getUid());
                                     map.put("email", email);
                                     map.put("last_connection", Calendar.getInstance(Locale.US).getTimeInMillis()); // Check this out
@@ -330,18 +319,10 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
                                     progressDialog.dismiss();
                                     Toast.makeText(StudentSignUp.this, "Sign up successful!", Toast.LENGTH_SHORT).show();
                                     Log.w("myTag", "Signed up");
-//                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                                    editor.putBoolean("student_logged", true);
-//                                    editor.commit();
-//                                    finish();
                                     Intent backToHome = new Intent(StudentSignUp.this, Home.class);
                                     startActivity(backToHome);
                                     Log.w("myTag", "Intent backToHome sent");
                                 } else {
-
-                                    // Delete user, because something went wrong
-                                    // user.delete();
-//                                    Above line doesn't work. Something went wrong in handling something else that went wrong... Happy Programming!
                                     Toast.makeText(StudentSignUp.this, "Could not add user", Toast.LENGTH_SHORT).show();
                                     Log.w("myTag", "Task not successful");
                                 }
