@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -67,20 +68,21 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 //import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class AddPost extends AppCompatActivity {
-
+//  Variable declarations
     public static final int ACTION_PDF = 10;
     public static final int ACTION_PIC = 20;
     String committee, imageUrl, id, purpose, program, year, branch;
     EditText inputTitle, inputDescription;
     public static final int IMAGE_GALLERY_REQUEST = 20;
     public static final int IMAGE_CAMERA_REQUEST = 30;
-    String date, title, description, pathToFile;
+    String date, title, description;
     Button bPicture, bCamera, bSelectPdf;
     ProgressDialog progressDialog;
     ImageView ivPicture;
@@ -88,27 +90,27 @@ public class AddPost extends AppCompatActivity {
     private TextView tvStatus;
     Uri imageUri, file = null;
     private StorageReference storageReference;
-    String imagePath;
+    String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
-//        inputDate =  findViewById(R.id.inputDate);
+
         inputTitle =  findViewById(R.id.inputTitle);
         inputDescription =  findViewById(R.id.inputDescription);
         ivPicture =  findViewById(R.id.ivPicture);
-//        inputDate = (EditText) findViewById(R.id.inputDate);
-        inputTitle = (EditText) findViewById(R.id.inputTitle);
-        inputDescription = (EditText) findViewById(R.id.inputDescription);
-        ivPicture = (ImageView) findViewById(R.id.ivPicture);
+
         Button btnCreatePost = findViewById(R.id.btnCreatePost);
+        bCamera =  findViewById(R.id.bCamera);
+        bPicture =  findViewById(R.id.bPicture);
 
         date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
 
-
+        // Check whether intent is for student activity or notices.
         Intent intent = getIntent();
         purpose = intent.getStringExtra("purpose");
+        assert purpose != null;
         if (purpose.equals("student_activity")) {
             committee = intent.getStringExtra("adminOf");
             dbRef = FirebaseDatabase.getInstance().getReference(committee);
@@ -126,8 +128,6 @@ public class AddPost extends AppCompatActivity {
             }
         }
 
-
-
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,9 +136,11 @@ public class AddPost extends AppCompatActivity {
 
         });
 
+        // Check permissions before continuing
+        if(Build.VERSION.SDK_INT>=23){
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
 
-
-        bPicture =  findViewById(R.id.bPicture);
         bPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,17 +153,11 @@ public class AddPost extends AppCompatActivity {
             }
         });
 
-        bCamera =  findViewById(R.id.bCamera);
-        if(Build.VERSION.SDK_INT>=23){
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-        }
+
         bCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-               if(intent.resolveActivity(getPackageManager()) != null) {
-                   startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
-               }
+              dispatchPictureTakeIntent();
             }
         });
 
@@ -169,9 +165,25 @@ public class AddPost extends AppCompatActivity {
     }
 
 
+    private void dispatchPictureTakeIntent(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+            File photoFile = null;
+            try{
+                photoFile = createImageFile();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+
+            if(photoFile!= null){
+                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, IMAGE_CAMERA_REQUEST);
+            }
+
+        }
+    }
 //
-
-
     //  THIS!
     private void uploadPost() {
 
@@ -258,10 +270,8 @@ public class AddPost extends AppCompatActivity {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(ivPicture);
             } else if (requestCode == IMAGE_CAMERA_REQUEST && data != null && data.getData() != null) {
-                Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                ivPicture.setImageBitmap(bitmap);
-                assert bitmap != null;
-                imageUri = getImageUri(AddPost.this, bitmap);
+                imageUri = data.getData();
+                Picasso.get().load(imageUri).into(ivPicture);
             }
         }
     }
@@ -272,25 +282,18 @@ public class AddPost extends AppCompatActivity {
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    private Uri getImageUri(Context context, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+    private File createImageFile() throws IOException{
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
-
-//    private File createImageFile() throws IOException {
-//        String name = System.currentTimeMillis() + "." ;
-//        File storageDir =getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(
-//                name,
-//                ".jpg",
-//                storageDir
-//        );
-//
-//        imagePath = image.getAbsolutePath();
-//        return image;
-//    }
 }
 
 

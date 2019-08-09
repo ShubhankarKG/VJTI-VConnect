@@ -10,7 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e8eaf6"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="56dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

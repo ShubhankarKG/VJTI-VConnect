@@ -111,7 +111,7 @@ public class EditThisPost extends AppCompatActivity {
 
         if ((postId == null))
             Toast.makeText(this, "PostID error occured!", Toast.LENGTH_SHORT).show();
-        else if (intent.getStringExtra("purpose").equals("student_activity")) {
+        else if (Objects.equals(intent.getStringExtra("purpose"), "student_activity")) {
             committee = intent.getStringExtra("committee");
             dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postId);
             dbRef.keepSynced(true);
@@ -244,32 +244,23 @@ public class EditThisPost extends AppCompatActivity {
 
 
     private void galleryUpload(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_GALLERY_REQUEST);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String pictureDirectoryPath = pictureDirectory.getPath();
+        Uri data = Uri.parse(pictureDirectoryPath);
+        photoPickerIntent.setDataAndType(data, "image/*");
+        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
     }
 
 
     private void uploadFile(){
 
         if(isEmpty){
-//            Post post = new Post(Title, Description,date);
-//            if (!TextUtils.isEmpty(postId)) {
-//            } else {
-//                postId = dbRef.push().getKey();
-//            }
-//            post.setId(postId);
-//            dbRef.child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void aVoid) {
-//                    Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
-//                }
-//            });
             Title = editTitle.getText().toString();
             Description = editDescription.getText().toString();
             Post post = new Post(Title, Description, date);
-            dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            post.setId(postId);
+            dbRef.getParent().child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(EditThisPost.this, "Done!", Toast.LENGTH_SHORT).show();
@@ -286,12 +277,9 @@ public class EditThisPost extends AppCompatActivity {
             if(oldImage){
                 Title = editTitle.getText().toString();
                 Description = editDescription.getText().toString();
-//                dbRef.child("title").setValue(Title);
-//                dbRef.child("description").setValue(Description);
-//                dbRef.child("date").setValue(date);
-//                dbRef.child("id").setValue(postId);
                 Post post = new Post(Title, Description, oldImageString, date);
-                dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                post.setId(postId);
+                dbRef.getParent().child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(EditThisPost.this, "Update successful!", Toast.LENGTH_SHORT).show();
@@ -303,7 +291,6 @@ public class EditThisPost extends AppCompatActivity {
                 startActivity(goBack);
             }
             else{
-                dbRef.child("image").removeValue();
                 if(newImageUri!= null){
                     final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(newImageUri));
                     fileReference.putFile(newImageUri)
@@ -317,7 +304,8 @@ public class EditThisPost extends AppCompatActivity {
                                             Description = editDescription.getText().toString();
                                             Image = uri.toString();
                                             Post post = new Post(Title, Description, Image, date);
-                                            dbRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            post.setId(postId);
+                                            dbRef.getParent().child(postId).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(EditThisPost.this, "Update Successful", Toast.LENGTH_SHORT).show();
@@ -345,7 +333,7 @@ public class EditThisPost extends AppCompatActivity {
         }
 
         if (!isOldEmpty) {
-            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl); //Causes Runtime error!!
+            oldStorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
             oldStorageReference.delete();
         }
     }
