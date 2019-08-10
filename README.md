@@ -12,32 +12,32 @@ SAHIL PAVASKAR
 
 A project on Android App Development Under Community of Coders' Inheritance 2019
 
-INDEX
+NDEX
 
 
-CONCEPT AND COMPLETION STATUS…………………………………………………....	2
+CONCEPT AND COMPLETION STATUS
 
-SOFTWARE USED…………………………………………………………………………….	3
+SOFTWARE USED
 
-A LOOK AT THE APP…………………………………………………………………………...	4
+A LOOK AT THE APP
 
-ANDROID BASICS….……………………....……………………………………………….......6
+ANDROID BASICS
 
-FEED ACTIVITY………………………………………………………………………………...	8
+FEED ACTIVITY
 
-REPRESENTATION OF POSTS AND CLASS NOTICES………………………………….	10
+REPRESENTATION OF POSTS AND CLASS NOTICES
 
-STORING USER DATA WITH SHARED PREFERENCES…………………………………..	11
+STORING USER DATA WITH SHARED PREFERENCES
 
-FIREBASE REALTIME DATABASE……………………………………………………….....	13
+FIREBASE REALTIME DATABASE
 
-FIREBASE AUTHENTICATION……………………………………………………………….	14
+FIREBASE AUTHENTICATION
 
-FUTURE WORK………………………………………………………………………………..	15
+FUTURE WORK
 
-BUGS AND ISSUES…………………………………………………………………………....	15
+BUGS AND ISSUES
 
-BIBLIOGRAPHY……………………………………………………………………………….	16
+BIBLIOGRAPHY
 
 
 
