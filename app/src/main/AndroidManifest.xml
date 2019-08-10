@@ -39,7 +39,6 @@
         <activity
             android:name=".EditThisPost"
             android:label="EditThisPost"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ViewPost"
@@ -49,7 +48,6 @@
         <activity
             android:name=".AddPost"
             android:label="AddPost"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
 
         <activity
@@ -58,16 +56,7 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
+        
     </application>
 
 </manifest>

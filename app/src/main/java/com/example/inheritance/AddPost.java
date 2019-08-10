@@ -32,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -41,12 +42,12 @@ public class AddPost extends AppCompatActivity {
     //  Variable declarations
 
     String committee, imageUrl, id, purpose, program, year, branch;
-    EditText inputTitle, inputDescription;
+    public EditText inputTitle, inputDescription;
     public static final int IMAGE_GALLERY_REQUEST = 20;
-    String date, title, description;
-    Button bPicture;
+    public String date, Title, Description;
+    public Button bPicture, btnCreatePost;
     ProgressDialog progressDialog;
-    ImageView ivPicture;
+    public ImageView ivPicture;
     DatabaseReference dbRef;
     Uri imageUri;
     private StorageReference storageReference;
@@ -61,11 +62,11 @@ public class AddPost extends AppCompatActivity {
         inputDescription =  findViewById(R.id.inputDescription);
         ivPicture =  findViewById(R.id.ivPicture);
 
-        Button btnCreatePost = findViewById(R.id.btnCreatePost);
+        btnCreatePost = findViewById(R.id.btnCreatePost);
         bPicture =  findViewById(R.id.bPicture);
 
-        date = new SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault()).format(new Date());
-
+        DateFormat Date = new SimpleDateFormat("EEE, MMM d, ''yy");
+        date = Date.format(new Date());
         // Check whether intent is for student activity or notices.
         Intent intent = getIntent();
         purpose = intent.getStringExtra("purpose");
@@ -90,6 +91,7 @@ public class AddPost extends AppCompatActivity {
         btnCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 uploadPost();
             }
 
@@ -105,10 +107,7 @@ public class AddPost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                String pictureDirectoryPath = pictureDirectory.getPath();
-                Uri data = Uri.parse(pictureDirectoryPath);
-                photoPickerIntent.setDataAndType(data, "image/*");
+                photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
             }
         });
@@ -116,16 +115,9 @@ public class AddPost extends AppCompatActivity {
     }
 
     private void uploadPost() {
-
-        title = inputTitle.getText().toString();
-        description = inputDescription.getText().toString();
-
+        Title = inputTitle.getText().toString();
+        Description = inputDescription.getText().toString();
         if (imageUri != null) {
-            progressDialog = new ProgressDialog(AddPost.this);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setTitle("Uploading post...");
-            progressDialog.setProgress(0);
-            progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -134,23 +126,20 @@ public class AddPost extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    imageUrl = uri.toString();
-                                    Post post = new Post(title, description, imageUrl, date);
+                                    Post post = new Post(Title, Description, imageUrl, date);
                                     if (TextUtils.isEmpty(id)) {
                                         id = dbRef.push().getKey();
                                     }
-                                    if (TextUtils.isEmpty(title)) {
-                                        Toast.makeText(AddPost.this, "Please add a title", Toast.LENGTH_SHORT).show();
+                                    while (TextUtils.isEmpty(Title)) {
+                                        Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
                                     }
                                     post.setId(id);
                                     dbRef.child(id).setValue(post);
-                                    progressDialog.dismiss();
                                     Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                                    Intent goBack = new Intent(AddPost.this, Home.class);
-                                    startActivity(goBack);
-
+                                    startActivity(new Intent(AddPost.this, Home.class));
                                 }
                             });
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -158,49 +147,18 @@ public class AddPost extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(AddPost.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            int progress = (int) (100 * (taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount()));
-                            progressDialog.setProgress(progress);
-                        }
                     });
+        } else {
 
-        }
-        else {
-            progressDialog = new ProgressDialog(AddPost.this);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setTitle("Uploading post...");
-            progressDialog.show();
-            Post post = new Post(title, description, date);
+            Post post = new Post(Title, Description, date);
             if (TextUtils.isEmpty(id)) {
-
                 id = dbRef.push().getKey();
             }
-            if (TextUtils.isEmpty(title)) {
-                Toast.makeText(AddPost.this, "Please add a title", Toast.LENGTH_SHORT).show();
-            }
             post.setId(id);
-            dbRef.child(id).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(AddPost.this, "Post added successfully", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AddPost.this, "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    progressDialog.dismiss();
-                    startActivity(new Intent(AddPost.this, Home.class));
-                }
-            });
+            dbRef.child(id).setValue(post);
+            Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AddPost.this, Home.class));
         }
-
     }
 
     @Override

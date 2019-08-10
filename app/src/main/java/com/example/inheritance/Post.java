@@ -7,42 +7,59 @@ public class Post {
     private String date;
     private String id;
 
-    //Default constructor for using Firebase Database
-    public Post(){
-
+    public Post() {
     }
 
-    //Constructor for creating a node when image is present.
-    public Post(String title, String description, String imageUrl , String date) {
+    public Post(String title, String description, String date) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
+    public Post(String title, String description, String imageUrl, String date) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
         this.date = date;
     }
 
-    //Constructor for creating a node when image is not present.
-    public Post(String title, String description,String date){
-        this.title = title;
-        this.description = description;
-        this.date = date;
-    }
-
-    //Getter methods
-    public String getId() {
-        return id;
-    }
     public String getTitle() {
         return title;
     }
-    String getDate() {return date;}
-    String getDescription() {
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
         return description;
     }
-    String getImageUrl() {
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    //Setter Methods
-    public void setId(String id) { this.id = id;}
-    public void setTitle(String title) { this.title = title; }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
