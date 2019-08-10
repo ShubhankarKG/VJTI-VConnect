@@ -39,7 +39,8 @@
                         android:padding="8dp"
                         android:text="Class Notices"
                         android:textColor="@color/textOnP"
-                        android:textSize="28sp" />
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="32sp" />
 
                     <TextView
                         android:id="@+id/class_details"

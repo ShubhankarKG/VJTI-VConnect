@@ -53,6 +53,7 @@ public class EditThisPost extends AppCompatActivity {
     String imageUrl;
     StorageReference storageReference, oldStorageReference;
     String date, Title, Description, oldImageString;
+    String purpose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class EditThisPost extends AppCompatActivity {
         if ((postId == null))
             Toast.makeText(this, "PostID error occured!", Toast.LENGTH_SHORT).show();
         else if (Objects.equals(intent.getStringExtra("purpose"), "student_activity")) {
+            purpose = "student_activity";
             committee = intent.getStringExtra("committee");
             dbRef = FirebaseDatabase.getInstance().getReference(committee).child(postId);
             dbRef.keepSynced(true);
@@ -122,6 +124,7 @@ public class EditThisPost extends AppCompatActivity {
             firebaseStorage = FirebaseStorage.getInstance();
             storageReference = firebaseStorage.getReference(committee);
         } else if (Objects.equals(intent.getStringExtra("purpose"), "notice")) {
+            purpose = "notice";
             program = intent.getStringExtra("program");
             branch = intent.getStringExtra("branch");
             year = intent.getStringExtra("year");
@@ -239,9 +242,16 @@ public class EditThisPost extends AppCompatActivity {
                     Toast.makeText(EditThisPost.this, "Done!", Toast.LENGTH_SHORT).show();
                 }
             });
-            Intent goBack = new Intent(EditThisPost.this, Feed.class);
-            goBack.putExtra("committee", committee);
-            startActivity(goBack);
+
+            if (purpose.equals("student_activity")) {
+                Intent goBack = new Intent(EditThisPost.this, Feed.class);
+                goBack.putExtra("committee", committee);
+                startActivity(goBack);
+            } else if (purpose.equals("notice")) {
+                Intent goBack = new Intent(EditThisPost.this, Home.class);
+                startActivity(goBack);
+            }
+
 
         }
         else{
@@ -259,9 +269,14 @@ public class EditThisPost extends AppCompatActivity {
                     }
                 });
 
-                Intent goBack = new Intent(EditThisPost.this, Feed.class);
-                goBack.putExtra("committee", committee);
-                startActivity(goBack);
+                if (purpose.equals("student_activity")) {
+                    Intent goBack = new Intent(EditThisPost.this, Feed.class);
+                    goBack.putExtra("committee", committee);
+                    startActivity(goBack);
+                } else if (purpose.equals("notice")) {
+                    Intent goBack = new Intent(EditThisPost.this, Home.class);
+                    startActivity(goBack);
+                }
             }
             else{
                 if(newImageUri!= null){
@@ -286,9 +301,14 @@ public class EditThisPost extends AppCompatActivity {
                                             });
 
 
-                                            Intent goBack = new Intent(EditThisPost.this, Feed.class);
-                                            goBack.putExtra("committee", committee);
-                                            startActivity(goBack);
+                                            if (purpose.equals("student_activity")) {
+                                                Intent goBack = new Intent(EditThisPost.this, Feed.class);
+                                                goBack.putExtra("committee", committee);
+                                                startActivity(goBack);
+                                            } else if (purpose.equals("notice")) {
+                                                Intent goBack = new Intent(EditThisPost.this, Home.class);
+                                                startActivity(goBack);
+                                            }
 
                                         }
                                     });

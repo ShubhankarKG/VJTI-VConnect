@@ -126,7 +126,8 @@ public class AddPost extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Post post = new Post(Title, Description, imageUrl, date);
+                                    imageUrl = uri.toString();
+                                    Post post = new Post(Title, Description, date);
                                     if (TextUtils.isEmpty(id)) {
                                         id = dbRef.push().getKey();
                                     }
@@ -134,6 +135,7 @@ public class AddPost extends AppCompatActivity {
                                         Toast.makeText(AddPost.this, "Please add a title!", Toast.LENGTH_SHORT).show();
                                     }
                                     post.setId(id);
+                                    post.setImageUrl(imageUrl);
                                     dbRef.child(id).setValue(post);
                                     Toast.makeText(AddPost.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(AddPost.this, Home.class));

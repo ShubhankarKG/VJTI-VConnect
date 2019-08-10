@@ -373,7 +373,7 @@ public class MainActivity extends Fragment {
             });
 
         } else {
-            bLogin.setText(R.string.Login);
+            bLogin.setText("Admin Login");
             bLogin.setAllCaps(false);
             bLogin.setOnClickListener(new View.OnClickListener() {
                 @Override

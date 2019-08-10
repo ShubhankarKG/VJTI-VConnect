@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
             android:theme="@style/AppTheme.AppBarOverlay">
             <LinearLayout
@@ -50,7 +50,7 @@
                 android:id="@+id/bLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorPrimaryDark"
                 android:text="Admin\nLogin"
                 android:padding="8dp"
                 android:textColor="#FFFFFF"
@@ -59,8 +59,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="#005b9f"
-                    android:text="Logout"
+                    android:background="@color/colorPrimaryDark"
                     android:padding="8dp"
                     android:textColor="#FFFFFF"
                     android:id="@+id/bLogout"

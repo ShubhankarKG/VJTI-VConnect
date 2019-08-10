@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,7 +53,8 @@ public class StudentSignUp extends AppCompatActivity implements AdapterView.OnIt
 
     private static final int RC_SIGN_IN = 123;
     EditText edtxtEmail, edtxtPwd;
-    Button bSignup, bCancel, bGoogleSignup;
+    Button bSignup, bCancel;
+    SignInButton bGoogleSignup;
     RadioGroup rgProgram;
     TextView txtBranch;
     Spinner yearSpinner, branchSpinner;

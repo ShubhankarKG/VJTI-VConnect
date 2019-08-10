@@ -8,6 +8,29 @@
     android:background="#F5F5F5"
     tools:context=".Home">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:padding="8dp"
+                android:text="Account"
+                android:textColor="@color/textOnP"
+                android:textSize="32sp" />
+        </com.google.android.material.appbar.AppBarLayout>
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +38,7 @@
         android:layout_marginTop="180dp"
         android:gravity="center"
         android:textColor="@color/textOnS"
-        android:text="Hey Stranger!\nYou aren't logged in :-("
+        android:text="You aren't logged in"
         android:textSize="24sp" />
 
     <Button

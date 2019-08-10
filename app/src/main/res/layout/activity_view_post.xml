@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            android:background="@color/colorPrimaryDark"
             app:contentScrim="@color/colorPrimary">
 
             <RelativeLayout
@@ -29,6 +30,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/activity_horizontal_margin"
                     android:textColor="#ffffff"
+                    android:fontFamily="sans-serif-light"
                     android:textSize="30sp"
                     />
                 <TextView
