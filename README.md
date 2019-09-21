@@ -12,14 +12,12 @@ SAHIL PAVASKAR
 
 A project on Android App Development Under Community of Coders' Inheritance 2019
 
-NDEX
+INDEX
 
 
 CONCEPT AND COMPLETION STATUS
 
 SOFTWARE USED
-
-A LOOK AT THE APP
 
 ANDROID BASICS
 
@@ -63,20 +61,7 @@ SOFTWARE USED
 Android Studio 3.4.2 an IDE for developing applications exclusively for Android platform. It has a strong editor tool for developing creative UI and emulators for different versions to test and simulate sensors without having actual Android devices.
 Firebase for giving users a quick, intuitive sign-in process with Firebase Authentication, and providing users with content in the form of posts, stored in Firebase Realtime Database. Another great functionality provided by Firebase is Firebase Storage, which can be used to store media and files. 
 Git, a version control system (VCS) that allows developers to easily maintain and track changes in their projects.
-
-
-A LOOK AT THE APP
-
-                                  
-
-
-
-Home Screen of V-Connect with Student Activities and Login button for committee heads.
-
-Login Screen for students of VJTI.
-
-                              
-                                                            
+                                                                                
 
 
 ANDROID BASICS
