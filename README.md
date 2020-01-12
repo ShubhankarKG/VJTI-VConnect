@@ -62,11 +62,12 @@ Android Manifest is an `.xml` file that is used to provide specific information 
 
 In lieu of the project concerned, the permissions required from the user are :
 
-* `<uses-permission android:name="android.permission.INTERNET" />`
-* `<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
-* `<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />`
-* `<uses-permission android:name="android.permission.CAMERA" />`
-
+```xml
+<uses-permission android:name="android.permission.INTERNET" />`
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />`
+<uses-permission android:name="android.permission.CAMERA" />`
+```
 The project requires internet access and to check whether the internet connection is presently available or not in a device is checked with the help of network state. Since the user requires downloading and uploading images, the permission of reading external storage and camera is required.
 
 ### INTENT
@@ -81,13 +82,14 @@ The RecyclerView creates only as many view holders as are needed to display the 
 Every individual element in the RecyclerView is represented by a _RecyclerView.ViewHolder_ object. These view holder objects are, in turn managed by an adapter object, which can be created by extending RecyclerView.Adapter. The adapter is responsible for creating view holders as needed, and binds the data to be displayed to respective view holders.
 The XML code below shows how the RecyclerView was implemented in the layout file for the Feed Activity:
 
-```<androidx.recyclerview.widget.RecyclerView android:id="@+id/feed_recyclerview" android:layout_width="match_parent" android:layout_height="match_parent">
+```xml
+<androidx.recyclerview.widget.RecyclerView android:id="@+id/feed_recyclerview" android:layout_width="match_parent" android:layout_height="match_parent">
 </androidx.recyclerview.widget.RecyclerView>
 ```
 
 The CardView was implemented in XML as:
 
-```
+```xml
 <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:elevation="48dp" app:cardCornerRadius="3dp"> 
 <!--Views inside the CardView for title, description, date, et cetera --> 
 </androidx.cardview.widget.CardView>
@@ -96,7 +98,9 @@ The CardView was implemented in XML as:
 ### REPRESENTATION OF POSTS AND CLASS NOTICES
 To conveniently store the data of individual posts and class notices internally a class titled __Post__ was created. Its data fields (strings) consist of _title, description, date, id (post key) and image_ (it helps in loading the image from a URL string). Its methods consist of setters and getters for all data fields, a default empty constructor and a constructor to construct a post object using passed title, description, date and image arguments.
 
-`public Post(String title, String description, String image, String date)`
+```java
+public Post(String title, String description, String image, String date)
+```
 
 This manner of storing posts, which is a practical implementation of encapsulation, internally facilitates the following operations:
 * Adding, editing and deleting posts, and accessing them for the same.
@@ -112,16 +116,20 @@ For this app, it is necessary to store user data such as the credentials of the 
 First, a _SharedPreferences_ object is created in Home Activity. It is declared as public and static so that all activities can use the 
 same SharedPreferences object.
 
-`public static SharedPreferences sharedpreferences;`
+```java
+public static SharedPreferences sharedpreferences;
+```
 
 Next, we get access to a shared preferences file (or if it doesn't exist, create one) called 'userCred' using the getSharedPreferences() method:
 
-`sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);`
+```java
+sharedPreferences = getSharedPreferences("userCred", Context.MODE_PRIVATE);
+```
 
 This makes the sharedPreferences object a handle to the newly created 'userCred' shared preferences file. Internally, shared preferences files are XML files.
 Now, for writing data to the 'userCred' file, we use an object of _SharedPreferences.Editor_ class:
 
-```
+```java
 SharedPreferences.Editor editor = sharedPreferences.edit();
 editor.putBoolean("logged",true); // User logged in (Boolean)
 editor.putString("login_id",loginId); // Store login ID (String) of user
@@ -131,7 +139,7 @@ editor.commit(); // Save changes to the shared preferences file
 The first parameter in __putBoolean(), putString(), putInt()__ , et cetera methods is the 'key', while the second parameter is the 'value' we want to store.
 Similarly, we can store program, year and branch of user as shown, in Student Signup Activity:
 
-```
+```java
 SharedPreferences.Editor editor = sharedPreferences.edit();
 editor.putString("program", program);
 editor.putString("year", year);
@@ -141,7 +149,7 @@ editor.commit();
 
 For reading the values stored in the shared preferences file, we use __getString(), getBoolean()__, et cetera methods. In these methods, the first parameter is the 'key' of the data we want to retrieve, while the second parameter is the default value that the method should return in case the key passed to the method does not exist in the shared preferences file.
 
-```
+```java
 if(sharedPreferences.getBoolean("logged", false)){
 	//User logged in
 } else{
@@ -158,7 +166,7 @@ The Firebase Database is a __cloud-hosted NoSQL__ Database. Data is stored here 
 The implementation of Firebase Realtime Database in Android Studio is as follows :
 In build.gradle file of app module :
 
-```
+```gradle
 implementation 'com.google.firebase:firebase-core:17.0.0'
 implementation 'com.google.firebase:firebase-database:18.0.0'
 implementation 'com.firebaseui:firebase-ui-database:0.4.0'
@@ -168,16 +176,20 @@ implementation 'com.firebaseui:firebase-ui-database:0.4.0'
 Firebase provides a full set of authentication options out-of-the-box. Firebase automatically stores users’ credentials securely and redundantly (with replication and daily off-site backups). This separates sensitive user credentials from the application data, and lets developers focus on the user interface and app experience.
 This project uses sign up with email and password. To create a new user with an email and a password, the following function is used:
 
-```
+```java
 auth = FirebaseAuth.getInstance();
 auth.createUserWithEmailAndPassword(email, password);
 ```
 
 This creates a new user with the given email address at the backend. The password is not available to the developer. To log in, the following code is used:
 
-`auth.signInWithEmailAndPassword(email, password);`
-An onCompleteListener can be added to facilitate the use of these methods. To check if the user is logged in,
+```java
+auth.signInWithEmailAndPassword(email, password);
 ```
+
+An onCompleteListener can be added to facilitate the use of these methods. To check if the user is logged in,
+
+```java
 if(auth.getUser == null) 
 //    User not logged in
 else {
